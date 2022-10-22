@@ -27,7 +27,7 @@ module;
 
 #include <string>
 
-#include <sqlite3.h>
+#include "sqlite3.h"
 
 
 export module osql.dbconnection;
