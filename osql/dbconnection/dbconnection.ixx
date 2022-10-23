@@ -25,12 +25,17 @@ SOFTWARE.
 //===========================================================================
 module;
 
+#include <memory>
 #include <string>
+#include <vector>
 
 #include "sqlite3.h"
+#include "osql/osql.h"
 
 
 export module osql.dbconnection;
+
+import osql.common;
 
 
 //===========================================================================
@@ -41,9 +46,13 @@ export namespace osql::dbconnection
     *
     * @sa RODBConnection, RWDBConnection, MemoryDBConnexion.
     */
-    class DBConnection
+    class DBConnection : public osql::common::ObjectBase
     {
     public:
+        //---   Wrappers   --------------------------------------------------
+        using MyBaseClass = osql::common::ObjectBase;  //!< wrapper to the base class
+
+
         //---   OPENING FLAGS   ---------------------------------------------
         // see https://www.sqlite.org/c3ref/c_open_autoproxy.html
 
@@ -80,9 +89,14 @@ export namespace osql::dbconnection
         inline DBConnection(const std::string& filename                         ,
                             const int          flags      = CREATE | URI_ALLOWED,
                             const std::string& vfs_module = "win32"              ) noexcept
+            : MyBaseClass()
         {
-            m_last_error_code = sqlite3_open_v2(filename.c_str(), &m_handle, flags, vfs_module.c_str());
+            _last_error_code = sqlite3_open_v2(filename.c_str(), &_db_handle, flags, vfs_module.c_str());
+            // notice: attributes '_last_error_code' and '_db_handle' are inherited from base class
         }
+
+        /** @brief Default empty constructor. */
+        DBConnection() noexcept = default;
 
         /** @brief Deleted copy constructor. */
         DBConnection(const DBConnection&) noexcept = delete;
@@ -99,43 +113,17 @@ export namespace osql::dbconnection
 
         //---   Assignments   -----------------------------------------------
         /** @brief Deleted copy assignment. */
-        DBConnection operator= (const DBConnection&) noexcept = delete;
+        DBConnection& operator= (const DBConnection&) noexcept = delete;
 
         /** @brief Deleted move assignment. */
-        DBConnection operator= (DBConnection&&) noexcept = delete;
+        DBConnection& operator= (DBConnection&&) noexcept = delete;
 
 
         //---   Accessors   -------------------------------------------------
         /** @brief Gets access to the sqlite3 connection handle. */
-        inline const sqlite3* get_handle() const noexcept
+        inline sqlite3* get_handle() const noexcept
         {
-            return m_handle;
-        }
-
-
-        //---   Error Operations   ------------------------------------------
-        /** @brief Returns true if things are fine, or false in case of any type of error. */
-        inline const bool is_ok() const noexcept
-        {
-            return m_last_error_code == SQLITE_OK;
-        }
-
-        /** @brief Returns the last error code value. */
-        inline const int get_error_code() const noexcept
-        {
-            return m_last_error_code;
-        }
-
-        /** @brief Returns the last error message - UTF-8. */
-        inline const std::string get_error_msg() const noexcept
-        {
-            return sqlite3_errmsg(m_handle);
-        }
-
-        /** @brief Returns the last error message - UTF-16. */
-        inline const std::wstring get_error_wmsg() const noexcept
-        {
-            return static_cast<const wchar_t*>(sqlite3_errmsg16(m_handle));
+            return _db_handle;
         }
 
 
@@ -145,12 +133,6 @@ export namespace osql::dbconnection
         * @return the associated error code if any, or SQLITE_OK if no error.
         */
         int close() noexcept;
-
-
-    private:
-        //---   Internal attributes   ---------------------------------------
-        sqlite3* m_handle;       //!< The sqlite3 handle to the created database
-        int      m_last_error_code; //!< the code of the last encountered error.
     };
 
 

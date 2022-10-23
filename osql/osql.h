@@ -1,3 +1,4 @@
+#pragma once
 /*
 MIT License
 
@@ -23,31 +24,22 @@ SOFTWARE.
 */
 
 //===========================================================================
-module;
+// Forward declarations over whole library ObjectSQLite
+ 
+//---   osql::common   ------------------------------------------------------
+namespace osql::common {
+    class ObjectBase;
+}
 
-#include <memory>
-#include <string>
+//---   osql::dbconnection   ------------------------------------------------
+namespace osql::dbconnection {
+    class DBConnection;
+    class RODBConnection;
+    class RWDBConnection;
+    class MemoryDBConnection;
+}
 
-#include <sqlite3.h>
-
-
-module osql.dbconnection;
-
-
-//===========================================================================
-namespace osql::dbconnection
-{
-    /* Closes this connection. Ends any pending transaction also. */
-    int DBConnection::close() noexcept
-    {
-        // TODO: finalize all prepared statements
-
-        // TODO: close all BLOB handles
-
-        // TODO: finish all sqlite3_backup objects associated with the sqlite3 object
-
-        // finally, closes this connection
-        return sqlite3_close_v2(_db_handle);
-    }
-
+//---   osql::statements   --------------------------------------------------
+namespace osql::statements {
+    class Statement;
 }
