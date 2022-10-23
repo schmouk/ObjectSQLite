@@ -24,8 +24,13 @@ SOFTWARE.
 */
 
 //===========================================================================
-// Forward declarations over whole ObjectSQLite
+// Forward declarations over whole library ObjectSQLite
  
+//---   osql::common   ------------------------------------------------------
+namespace osql::common {
+    class ObjectBase;
+}
+
 //---   osql::dbconnection   ------------------------------------------------
 namespace osql::dbconnection {
     class DBConnection;

@@ -25,6 +25,7 @@ SOFTWARE.
 //===========================================================================
 module;
 
+#include <memory>
 #include <string>
 
 #include <sqlite3.h>
@@ -46,7 +47,7 @@ namespace osql::dbconnection
         // TODO: finish all sqlite3_backup objects associated with the sqlite3 object
 
         // finally, closes this connection
-        return sqlite3_close_v2(m_handle);
+        return sqlite3_close_v2(_db_handle);
     }
 
 }
