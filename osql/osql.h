@@ -26,6 +26,12 @@ SOFTWARE.
 //===========================================================================
 // Forward declarations over whole library ObjectSQLite
  
+//---   osql::clauses   -----------------------------------------------------
+namespace osql::clauses {
+    class Clause;
+    class WithClause;
+}
+
 //---   osql::common   ------------------------------------------------------
 namespace osql::common {
     class ObjectBase;

@@ -160,7 +160,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ObjectSQLite.cpp" />
-    <ClCompile Include="osql\clauses\clause.ixx" />
+    <ClCompile Include="osql\clauses\clause.cpp" />
+    <ClCompile Include="osql\clauses\with_clause.ixx" />
     <ClCompile Include="osql\common\object_base.ixx" />
     <ClCompile Include="osql\dbconnection\dbconnection.cpp" />
     <ClCompile Include="osql\dbconnection\dbconnection.ixx" />
@@ -172,6 +173,7 @@
     <None Include="Source.def" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="osql\clauses\clause.h" />
     <ClInclude Include="osql\osql.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

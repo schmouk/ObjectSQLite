@@ -23,30 +23,28 @@ SOFTWARE.
 */
 
 //===========================================================================
-#include <iostream>
+#include <format>
+#include <sstream>
+#include <string>
 
-#include <sqlite3.h>
-
-import osql.dbconnection;
-using namespace osql::dbconnection;
-
-import osql.clauses;
-
-osql::clauses::WithClause clause;
+#include "osql/clauses/clause.h"
 
 
-int main()
+//===========================================================================
+namespace osql::clauses
 {
-    std::cout << "Let's test ObjectSQLite with sqlite3 version " << SQLITE_VERSION << "!\n";
+    /* Gets the full text of this clause. */
+    const std::string Clause::get_text() const noexcept
+    {
+        std::ostringstream os;
 
-    DBConnection test_db{ "tests/db_test", DBConnection::CREATE };
-    std::cout << "creation of first test db, error result = " << test_db.get_error_code() << ", " << test_db.get_error_msg() << std::endl;
+        if (_prefix != "")
+            os << _prefix << ' ';
+        os << _text;
+        if (_suffix != "")
+            os << ' ' << _suffix;
 
-    MemoryDBConnection test_mem_db{};
-    std::cout << "creation of memory test db, error result = " << test_mem_db.get_error_code() << ", " << test_mem_db.get_error_msg() << std::endl;
+        return os.str();
+    }
 
-    osql::clauses::WithRecursiveClause wr_clause("test text");
-    std::cout << "Recursive With Clause content: " << wr_clause.get_text() << std::endl;
-
-    std::cout << "Empty With Clause content: " << clause.get_text() << std::endl;
 }

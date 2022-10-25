@@ -1,3 +1,4 @@
+#pragma once
 /*
 MIT License
 
@@ -23,29 +24,30 @@ SOFTWARE.
 */
 
 //===========================================================================
-module;
-
 #include <format>
 #include <string>
-#include "sqlite3.h"
-
-
-export module osql.clauses;
 
 
 //===========================================================================
-export namespace osql::clauses
+namespace osql::clauses
 {
     //=======================================================================
     /** @brief The base class for SQL clauses as included in SQL statements. */
-    template<const char PREFIX[]>
     class Clause
     {
     public:
         //---   Constructors / Destructor   ---------------------------------
-        /** @brief Value constructor. */
-        inline Clause(const std::string& text) noexcept
-            : _text(text)
+        /** @brief Value constructor (1/2). */
+        inline Clause(const std::string& prefix,
+                      const std::string& core_text) noexcept
+            : _prefix(prefix), _text(core_text), _suffix("")
+        {}
+
+        /** @brief Value constructor (2/2). */
+        inline Clause(const std::string& prefix,
+                      const std::string& core_text,
+                      const std::string& suffix) noexcept
+            : _prefix( prefix), _text(core_text), _suffix(suffix)
         {}
 
         /** @brief Default empty constructor. */
@@ -69,9 +71,9 @@ export namespace osql::clauses
         Clause& operator= (Clause&&) noexcept = default;
 
         /** @brief Text assignment. */
-        Clause& operator= (const std::string& text) noexcept
+        inline Clause& operator= (const std::string& core_text) noexcept
         {
-            set_text(text);
+            set_text(core_text);
             return *this;
         }
 
@@ -84,21 +86,24 @@ export namespace osql::clauses
 
         //---   Operations   ------------------------------------------------
         /** @brief Gets the full text of this clause. */
-        std::string& get_text() noexcept
-        {
-            return std::format("{:s} {:s}", PREFIX, _text);
-        }
+        const std::string get_text() const noexcept;
 
         /** @brief Sets the text associated with this clause. */
-        inline void set_text(const std::string& text) noexcept
+        inline void set_text(const std::string& core_text) noexcept
         {
-            _text = text;
+            _text = core_text;
         }
 
 
     protected:
         //---   Attributes   ------------------------------------------------
+        std::string _prefix{};
+        std::string _suffix{};
         std::string _text{};  //!< the core text of this clause
+
+
+    private:
+        static inline std::string _PREFIX{ "" };  //!< the class prefix. MUST BE OVERRIDDEN in inheriting classes.
     };
 
 }

@@ -36,7 +36,10 @@
     <ClCompile Include="osql\tables\table_base.ixx">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="osql\clauses\clause.ixx">
+    <ClCompile Include="osql\clauses\with_clause.ixx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="osql\clauses\clause.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -47,6 +50,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="osql\osql.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="osql\clauses\clause.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
