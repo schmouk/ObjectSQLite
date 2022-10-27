@@ -39,9 +39,6 @@
     <ClCompile Include="osql\clauses\with_clause.ixx">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="osql\clauses\clause.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Source.def">
