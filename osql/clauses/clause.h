@@ -41,7 +41,7 @@ namespace osql::clauses
     };
 
 
-    /** @brief Returns a string set from a sequence of chars. */
+    /** @brief Templatization of a sequence of chars as a string. */
     template<char C, char... Cs>
     struct STR
     {
@@ -51,7 +51,7 @@ namespace osql::clauses
         }
     };
 
-    /** @brief Specialization of STR with null char. */
+    /** @brief Specialization of STR with sole null char. */
     template<>
     struct STR<'\0'>
     {
