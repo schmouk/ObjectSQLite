@@ -30,7 +30,7 @@ module;
 #include "osql/clauses/clause.h"
 
 
-export module osql.clauses.with_clauses;
+export module osql.clauses.select_clauses;
 
 import osql.clauses;
 
@@ -40,67 +40,101 @@ export namespace osql::clauses
 {
     //=======================================================================
     // This module defines:
-    //  - class WithClause (not recursive)
-    //  - class WithRecursiveClause (recursive)
+    //  - class SelectClause
+    //  - class SelectAllClause
+    //  - class SelectDistinctClause
     //
 
     //=======================================================================
-    using WithStr = STR<'W', 'I', 'T', 'H', 0>;
+    using SelectStr = STR<'S', 'E', 'L', 'E', 'C', 'T', 0>;
 
-    /** @brief The class of SQL WITH clauses as included in SQL statements. */
-    class WithClause : public Clause<WithStr>
+    /** @brief The class of SQL SELECT clauses as included in SQL statements. */
+    class SelectClause : public osql::clauses::Clause<SelectStr>
     {
     public:
         //---   Wrappers   --------------------------------------------------
-        using MyBaseClass = osql::clauses::Clause<WithStr>;
+        using MyBaseClass = osql::clauses::Clause<SelectStr>;
 
 
         //---   Constructors / Destructor   ---------------------------------
         /** @brief Value constructor. */
-        inline WithClause(const std::string& common_table_expressions_text) noexcept
-            : MyBaseClass(common_table_expressions_text)
+        inline SelectClause(const std::string& select_text) noexcept
+            : MyBaseClass(select_text)
         {}
 
         /** @brief Default empty constructor. */
-        WithClause() noexcept = default;
+        SelectClause() noexcept = default;
 
         /** @brief Default copy constructor. */
-        WithClause(const WithClause&) noexcept = default;
+        SelectClause(const SelectClause&) noexcept = default;
 
         /** @brief Default move constructor. */
-        WithClause(WithClause&&) noexcept = default;
+        SelectClause(SelectClause&&) noexcept = default;
 
         /** @brief Destructor. */
-        inline virtual ~WithClause() = default;
+        inline virtual ~SelectClause() = default;
     };
 
 
     //=======================================================================
+    using SelectAllStr = STR<'S', 'E', 'L', 'E', 'C', 'T', ' ', 'A', 'L', 'L', 0>;
+
     /** @brief The class of SQL WITH clauses as included in SQL statements. */
-    class WithRecursiveClause : public osql::clauses::Clause<STR<'W', 'I', 'T', 'H', ' ', 'R', 'E', 'C', 'U', 'R', 'S', 'I', 'V', 'E', 0>>
+    class SelectAllClause : public osql::clauses::Clause<SelectAllStr>
     {
     public:
         //---   Wrappers   --------------------------------------------------
-        using MyBaseClass = osql::clauses::Clause<STR<'W', 'I', 'T', 'H', ' ', 'R', 'E', 'C', 'U', 'R', 'S', 'I', 'V', 'E', 0>>;
+        using MyBaseClass = osql::clauses::Clause<SelectAllStr>;
 
 
         //---   Constructors / Destructor   ---------------------------------
         /** @brief Value constructor. */
-        inline WithRecursiveClause(const std::string& common_table_expressions_text) noexcept
-            : MyBaseClass(common_table_expressions_text)
+        inline SelectAllClause(const std::string& select_text) noexcept
+            : MyBaseClass(select_text)
         {}
 
         /** @brief Empty constructor. */
-        inline WithRecursiveClause() noexcept = default;
+        inline SelectAllClause() noexcept = default;
 
         /** @brief Default copy constructor. */
-        WithRecursiveClause(const WithRecursiveClause&) noexcept = default;
+        SelectAllClause(const SelectAllClause&) noexcept = default;
 
         /** @brief Default move constructor. */
-        WithRecursiveClause(WithRecursiveClause&&) noexcept = default;
+        SelectAllClause(SelectAllClause&&) noexcept = default;
 
         /** @brief Destructor. */
-        inline virtual ~WithRecursiveClause() = default;
+        inline virtual ~SelectAllClause() = default;
+    };
+
+
+    //=======================================================================
+    using SelectDistinctStr = STR<'S', 'E', 'L', 'E', 'C', 'T', ' ', 'D', 'I', 'S', 'T', 'I', 'N', 'C', 'T', 0>;
+
+    /** @brief The class of SQL WITH clauses as included in SQL statements. */
+    class SelectDistinctClause : public osql::clauses::Clause<SelectDistinctStr>
+    {
+    public:
+        //---   Wrappers   --------------------------------------------------
+        using MyBaseClass = osql::clauses::Clause<SelectDistinctStr>;
+
+
+        //---   Constructors / Destructor   ---------------------------------
+        /** @brief Value constructor. */
+        inline SelectDistinctClause(const std::string& select_text) noexcept
+            : MyBaseClass(select_text)
+        {}
+
+        /** @brief Empty constructor. */
+        inline SelectDistinctClause() noexcept = default;
+
+        /** @brief Default copy constructor. */
+        SelectDistinctClause(const SelectDistinctClause&) noexcept = default;
+
+        /** @brief Default move constructor. */
+        SelectDistinctClause(SelectDistinctClause&&) noexcept = default;
+
+        /** @brief Destructor. */
+        inline virtual ~SelectDistinctClause() = default;
     };
 
 }

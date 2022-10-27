@@ -31,8 +31,10 @@ import osql.dbconnection;
 using namespace osql::dbconnection;
 
 import osql.clauses;
+import osql.clauses.select_clauses;
+import osql.clauses.with_clauses;
 
-osql::clauses::WithClause clause;
+osql::clauses::SelectDistinctClause clause;
 
 
 int main()
@@ -48,5 +50,5 @@ int main()
     osql::clauses::WithRecursiveClause wr_clause("test text");
     std::cout << "Recursive With Clause content: " << wr_clause.get_text() << std::endl;
 
-    std::cout << "Empty With Clause content: " << clause.get_text() << std::endl;
+    std::cout << "Empty Select Distinct Clause content: " << clause.get_text() << std::endl;
 }

@@ -39,6 +39,12 @@
     <ClCompile Include="osql\clauses\with_clause.ixx">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="osql\clauses\clause.ixx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="osql\clauses\select_clause.ixx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Source.def">
