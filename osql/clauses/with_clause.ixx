@@ -38,69 +38,10 @@ import osql.clauses;
 //===========================================================================
 export namespace osql::clauses
 {
-    //=======================================================================
-    // This module defines:
-    //  - class WithClause (not recursive)
-    //  - class WithRecursiveClause (recursive)
-    //
-
-    //=======================================================================
-    using WithStr = STR<'W', 'I', 'T', 'H', 0>;
+    /** @brief The class of SQL WITH clauses as included in SQL statements. */
+    using WithClause = osql::clauses::Clause <  STR<'W', 'I', 'T', 'H', 0> >;
 
     /** @brief The class of SQL WITH clauses as included in SQL statements. */
-    class WithClause : public Clause<WithStr>
-    {
-    public:
-        //---   Wrappers   --------------------------------------------------
-        using MyBaseClass = osql::clauses::Clause<WithStr>;
-
-
-        //---   Constructors / Destructor   ---------------------------------
-        /** @brief Value constructor. */
-        inline WithClause(const std::string& common_table_expressions_text) noexcept
-            : MyBaseClass(common_table_expressions_text)
-        {}
-
-        /** @brief Default empty constructor. */
-        WithClause() noexcept = default;
-
-        /** @brief Default copy constructor. */
-        WithClause(const WithClause&) noexcept = default;
-
-        /** @brief Default move constructor. */
-        WithClause(WithClause&&) noexcept = default;
-
-        /** @brief Destructor. */
-        inline virtual ~WithClause() = default;
-    };
-
-
-    //=======================================================================
-    /** @brief The class of SQL WITH clauses as included in SQL statements. */
-    class WithRecursiveClause : public osql::clauses::Clause<STR<'W', 'I', 'T', 'H', ' ', 'R', 'E', 'C', 'U', 'R', 'S', 'I', 'V', 'E', 0>>
-    {
-    public:
-        //---   Wrappers   --------------------------------------------------
-        using MyBaseClass = osql::clauses::Clause<STR<'W', 'I', 'T', 'H', ' ', 'R', 'E', 'C', 'U', 'R', 'S', 'I', 'V', 'E', 0>>;
-
-
-        //---   Constructors / Destructor   ---------------------------------
-        /** @brief Value constructor. */
-        inline WithRecursiveClause(const std::string& common_table_expressions_text) noexcept
-            : MyBaseClass(common_table_expressions_text)
-        {}
-
-        /** @brief Empty constructor. */
-        inline WithRecursiveClause() noexcept = default;
-
-        /** @brief Default copy constructor. */
-        WithRecursiveClause(const WithRecursiveClause&) noexcept = default;
-
-        /** @brief Default move constructor. */
-        WithRecursiveClause(WithRecursiveClause&&) noexcept = default;
-
-        /** @brief Destructor. */
-        inline virtual ~WithRecursiveClause() = default;
-    };
+    using WithRecursiveClause = osql::clauses::Clause< STR<'W', 'I', 'T', 'H', ' ', 'R', 'E', 'C', 'U', 'R', 'S', 'I', 'V', 'E', 0> >;
 
 }

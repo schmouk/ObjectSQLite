@@ -39,102 +39,13 @@ import osql.clauses;
 export namespace osql::clauses
 {
     //=======================================================================
-    // This module defines:
-    //  - class SelectClause
-    //  - class SelectAllClause
-    //  - class SelectDistinctClause
-    //
-
-    //=======================================================================
-    using SelectStr = STR<'S', 'E', 'L', 'E', 'C', 'T', 0>;
-
     /** @brief The class of SQL SELECT clauses as included in SQL statements. */
-    class SelectClause : public osql::clauses::Clause<SelectStr>
-    {
-    public:
-        //---   Wrappers   --------------------------------------------------
-        using MyBaseClass = osql::clauses::Clause<SelectStr>;
-
-
-        //---   Constructors / Destructor   ---------------------------------
-        /** @brief Value constructor. */
-        inline SelectClause(const std::string& select_text) noexcept
-            : MyBaseClass(select_text)
-        {}
-
-        /** @brief Default empty constructor. */
-        SelectClause() noexcept = default;
-
-        /** @brief Default copy constructor. */
-        SelectClause(const SelectClause&) noexcept = default;
-
-        /** @brief Default move constructor. */
-        SelectClause(SelectClause&&) noexcept = default;
-
-        /** @brief Destructor. */
-        inline virtual ~SelectClause() = default;
-    };
-
-
-    //=======================================================================
-    using SelectAllStr = STR<'S', 'E', 'L', 'E', 'C', 'T', ' ', 'A', 'L', 'L', 0>;
+    using SelectClause = osql::clauses::Clause< STR<'S', 'E', 'L', 'E', 'C', 'T', 0> >;
+   
+    /** @brief The class of SQL WITH clauses as included in SQL statements. */
+    using SelectAllClause = osql::clauses::Clause< STR<'S', 'E', 'L', 'E', 'C', 'T', ' ', 'A', 'L', 'L', 0> >;
 
     /** @brief The class of SQL WITH clauses as included in SQL statements. */
-    class SelectAllClause : public osql::clauses::Clause<SelectAllStr>
-    {
-    public:
-        //---   Wrappers   --------------------------------------------------
-        using MyBaseClass = osql::clauses::Clause<SelectAllStr>;
-
-
-        //---   Constructors / Destructor   ---------------------------------
-        /** @brief Value constructor. */
-        inline SelectAllClause(const std::string& select_text) noexcept
-            : MyBaseClass(select_text)
-        {}
-
-        /** @brief Empty constructor. */
-        inline SelectAllClause() noexcept = default;
-
-        /** @brief Default copy constructor. */
-        SelectAllClause(const SelectAllClause&) noexcept = default;
-
-        /** @brief Default move constructor. */
-        SelectAllClause(SelectAllClause&&) noexcept = default;
-
-        /** @brief Destructor. */
-        inline virtual ~SelectAllClause() = default;
-    };
-
-
-    //=======================================================================
-    using SelectDistinctStr = STR<'S', 'E', 'L', 'E', 'C', 'T', ' ', 'D', 'I', 'S', 'T', 'I', 'N', 'C', 'T', 0>;
-
-    /** @brief The class of SQL WITH clauses as included in SQL statements. */
-    class SelectDistinctClause : public osql::clauses::Clause<SelectDistinctStr>
-    {
-    public:
-        //---   Wrappers   --------------------------------------------------
-        using MyBaseClass = osql::clauses::Clause<SelectDistinctStr>;
-
-
-        //---   Constructors / Destructor   ---------------------------------
-        /** @brief Value constructor. */
-        inline SelectDistinctClause(const std::string& select_text) noexcept
-            : MyBaseClass(select_text)
-        {}
-
-        /** @brief Empty constructor. */
-        inline SelectDistinctClause() noexcept = default;
-
-        /** @brief Default copy constructor. */
-        SelectDistinctClause(const SelectDistinctClause&) noexcept = default;
-
-        /** @brief Default move constructor. */
-        SelectDistinctClause(SelectDistinctClause&&) noexcept = default;
-
-        /** @brief Destructor. */
-        inline virtual ~SelectDistinctClause() = default;
-    };
-
+    using SelectDistinctClause = osql::clauses::Clause< STR<'S', 'E', 'L', 'E', 'C', 'T', ' ', 'D', 'I', 'S', 'T', 'I', 'N', 'C', 'T', 0> >
+        ;
 }
