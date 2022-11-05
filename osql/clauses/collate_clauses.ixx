@@ -30,7 +30,7 @@ module;
 #include "osql/clauses/clause.h"
 
 
-export module osql.clauses.with_clauses;
+export module osql.clauses.collate_clauses;
 
 import osql.clauses;
 
@@ -38,10 +38,13 @@ import osql.clauses;
 //===========================================================================
 export namespace osql::clauses
 {
-    /** @brief The class of SQL WITH clauses as included in SQL statements. */
-    using WithClause = osql::clauses::Clause< STR<'W', 'I', 'T', 'H', 0> >;
-
-    /** @brief The class of SQL WITH clauses as included in SQL statements. */
-    using WithRecursiveClause = osql::clauses::Clause< STR<'W', 'I', 'T', 'H', ' ', 'R', 'E', 'C', 'U', 'R', 'S', 'I', 'V', 'E', 0> >;
+    //=======================================================================
+    /** @brief The class of SQL COLLATE clauses as included in SQL statements.
+    *
+    *   @see https://www.sqlshack.com/the-collate-sql-command-overview/ or
+    *   https://dev.mysql.com/doc/refman/8.0/en/charset-collate.html to get
+    *   explanations about the charsets collation concept in SQL.
+    */
+    using CollateClause = Clause< STR<'C', 'O', 'L', 'L', 'A', 'T', 'E', 0> >;
 
 }

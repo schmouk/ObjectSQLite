@@ -43,20 +43,29 @@ namespace osql::clauses
     template<char C, char... Cs>
     struct STR
     {
-        static std::string get_text()
+        [[nodiscard]] static std::string get_text()
         {
             return (STRCHAR<C>() + STR<Cs...>::get_text());
         }
     };
 
+
     /** @brief Specialization of STR with sole null char. */
     template<>
     struct STR<'\0'>
     {
-        static std::string get_text()
+        [[nodiscard]] static std::string get_text()
         {
             return "";
         }
     };
 
+}
+
+
+/** @brief Evaluates the text associated with an osql clause. */
+template<typename ClauseT>
+[[nodiscard]] inline const std::string T(const ClauseT& clause) noexcept
+{
+    return clause.get_text();
 }

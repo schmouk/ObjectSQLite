@@ -23,9 +23,10 @@ OUT  OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-//===========================================================================
-// Forward declarations over whole library ObjectSQLite
- 
+//===   Includes   ==========================================================
+
+
+//===   Forward declarations over whole library ObjectSQLite   ============== 
 //---   osql::clauses   -----------------------------------------------------
 namespace osql::clauses {
     class Clause;

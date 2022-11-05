@@ -1,4 +1,3 @@
-#pragma once
 /*
 MIT License
 
@@ -23,9 +22,9 @@ OUT  OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-//===========================================================================module;
-#include <format>
-#include <sstream>
+//===========================================================================
+module;
+
 #include <string>
 
 #include "osql/clauses/clause.h"
@@ -64,20 +63,20 @@ export namespace osql::clauses
 
         //---   Operators   -------------------------------------------------
         /** @brief Default copy assignment. */
-        Clause& operator= (const Clause&) noexcept = default;
+        [[nodiscard]] Clause& operator= (const Clause&) noexcept = default;
 
         /** @brief Default move assignment. */
-        Clause& operator= (Clause&&) noexcept = default;
+        [[nodiscard]] Clause& operator= (Clause&&) noexcept = default;
 
         /** @brief Text assignment. */
-        inline Clause& operator= (const std::string& core_text) noexcept
+        [[nodiscard]] inline Clause& operator= (const std::string& core_text) noexcept
         {
             set_text(core_text);
             return *this;
         }
 
         /** @brief Unmutable std::string casting operator. */
-        inline operator const std::string() const noexcept
+        [[nodiscard]] inline operator const std::string() const noexcept
         {
             return get_text();
         }
@@ -85,17 +84,17 @@ export namespace osql::clauses
 
         //---   Operations   ------------------------------------------------
         /** @brief Gets the full text of this clause. */
-        const std::string get_text() const noexcept
+        [[nodiscard]] const std::string get_text() const noexcept
         {
-            std::ostringstream os;
+            std::string s{};
 
             if (m_prefix != "")
-                os << m_prefix << ' ';
-            os << _text;
+                s += m_prefix + ' ';
+            s += _text;
             if (m_suffix != "")
-                os << ' ' << m_suffix;
+                s += ' ' + m_suffix;
 
-            return os.str();
+            return s;
         }
 
         /** @brief Sets the text associated with this clause. */
@@ -111,8 +110,8 @@ export namespace osql::clauses
 
 
     private:
-        static inline std::string m_prefix = PREFIX::get_text();
-        static inline std::string m_suffix = SUFFIX::get_text();
+        static inline std::string m_prefix = PREFIX::get_text();  // the prefix text associated with this clause type
+        static inline std::string m_suffix = SUFFIX::get_text();  // the suffix text associated with this clause type
     };
 
 }

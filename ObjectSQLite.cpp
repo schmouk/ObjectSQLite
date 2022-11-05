@@ -27,10 +27,13 @@ SOFTWARE.
 
 #include <sqlite3.h>
 
+#include "osql/clauses/clause.h"
+
 import osql.dbconnection;
 using namespace osql::dbconnection;
 
 import osql.clauses;
+import osql.clauses.collate_clauses;
 import osql.clauses.select_clauses;
 import osql.clauses.with_clauses;
 
@@ -48,7 +51,9 @@ int main()
     std::cout << "creation of memory test db, error result = " << test_mem_db.get_error_code() << ", " << test_mem_db.get_error_msg() << std::endl;
 
     osql::clauses::WithRecursiveClause wr_clause("test text");
-    std::cout << "Recursive With Clause content: " << wr_clause.get_text() << std::endl;
+    std::cout << "Recursive With Clause content: " << T(wr_clause) << std::endl;
 
-    std::cout << "Empty Select Distinct Clause content: " << clause.get_text() << std::endl;
+    std::cout << "Empty Select Distinct Clause content: " << T(clause) << std::endl;
+
+    std::cout << "Collate Clause: " << T(osql::clauses::CollateClause("Latin1_General_CS_AS_KS_WS")) << std::endl;
 }
