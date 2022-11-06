@@ -63,9 +63,17 @@ namespace osql::clauses
 }
 
 
-/** @brief Evaluates the text associated with an osql clause. */
+/** @brief Evaluates the text associated with an osql clause (1/2). */
 template<typename ClauseT>
 [[nodiscard]] inline std::string T(const ClauseT& clause) noexcept
 {
     return clause.get_text();
+}
+
+
+/** @brief Evaluates the text associated with an osql clause (2/2). */
+template<typename ClauseT>
+[[nodiscard]] inline std::string T() noexcept
+{
+    return ClauseT().get_text();
 }

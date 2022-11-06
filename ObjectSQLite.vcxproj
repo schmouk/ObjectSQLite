@@ -162,6 +162,10 @@
     <ClCompile Include="ObjectSQLite.cpp" />
     <ClCompile Include="osql\clauses\clause.ixx" />
     <ClCompile Include="osql\clauses\collate_clause.ixx" />
+    <ClCompile Include="osql\clauses\conflict_clause.ixx" />
+    <ClCompile Include="osql\clauses\foreign_key_clause.ixx" />
+    <ClCompile Include="osql\clauses\match_clause.ixx" />
+    <ClCompile Include="osql\clauses\on_delete_update_clause.ixx" />
     <ClCompile Include="osql\clauses\ordering_clause.ixx" />
     <ClCompile Include="osql\clauses\ordering_term.ixx" />
     <ClCompile Include="osql\clauses\select_clause.ixx" />
