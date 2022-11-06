@@ -114,4 +114,10 @@ export namespace osql::clauses
         static inline std::string m_suffix = SUFFIX::get_text();  // the suffix text associated with this clause type
     };
 
+
+    //=======================================================================
+    /** @brief The class for SQL clauses with no prefix, as included in SQL statements. */
+    template<typename SUFFIX = STR<'\0'>>
+    using NoPrefixClause = Clause< STR<'\0'>, SUFFIX >;
+
 }

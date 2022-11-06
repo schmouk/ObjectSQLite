@@ -41,9 +41,11 @@ export namespace osql::clauses
     //=======================================================================
     /** @brief The class of SQL COLLATE clauses as included in SQL statements.
     *
-    *   @see https://www.sqlshack.com/the-collate-sql-command-overview/ or
+    *   @see https://www.sqlshack.com/the-collate-sql-command-overview/  or
     *   https://dev.mysql.com/doc/refman/8.0/en/charset-collate.html to get
-    *   explanations about the charsets collation concept in SQL.
+    *   explanations about the charsets collation  concept  in  SQL.  These
+    *   charsets  names  are  to  be used as the 'core_expr' of the collate 
+    *   clause at its creation time.
     */
     using CollateClause = Clause< STR<'C', 'O', 'L', 'L', 'A', 'T', 'E', 0> >;
 

@@ -34,6 +34,8 @@ using namespace osql::dbconnection;
 
 import osql.clauses;
 import osql.clauses.collate_clauses;
+import osql.clauses.ordering_clauses;
+import osql.clauses.ordering_terms;
 import osql.clauses.select_clauses;
 import osql.clauses.with_clauses;
 
@@ -56,4 +58,17 @@ int main()
     std::cout << "Empty Select Distinct Clause content: " << T(clause) << std::endl;
 
     std::cout << "Collate Clause: " << T(osql::clauses::CollateClause("Latin1_General_CS_AS_KS_WS")) << std::endl;
+
+    std::cout << "Ordering Clause: " << T(osql::clauses::OrderingClause(osql::clauses::AscOrderingTerm("SQL-expression-1",
+                                                                                                       osql::clauses::CollateClause("Latin1_General_CS_AS_KS_WS"),
+                                                                                                       true),
+                                                                        osql::clauses::DescOrderingTerm("SQL-expression-2", false),
+                                                                        osql::clauses::NullsFirstOrderingTerm("SQL-expression-3",
+                                                                                                              osql::clauses::CollateClause("Latin1_General_CS_AS_KS_WS"),
+                                                                                                              false),
+                                                                        osql::clauses::OrderingTerm("SQL-expression-4",
+                                                                                                    osql::clauses::CollateClause("Latin1_General_CS_AS_KS_WS"),
+                                                                                                    true, false)))
+
+        << std::endl;
 }

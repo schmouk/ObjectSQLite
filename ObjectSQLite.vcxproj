@@ -161,8 +161,9 @@
   <ItemGroup>
     <ClCompile Include="ObjectSQLite.cpp" />
     <ClCompile Include="osql\clauses\clause.ixx" />
-    <ClCompile Include="osql\clauses\collate_clauses.ixx" />
+    <ClCompile Include="osql\clauses\collate_clause.ixx" />
     <ClCompile Include="osql\clauses\ordering_clause.ixx" />
+    <ClCompile Include="osql\clauses\ordering_term.ixx" />
     <ClCompile Include="osql\clauses\select_clause.ixx" />
     <ClCompile Include="osql\clauses\with_clause.ixx" />
     <ClCompile Include="osql\common\object_base.ixx" />
