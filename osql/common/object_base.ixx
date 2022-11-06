@@ -29,7 +29,7 @@ module;
 #include "sqlite3.h"
 
 
-export module osql.common;
+export module osql.common.object_base;
 
 
 //===========================================================================

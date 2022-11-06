@@ -35,7 +35,7 @@ module;
 
 export module osql.dbconnection;
 
-import osql.common;
+import osql.common.object_base;
 
 
 //===========================================================================

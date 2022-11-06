@@ -29,9 +29,9 @@ module;
 #include "sqlite3.h"
 
 
-export module osql.statements;
+export module osql.statements.statements;
 
-import osql.common;
+import osql.common.object_base;
 import osql.dbconnection;
 
 

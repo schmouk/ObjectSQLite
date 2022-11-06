@@ -81,4 +81,9 @@ int main()
 
     osql::columns::PrimaryKeyClause<osql::clauses::ConflictIgnoreClause>  prim_key_clause2 = prim_key_clause;
     std::cout << "Column Primary Key Clause: " << osql::clauses::T(prim_key_clause2) << std::endl;
+
+
+    osql::columns::PrimaryKeyDescClause<osql::clauses::ConflictAbortClause>  prim_key_clause3;
+    std::cout << "Column Primary Key Clause: " << osql::clauses::T(prim_key_clause3) << std::endl;
+
 }

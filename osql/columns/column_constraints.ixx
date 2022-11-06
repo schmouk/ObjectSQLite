@@ -44,14 +44,40 @@ export namespace osql::columns
     // Notice: these constraints are used with columns definitions.
     //
 
+    //===   NOT NULL   ======================================================
+    using NotNullStr = osql::clauses::STR<'N', 'O', 'T', ' ', 'N', 'U', 'L', 'L', 0>;
+
+    /** @brief The class of Not Null Clauses as included in columns definitions. */
+    template<typename ConflictClauseT>
+    class NotNullClause : public osql::clauses::Clause< NotNullStr >
+    {
+    public:
+        //---   Wrappers   --------------------------------------------------
+        using MyBaseClass = osql::clauses::Clause< NotNullStr >;  //!< wrapper to the base class
+
+        //---   Constructors / Destructor   ---------------------------------
+        /** @brief Value constructor. */
+        NotNullClause() noexcept
+            : MyBaseClass(osql::clauses::T<ConflictClauseT>())
+        {}
+    };
+
+
     //===   PRIMARY KEY   ===================================================
     /** @brief the STR value for PRIMARY KEY. */
     using PrimaryKeyStr = osql::clauses::STR< 'P', 'R', 'I', 'M', 'A', 'R', 'Y', ' ', 'K', 'E', 'Y', 0 >;
 
+    /** @brief the STR value for PRIMARY KEY ASC. */
+    using PrimaryKeyAscStr = osql::clauses::STR< 'P', 'R', 'I', 'M', 'A', 'R', 'Y', ' ', 'K', 'E', 'Y',' ', 'A', 'S', 'C', 0 >;
+
+    /** @brief the STR value for PRIMARY KEY DESC. */
+    using PrimaryKeyDescStr = osql::clauses::STR< 'P', 'R', 'I', 'M', 'A', 'R', 'Y', ' ', 'K', 'E', 'Y', ' ', 'D', 'E', 'S', 'C', 0 >;
+
+
     /** @brief The class of Primary Key Clauses as included in columns definitions.
     *
-    * CAUTION: Primary Key clauses have for columns definitions are  not  the 
-    *          same as Primary Key clauses for tables definitions. Always use
+    * CAUTION: Primary Key clauses for columns definitions are not  the  same
+    *          as Primary Key clauses for tables definitions.  Always use the
     *          the namespace as a prefix when instantiating PrimaryKeyClause.
     */
     template<typename ConflictClauseT>
@@ -61,10 +87,51 @@ export namespace osql::columns
         //---   Wrappers   --------------------------------------------------
         using MyBaseClass = osql::clauses::Clause< PrimaryKeyStr >;  //!< wrapper to the base class
 
-
         //---   Constructors / Destructor   ---------------------------------
         /** @brief Value constructor. */
         PrimaryKeyClause(const bool auto_incr = false) noexcept
+            : MyBaseClass(osql::clauses::T<ConflictClauseT>() + (auto_incr ? " AUTOINCREMENT" : ""))
+        {}
+    };
+
+
+    /** @brief The class of Primary Key Clauses with specifier ASC as included in columns definitions.
+    *
+    * CAUTION: Primary Key clauses for columns definitions are not  the  same
+    *          as Primary Key clauses for tables definitions.  Always use the
+    *          the namespace as a prefix when instantiating PrimaryKeyClause.
+    */
+    template<typename ConflictClauseT>
+    class PrimaryKeyAscClause : public osql::clauses::Clause< PrimaryKeyAscStr >
+    {
+    public:
+        //---   Wrappers   --------------------------------------------------
+        using MyBaseClass = osql::clauses::Clause< PrimaryKeyAscStr >;  //!< wrapper to the base class
+
+        //---   Constructors / Destructor   ---------------------------------
+        /** @brief Value constructor. */
+        PrimaryKeyAscClause(const bool auto_incr = false) noexcept
+            : MyBaseClass(osql::clauses::T<ConflictClauseT>() + (auto_incr ? " AUTOINCREMENT" : ""))
+        {}
+    };
+
+
+    /** @brief The class of Primary Key Clauses with specifier DESC as included in columns definitions.
+    *
+    * CAUTION: Primary Key clauses for columns definitions are not  the  same
+    *          as Primary Key clauses for tables definitions.  Always use the
+    *          the namespace as a prefix when instantiating PrimaryKeyClause.
+    */
+    template<typename ConflictClauseT>
+    class PrimaryKeyDescClause : public osql::clauses::Clause< PrimaryKeyDescStr >
+    {
+    public:
+        //---   Wrappers   --------------------------------------------------
+        using MyBaseClass = osql::clauses::Clause< PrimaryKeyDescStr >;  //!< wrapper to the base class
+
+        //---   Constructors / Destructor   ---------------------------------
+        /** @brief Value constructor. */
+        PrimaryKeyDescClause(const bool auto_incr = false) noexcept
             : MyBaseClass(osql::clauses::T<ConflictClauseT>() + (auto_incr ? " AUTOINCREMENT" : ""))
         {}
     };

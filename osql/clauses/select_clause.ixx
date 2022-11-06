@@ -46,6 +46,5 @@ export namespace osql::clauses
     using SelectAllClause = osql::clauses::Clause< osql::clauses::STR<'S', 'E', 'L', 'E', 'C', 'T', ' ', 'A', 'L', 'L', 0> >;
 
     /** @brief The class of SQL WITH clauses as included in SQL statements. */
-    using SelectDistinctClause = osql::clauses::Clause< osql::clauses::STR<'S', 'E', 'L', 'E', 'C', 'T', ' ', 'D', 'I', 'S', 'T', 'I', 'N', 'C', 'T', 0> >
-        ;
+    using SelectDistinctClause = osql::clauses::Clause< osql::clauses::STR<'S', 'E', 'L', 'E', 'C', 'T', ' ', 'D', 'I', 'S', 'T', 'I', 'N', 'C', 'T', 0> >;
 }

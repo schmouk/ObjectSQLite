@@ -29,7 +29,7 @@ module;
 #include "sqlite3.h"
 
 
-module osql.statements;
+module osql.statements.statements;
 
 import osql.dbconnection;
 
