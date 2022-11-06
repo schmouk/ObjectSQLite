@@ -171,14 +171,21 @@
     <ClCompile Include="osql\dbconnection\dbconnection.ixx" />
     <ClCompile Include="osql\statements\statement.cpp" />
     <ClCompile Include="osql\statements\statement.ixx" />
+    <ClCompile Include="osql\tables\table_base.cpp" />
     <ClCompile Include="osql\tables\table_base.ixx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Source.def" />
+    <None Include="sqlite3.def" />
+    <None Include="sqlite3.dll" />
+    <None Include="sqlite3.exp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="osql\clauses\clause.h" />
     <ClInclude Include="osql\osql.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="sqlite3.lib" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
