@@ -43,10 +43,10 @@ namespace osql::clauses
 
     //=======================================================================
     /** @brief STR definition for DEFERRABLE clauses. */
-    using DeferrableStr = STR< 'D', 'E', 'F', 'E', 'R', 'R', 'A', 'B', 'L', 'E', O >;
+    using DeferrableStr = STR< 'D', 'E', 'F', 'E', 'R', 'R', 'A', 'B', 'L', 'E', 0 >;
 
     /** @brief STR definition for NOT DEFERRABLE clauses. */
-    using NotDeferrableStr = STR< 'N', 'O', 'T', ' ', 'D', 'E', 'F', 'E', 'R', 'R', 'A', 'B', 'L', 'E', O >;
+    using NotDeferrableStr = STR< 'N', 'O', 'T', ' ', 'D', 'E', 'F', 'E', 'R', 'R', 'A', 'B', 'L', 'E', 0 >;
 
     /** @brief STR definition for INITIALLY DEFERRED spec. */
     using InitiallyDeferred = STR< 'I', 'N', 'I', 'T', 'I', 'A', 'L', 'L', 'Y', ' ', 'D', 'E', 'F', 'E', 'R', 'R', 'E', 'D', 0 >;
@@ -71,7 +71,7 @@ namespace osql::clauses
     export using DeferrableDeferredClause = DeferrableBaseClause< DeferrableStr, InitiallyDeferred >;
 
     /** @brief The base class for INITIALLY IMMEDIATE DEFERRABLE clauses. */
-    export using DeferrableDeferredClause = DeferrableBaseClause< DeferrableStr, InitiallyImmediate >;
+    export using DeferrableImmediateClause = DeferrableBaseClause< DeferrableStr, InitiallyImmediate >;
 
 
     //=======================================================================
@@ -79,6 +79,6 @@ namespace osql::clauses
     export using NotDeferrableDeferredClause = DeferrableBaseClause< NotDeferrableStr, InitiallyDeferred >;
 
     /** @brief The base class for INITIALLY IMMEDIATE NOT DEFERRABLE clauses. */
-    export using NotDeferrableDeferredClause = DeferrableBaseClause< NotDeferrableStr, InitiallyImmediate >;
+    export using NotDeferrableImmediateClause = DeferrableBaseClause< NotDeferrableStr, InitiallyImmediate >;
 
 }

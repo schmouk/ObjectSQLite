@@ -25,12 +25,13 @@ SOFTWARE.
 //===========================================================================
 module;
 
+#include <format>
 #include <string>
 
 #include "osql/clauses/clause.h"
 
 
-export module osql.clauses.match_clauses;
+export module osql.clauses.type_name_clauses;
 
 import osql.clauses;
 
@@ -39,43 +40,62 @@ import osql.clauses;
 export namespace osql::clauses
 {
     //
-    // Notice: these clauses are used with columns and with tables constraints.
+    // Notice: these clauses are used with columns definitions.
     //
 
     //=======================================================================
-    /** @brief The class of Match Clauses as included in columns and tables constraints. */
-    class MatchClause : public Clause< STR<'M', 'A', 'T', 'C', 'H', 0> >
+    /** @brief The class of Type Name Clauses as included in columns and tables constraints. */
+    class TypeNameClause : public NoPrefixClause<>
     {
     public:
         //---   Wrappers   --------------------------------------------------
-        using MyBaseClass = Clause< STR<'M', 'A', 'T', 'C', 'H', 0> >;  //!< wrapper to the base class
+        using MyBaseClass = NoPrefixClause<>;  //!< wrapper to the base class
 
 
         //---   Constructors / Destructor   ---------------------------------
-        /** @brief Value constructor. */
-        inline MatchClause(const std::string& name) noexcept
+        /** @brief Value constructor (with sole name of type).
+        *
+        * Notice: The name definition may embed spaces and tabs characters.
+        */
+        inline TypeNameClause(const std::string& name) noexcept
             : MyBaseClass(name)
         {}
 
+        /** @brief Value constructor (with type name and one signed integer).
+        *
+        * Notice: The name definition may embed spaces and tabs characters.
+        */
+        inline TypeNameClause(const std::string& name, const int32_t num) noexcept
+            : MyBaseClass(std::format("{:s}({:d})", name, num))
+        {}
+
+        /** @brief Value constructor (with type name and two signed integers).
+        *
+        * Notice: The name definition may embed spaces and tabs characters.
+        */
+        inline TypeNameClause(const std::string& name, const int32_t min_num, const int32_t max_num) noexcept
+            : MyBaseClass(std::format("{:s}({:d}, {:d})", name, min_num, max_num))
+        {}
+
         /** @brief Deleted empty/default constructor. */
-        MatchClause() noexcept = delete;
+        TypeNameClause() noexcept = delete;
 
         /** @brief Default copy constructor. */
-        MatchClause(const MatchClause&) noexcept = default;
+        TypeNameClause(const TypeNameClause&) noexcept = default;
 
         /** @brief Default move constructor. */
-        MatchClause(MatchClause&&) noexcept = default;
+        TypeNameClause(TypeNameClause&&) noexcept = default;
 
         /** @brief Default destructor. */
-        virtual ~MatchClause() noexcept = default;
+        virtual ~TypeNameClause() noexcept = default;
 
 
         //---   Assignments   -----------------------------------------------
         /** @brief Default copy assignment. */
-        [[nodiscard]] MatchClause& operator= (const MatchClause&) noexcept = default;
+        [[nodiscard]] TypeNameClause& operator= (const TypeNameClause&) noexcept = default;
 
         /** @brief Default move assignment. */
-        [[nodiscard]] MatchClause& operator= (MatchClause&&) noexcept = default;
+        [[nodiscard]] TypeNameClause& operator= (TypeNameClause&&) noexcept = default;
     };
 
 }

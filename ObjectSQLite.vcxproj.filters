@@ -66,6 +66,12 @@
     <ClCompile Include="osql\clauses\match_clause.ixx">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="osql\clauses\deferrable_clause.ixx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="osql\clauses\type_name_clause.ixx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Source.def">
