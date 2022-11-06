@@ -44,11 +44,11 @@ export namespace osql::clauses
 
     //=======================================================================
     /** @brief The class of Match Clauses as included in columns and tables constraints. */
-    class MatchClause : public Clause< STR<'M', 'A', 'T', 'C', 'H', 0> >
+    class MatchClause : public osql::clauses::Clause< osql::clauses::STR<'M', 'A', 'T', 'C', 'H', 0> >
     {
     public:
         //---   Wrappers   --------------------------------------------------
-        using MyBaseClass = Clause< STR<'M', 'A', 'T', 'C', 'H', 0> >;  //!< wrapper to the base class
+        using MyBaseClass = osql::clauses::Clause< osql::clauses::STR<'M', 'A', 'T', 'C', 'H', 0> >;  //!< wrapper to the base class
 
 
         //---   Constructors / Destructor   ---------------------------------
@@ -59,23 +59,6 @@ export namespace osql::clauses
 
         /** @brief Deleted empty/default constructor. */
         MatchClause() noexcept = delete;
-
-        /** @brief Default copy constructor. */
-        MatchClause(const MatchClause&) noexcept = default;
-
-        /** @brief Default move constructor. */
-        MatchClause(MatchClause&&) noexcept = default;
-
-        /** @brief Default destructor. */
-        virtual ~MatchClause() noexcept = default;
-
-
-        //---   Assignments   -----------------------------------------------
-        /** @brief Default copy assignment. */
-        [[nodiscard]] MatchClause& operator= (const MatchClause&) noexcept = default;
-
-        /** @brief Default move assignment. */
-        [[nodiscard]] MatchClause& operator= (MatchClause&&) noexcept = default;
     };
 
 }

@@ -41,14 +41,8 @@ export namespace osql::clauses
     //
 
     //=======================================================================
-    /** @brief The base class of On-Delete / On-Update clauses. */
-    template<typename PrefixT, typename SuffixT>
-    using OnDeleteUpdateClause = Clause<PrefixT, SuffixT>;
-
-
-    //=======================================================================
     /** @brief The class of Foreign Key Clauses as included in columns and tables constraints. */
-    class ForeignKeyClause : public Clause< STR<'R', 'E', 'F', 'E', 'R', 'E', 'N', 'C', 'E', 'S', 0> >
+    class ForeignKeyClause : public osql::clauses::Clause< osql::clauses::STR<'R', 'E', 'F', 'E', 'R', 'E', 'N', 'C', 'E', 'S', 0> >
     {
     public:
 

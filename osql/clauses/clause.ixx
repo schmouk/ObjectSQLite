@@ -38,7 +38,7 @@ export namespace osql::clauses
 {
     //=======================================================================
     /** @brief The base class for SQL clauses as included in SQL statements. */
-    template<typename PREFIX, typename SUFFIX = STR<'\0'>>
+    template<typename PREFIX, typename SUFFIX = osql::clauses::STR<'\0'>>
     class Clause
     {
     public:
@@ -89,8 +89,9 @@ export namespace osql::clauses
             std::string s{};
 
             if (m_prefix != "")
-                s += m_prefix + ' ';
-            s += _text;
+                s += m_prefix;
+            if (_text != "")
+                s += ' ' + _text;
             if (m_suffix != "")
                 s += ' ' + m_suffix;
 
@@ -117,7 +118,7 @@ export namespace osql::clauses
 
     //=======================================================================
     /** @brief The class for SQL clauses with no prefix, as included in SQL statements. */
-    template<typename SUFFIX = STR<'\0'>>
-    using NoPrefixClause = Clause< STR<'\0'>, SUFFIX >;
+    template<typename SUFFIX = osql::clauses::STR<'\0'>>
+    using NoPrefixClause = Clause< osql::clauses::STR<'\0'>, SUFFIX >;
 
 }

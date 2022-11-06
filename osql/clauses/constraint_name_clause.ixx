@@ -1,4 +1,3 @@
-#pragma once
 /*
 MIT License
 
@@ -24,56 +23,42 @@ SOFTWARE.
 */
 
 //===========================================================================
-#include <sstream>
+module;
+
 #include <string>
+
+#include "osql/clauses/clause.h"
+
+
+export module osql.clauses.constraint_name_clauses;
+
+import osql.clauses;
 
 
 //===========================================================================
-namespace osql::clauses
+export namespace osql::clauses
 {
-    /** @brief Returns a string set with a single char. */
-    template<char C>
-    [[nodiscard]] constexpr std::string STRCHAR() noexcept
+    //
+    // Notice: these clauses are used with columns and with tables definitions.
+    //
+
+    //=======================================================================
+    /** @brief The class of Constraint Name Clauses as used in columns and tables constraints. */
+    class ConstraintNameClause : public osql::clauses::Clause< osql::clauses::STR<'C', 'O', 'N', 'S', 'T', 'R', 'A', 'I', 'N', 'T', 0> >
     {
-        return std::string(1, C);
+    public:
+        //---   Wrappers   --------------------------------------------------
+        using MyBaseClass = osql::clauses::Clause< osql::clauses::STR<'C', 'O', 'N', 'S', 'T', 'R', 'A', 'I', 'N', 'T', 0> >;  //!< wrapper to the base class
+
+
+        //---   Constructors / Destructor   ---------------------------------
+        /** @brief Value constructor. */
+        inline ConstraintNameClause(const std::string& name) noexcept
+            : MyBaseClass(name)
+        {}
+
+        /** @brief Deleted empty/default constructor. */
+        ConstraintNameClause() noexcept = delete;
     };
-
-
-    /** @brief Templatization of a sequence of chars as a string. */
-    template<char C, char... Cs>
-    struct STR
-    {
-        [[nodiscard]] static std::string get_text()
-        {
-            return (STRCHAR<C>() + STR<Cs...>::get_text());
-        }
-    };
-
-
-    /** @brief Specialization of STR with sole null char. */
-    template<>
-    struct STR<'\0'>
-    {
-        [[nodiscard]] static std::string get_text()
-        {
-            return "";
-        }
-    };
-
-
-    /** @brief Evaluates the text associated with an osql clause (1/2). */
-    template<typename ClauseT>
-    [[nodiscard]] inline std::string T(const ClauseT& clause) noexcept
-    {
-        return clause.get_text();
-    }
-
-
-    /** @brief Evaluates the text associated with an osql clause (2/2). */
-    template<typename ClauseT>
-    [[nodiscard]] inline std::string T() noexcept
-    {
-        return ClauseT().get_text();
-    }
 
 }

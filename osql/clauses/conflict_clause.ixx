@@ -34,7 +34,7 @@ import osql.clauses;
 
 
 //===========================================================================
-namespace osql::clauses
+export namespace osql::clauses
 {
     //
     // Notice: these clauses are used for columns constraints and for tables contraints.
@@ -42,30 +42,41 @@ namespace osql::clauses
     
     //=======================================================================
     /** @brief the templated string for the prefix of every conflict clauses. */
-    using OnConflictPrefixStr = STR< 'O', 'N', ' ', 'C', 'O', 'N', 'F', 'L', 'I', 'C', 'T', 0 >;
+    using OnConflictPrefixStr = osql::clauses::STR< 'O', 'N', ' ', 'C', 'O', 'N', 'F', 'L', 'I', 'C', 'T', 0 >;
+
+
+    //=======================================================================
+    /** @brief The base class for all constraint clauses.
+    *
+    * @sa ConflictAbortClause, ConflictFailClause, ConflictIgnoreClause,
+    *     ConflictReplaceClause, ConflictRollbackClause and NoConflictClause
+    *     which should be used instead.
+    */
+    template< typename PrefixT, typename SuffixT>
+    using ConflictBaseClause = osql::clauses::Clause< PrefixT, SuffixT >;
 
     //=======================================================================
     /** @brief The class of ABORT Conflict Clauses as included in SQL statements. */
-    export using ConflictAbortClause = Clause< OnConflictPrefixStr, STR<'A', 'B', 'O', 'R', 'T', 0> >;
+    using ConflictAbortClause = ConflictBaseClause< OnConflictPrefixStr, osql::clauses::STR<'A', 'B', 'O', 'R', 'T', 0> >;
 
     //=======================================================================
     /** @brief The class of FAIL Conflict Clauses as included in SQL statements. */
-    export using ConflictFailClause = Clause< OnConflictPrefixStr, STR<'F', 'A', 'I', 'L', 0> >;
+    using ConflictFailClause = ConflictBaseClause< OnConflictPrefixStr, osql::clauses::STR<'F', 'A', 'I', 'L', 0> >;
 
     //=======================================================================
     /** @brief The class of IGNORE Conflict Clauses as included in SQL statements. */
-    export using ConflictIgnoreClause = Clause< OnConflictPrefixStr, STR<'I', 'G', 'N', 'O', 'R', 'E', 0> >;
+    using ConflictIgnoreClause = ConflictBaseClause< OnConflictPrefixStr, osql::clauses::STR<'I', 'G', 'N', 'O', 'R', 'E', 0> >;
 
     //=======================================================================
     /** @brief The class of REPLACE Conflict Clauses as included in SQL statements. */
-    export using ConflictReplaceClause = Clause< OnConflictPrefixStr, STR<'R', 'E', 'P', 'L', 'A', 'C', 'E', 0> >;
+    using ConflictReplaceClause = ConflictBaseClause< OnConflictPrefixStr, osql::clauses::STR<'R', 'E', 'P', 'L', 'A', 'C', 'E', 0> >;
 
     //=======================================================================
     /** @brief The class of ROLLBACK Conflict Clauses as included in SQL statements. */
-    export using ConflictRollbackClause = Clause< OnConflictPrefixStr, STR<'R', 'O', 'L', 'L', 'B', 'A', 'C', 'K', 0> >;
+    using ConflictRollbackClause = ConflictBaseClause< OnConflictPrefixStr, osql::clauses::STR<'R', 'O', 'L', 'L', 'B', 'A', 'C', 'K', 0> >;
 
     //=======================================================================
     /** @brief The class of NO Conflict Clauses as included in SQL statements. */
-    export using NoConflictClause = Clause< STR<0>, STR<0> >;
+    using NoConflictClause = ConflictBaseClause< osql::clauses::STR<0>, osql::clauses::STR<0> >;
 
 }

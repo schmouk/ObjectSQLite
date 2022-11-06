@@ -41,16 +41,16 @@ import osql.clauses.ordering_terms;
 namespace osql::clauses
 {
     /** @brief The STR expression associated with ordering clauses - internal usage. */
-    using OrderingStr = STR< 'O', 'R', 'D', 'E', 'R', ' ', 'B', 'Y', 0 >;
+    using OrderingStr = osql::clauses::STR< 'O', 'R', 'D', 'E', 'R', ' ', 'B', 'Y', 0 >;
     
 
     //=======================================================================
     /** @brief The class of SQL ORDER BY clauses as included in SQL statements. */
-    export class OrderingClause : public Clause< OrderingStr >
+    export class OrderingClause : public osql::clauses::Clause< OrderingStr >
     {
     public:
         //---   Wrappers   --------------------------------------------------
-        using MyBaseClass = Clause< OrderingStr >;
+        using MyBaseClass = osql::clauses::Clause< OrderingStr >;
 
 
         //---   Constructors / Destructor   ---------------------------------
@@ -59,23 +59,6 @@ namespace osql::clauses
         OrderingClause(const OrderingTermsT&... ordering_terms) noexcept
             : MyBaseClass(get_terms(ordering_terms...))
         {}
-
-        /** @brief Default copy constructor. */
-        OrderingClause(const OrderingClause&) noexcept = default;
-
-        /** @brief Default move constructor. */
-        OrderingClause(OrderingClause&&) noexcept = default;
-
-        /** @brief Destructor. */
-        inline virtual ~OrderingClause() = default;
-
-
-        //---   Operators   -------------------------------------------------
-        /** @brief Default copy assignment. */
-        [[nodiscard]] OrderingClause& operator= (const OrderingClause&) noexcept = default;
-
-        /** @brief Default move assignment. */
-        [[nodiscard]] OrderingClause& operator= (OrderingClause&&) noexcept = default;
 
 
         //---   Operations   ------------------------------------------------

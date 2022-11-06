@@ -142,7 +142,7 @@ export namespace osql::dbconnection
     * Such databases are opened for read only operations and must already
     * exist at opening time.
     */
-    class RODBConnection : public DBConnection
+    class RODBConnection : public osql::dbconnection::DBConnection
     {
     public:
         //---   Constructors / Destructor   ---------------------------------
@@ -164,7 +164,7 @@ export namespace osql::dbconnection
         inline RODBConnection(const std::string& filename,
                               const int          flags = URI_ALLOWED,
                               const std::string& vfs_module = "win32") noexcept
-            : DBConnection(filename, flags | (READ_ONLY & ~(READ_WRITE | CREATE)), vfs_module)
+            : osql::dbconnection::DBConnection(filename, flags | (READ_ONLY & ~(READ_WRITE | CREATE)), vfs_module)
         {}
 
         /** @brief Default destructor. */
@@ -178,7 +178,7 @@ export namespace osql::dbconnection
     * Such databases are opened for read/write operations and must already
     * exist at opening time.
     */
-    class RWDBConnection : public DBConnection
+    class RWDBConnection : public osql::dbconnection::DBConnection
     {
     public:
         //---   Constructors / Destructor   ---------------------------------
@@ -200,7 +200,7 @@ export namespace osql::dbconnection
         inline RWDBConnection(const std::string& filename,
                               const int          flags = URI_ALLOWED,
                               const std::string& vfs_module = "win32") noexcept
-            : DBConnection(filename, flags | (READ_WRITE & ~(READ_ONLY | CREATE)), vfs_module)
+            : osql::dbconnection::DBConnection(filename, flags | (READ_WRITE & ~(READ_ONLY | CREATE)), vfs_module)
         {}
 
         /** @brief Default destructor. */
@@ -214,7 +214,7 @@ export namespace osql::dbconnection
     * Such databases are opened into memory. They are automatically
     * destroyed at destruction time.
     */
-    class MemoryDBConnection : public DBConnection
+    class MemoryDBConnection : public osql::dbconnection::DBConnection
     {
     public:
         //---   Constructors / Destructor   ---------------------------------
@@ -237,7 +237,7 @@ export namespace osql::dbconnection
         inline MemoryDBConnection(const std::string& filename = "",
                                   const int          flags = CREATE,
                                   const std::string& vfs_module = "win32") noexcept
-            : DBConnection(filename, flags | MEMORY_DB, vfs_module)
+            : osql::dbconnection::DBConnection(filename, flags | MEMORY_DB, vfs_module)
         {}
 
         /** @brief Default destructor. */

@@ -43,16 +43,16 @@ namespace osql::clauses
 
     //=======================================================================
     /** @brief STR definition for DEFERRABLE clauses. */
-    using DeferrableStr = STR< 'D', 'E', 'F', 'E', 'R', 'R', 'A', 'B', 'L', 'E', 0 >;
+    using DeferrableStr = osql::clauses::STR< 'D', 'E', 'F', 'E', 'R', 'R', 'A', 'B', 'L', 'E', 0 >;
 
     /** @brief STR definition for NOT DEFERRABLE clauses. */
-    using NotDeferrableStr = STR< 'N', 'O', 'T', ' ', 'D', 'E', 'F', 'E', 'R', 'R', 'A', 'B', 'L', 'E', 0 >;
+    using NotDeferrableStr = osql::clauses::STR< 'N', 'O', 'T', ' ', 'D', 'E', 'F', 'E', 'R', 'R', 'A', 'B', 'L', 'E', 0 >;
 
     /** @brief STR definition for INITIALLY DEFERRED spec. */
-    using InitiallyDeferred = STR< 'I', 'N', 'I', 'T', 'I', 'A', 'L', 'L', 'Y', ' ', 'D', 'E', 'F', 'E', 'R', 'R', 'E', 'D', 0 >;
+    using InitiallyDeferred = osql::clauses::STR< 'I', 'N', 'I', 'T', 'I', 'A', 'L', 'L', 'Y', ' ', 'D', 'E', 'F', 'E', 'R', 'R', 'E', 'D', 0 >;
 
     /** @brief STR definition for INITIALLY IMMEDIATE spec. */
-    using InitiallyImmediate = STR< 'I', 'N', 'I', 'T', 'I', 'A', 'L', 'L', 'Y', ' ', 'I', 'M', 'M', 'E', 'D', 'I', 'A', 'T', 'E', 0 >;
+    using InitiallyImmediate = osql::clauses::STR< 'I', 'N', 'I', 'T', 'I', 'A', 'L', 'L', 'Y', ' ', 'I', 'M', 'M', 'E', 'D', 'I', 'A', 'T', 'E', 0 >;
 
 
     //=======================================================================
@@ -63,7 +63,7 @@ namespace osql::clauses
     *     which should be used rather than this base class.
     */
     export template<typename PrefixT, typename SuffixT>
-    using DeferrableBaseClause = Clause<PrefixT, SuffixT>;
+    using DeferrableBaseClause = osql::clauses::Clause<PrefixT, SuffixT>;
 
 
     //=======================================================================

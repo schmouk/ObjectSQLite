@@ -43,48 +43,48 @@ export namespace osql::clauses
     //=======================================================================
     /** @brief The base class of On-Delete and On-Update clauses. */
     template<typename PrefixT, typename SuffixT>
-    using OnDeleteUpdateClause = Clause<PrefixT, SuffixT>;
+    using OnDeleteUpdateClause = osql::clauses::Clause<PrefixT, SuffixT>;
 
 
     //=======================================================================
     /** @brief The base class for ON DELETE clauses. */
     template<typename SuffixT>
-    using OnDeleteClause = OnDeleteUpdateClause< STR<'O', 'N', ' ', 'D', 'E', 'L', 'E', 'T', 'E', 0>, SuffixT >;
+    using OnDeleteClause = OnDeleteUpdateClause< osql::clauses::STR<'O', 'N', ' ', 'D', 'E', 'L', 'E', 'T', 'E', 0>, SuffixT >;
 
     /** @brief The CASCADE directive on ON DELETE foreign-key specification. */
-    using OnDeleteCascadeClause = OnDeleteClause< STR<'C', 'A', 'S', 'C', 'A', 'D', 'E', 0> >;
+    using OnDeleteCascadeClause = OnDeleteClause< osql::clauses::STR<'C', 'A', 'S', 'C', 'A', 'D', 'E', 0> >;
 
     /** @brief The NO ACTION directive on ON DELETE foreign-key specification. */
-    using OnDeleteNoActionClause = OnDeleteClause< STR<'N', 'O', ' ', 'A', 'C', 'T', 'I', 'O', 'N', 0> >;
+    using OnDeleteNoActionClause = OnDeleteClause< osql::clauses::STR<'N', 'O', ' ', 'A', 'C', 'T', 'I', 'O', 'N', 0> >;
 
     /** @brief The RESTRICT directive on ON DELETE foreign-key specification. */
-    using OnDeleteRestrictClause = OnDeleteClause< STR<'R', 'E', 'S', 'T', 'R', 'I', 'C', 'T', 0> >;
+    using OnDeleteRestrictClause = OnDeleteClause< osql::clauses::STR<'R', 'E', 'S', 'T', 'R', 'I', 'C', 'T', 0> >;
 
     /** @brief The SET DEFAULT directive on ON DELETE foreign-key specification. */
-    using OnDeleteSetDefaultClause = OnDeleteClause< STR<'S', 'E', 'T', ' ', 'D', 'E', 'F', 'A', 'U', 'L', 'T', 0> >;
+    using OnDeleteSetDefaultClause = OnDeleteClause< osql::clauses::STR<'S', 'E', 'T', ' ', 'D', 'E', 'F', 'A', 'U', 'L', 'T', 0> >;
 
     /** @brief The SET NULL directive on ON DELETE foreign-key specification. */
-    using OnDeleteSetNullClause = OnDeleteClause< STR<'S', 'E', 'T', ' ', 'N', 'U', 'L', 'L', 0> >;
+    using OnDeleteSetNullClause = OnDeleteClause< osql::clauses::STR<'S', 'E', 'T', ' ', 'N', 'U', 'L', 'L', 0> >;
 
 
     //=======================================================================
     /** @brief The base class for ON UPDATE clauses. */
     template<typename SuffixT>
-    using OnUpdateClause = OnDeleteUpdateClause< STR<'O', 'N', ' ', 'U', 'P', 'D', 'A', 'T', 'E', 0>, SuffixT >;
+    using OnUpdateClause = OnDeleteUpdateClause< osql::clauses::STR<'O', 'N', ' ', 'U', 'P', 'D', 'A', 'T', 'E', 0>, SuffixT >;
 
     /** @brief The CASCADE directive on ON DELETE foreign-key specification. */
-    using OnUpdateCascadeClause = OnUpdateClause< STR<'C', 'A', 'S', 'C', 'A', 'D', 'E', 0> >;
+    using OnUpdateCascadeClause = OnUpdateClause< osql::clauses::STR<'C', 'A', 'S', 'C', 'A', 'D', 'E', 0> >;
 
     /** @brief The NO ACTION directive on ON DELETE foreign-key specification. */
-    using OnUpdateNoActionClause = OnUpdateClause< STR<'N', 'O', ' ', 'A', 'C', 'T', 'I', 'O', 'N', 0> >;
+    using OnUpdateNoActionClause = OnUpdateClause< osql::clauses::STR<'N', 'O', ' ', 'A', 'C', 'T', 'I', 'O', 'N', 0> >;
 
     /** @brief The RESTRICT directive on ON DELETE foreign-key specification. */
-    using OnUpdateRestrictClause = OnUpdateClause< STR<'R', 'E', 'S', 'T', 'R', 'I', 'C', 'T', 0> >;
+    using OnUpdateRestrictClause = OnUpdateClause< osql::clauses::STR<'R', 'E', 'S', 'T', 'R', 'I', 'C', 'T', 0> >;
 
     /** @brief The SET DEFAULT directive on ON DELETE foreign-key specification. */
-    using OnUpdateSetDefaultClause = OnUpdateClause< STR<'S', 'E', 'T', ' ', 'D', 'E', 'F', 'A', 'U', 'L', 'T', 0> >;
+    using OnUpdateSetDefaultClause = OnUpdateClause< osql::clauses::STR<'S', 'E', 'T', ' ', 'D', 'E', 'F', 'A', 'U', 'L', 'T', 0> >;
 
     /** @brief The SET NULL directive on ON DELETE foreign-key specification. */
-    using OnUpdateSetNullClause = OnUpdateClause< STR<'S', 'E', 'T', ' ', 'N', 'U', 'L', 'L', 0> >;
+    using OnUpdateSetNullClause = OnUpdateClause< osql::clauses::STR<'S', 'E', 'T', ' ', 'N', 'U', 'L', 'L', 0> >;
 
 }

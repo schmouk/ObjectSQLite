@@ -25,26 +25,48 @@ SOFTWARE.
 //===========================================================================
 module;
 
+#include <string>
+
 #include "osql/clauses/clause.h"
 
 
-export module osql.clauses.collate_clauses;
+export module osql.columns.column_constraints;
 
 import osql.clauses;
+import osql.clauses.conflict_clauses;
+
 
 
 //===========================================================================
-export namespace osql::clauses
+export namespace osql::columns
 {
-    //=======================================================================
-    /** @brief The class of SQL COLLATE clauses as included in SQL statements.
+    //
+    // Notice: these constraints are used with columns definitions.
+    //
+
+    //===   PRIMARY KEY   ===================================================
+    /** @brief the STR value for PRIMARY KEY. */
+    using PrimaryKeyStr = osql::clauses::STR< 'P', 'R', 'I', 'M', 'A', 'R', 'Y', ' ', 'K', 'E', 'Y', 0 >;
+
+    /** @brief The class of Primary Key Clauses as included in columns definitions.
     *
-    *   @see https://www.sqlshack.com/the-collate-sql-command-overview/  or
-    *   https://dev.mysql.com/doc/refman/8.0/en/charset-collate.html to get
-    *   explanations about the charsets collation  concept  in  SQL.  These
-    *   charsets  names  are  to  be used as the 'core_expr' of the collate 
-    *   clause at its creation time.
+    * CAUTION: Primary Key clauses have for columns definitions are  not  the 
+    *          same as Primary Key clauses for tables definitions. Always use
+    *          the namespace as a prefix when instantiating PrimaryKeyClause.
     */
-    using CollateClause = osql::clauses::Clause< STR<'C', 'O', 'L', 'L', 'A', 'T', 'E', 0> >;
+    template<typename ConflictClauseT>
+    class PrimaryKeyClause : public osql::clauses::Clause< PrimaryKeyStr >
+    {
+    public:
+        //---   Wrappers   --------------------------------------------------
+        using MyBaseClass = osql::clauses::Clause< PrimaryKeyStr >;  //!< wrapper to the base class
+
+
+        //---   Constructors / Destructor   ---------------------------------
+        /** @brief Value constructor. */
+        PrimaryKeyClause(const bool auto_incr = false) noexcept
+            : MyBaseClass(osql::clauses::T<ConflictClauseT>() + (auto_incr ? " AUTOINCREMENT" : ""))
+        {}
+    };
 
 }

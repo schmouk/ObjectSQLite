@@ -45,11 +45,11 @@ export namespace osql::clauses
 
     //=======================================================================
     /** @brief The class of Type Name Clauses as included in columns and tables constraints. */
-    class TypeNameClause : public NoPrefixClause<>
+    class TypeNameClause : public osql::clauses::NoPrefixClause<>
     {
     public:
         //---   Wrappers   --------------------------------------------------
-        using MyBaseClass = NoPrefixClause<>;  //!< wrapper to the base class
+        using MyBaseClass = osql::clauses::NoPrefixClause<>;  //!< wrapper to the base class
 
 
         //---   Constructors / Destructor   ---------------------------------
@@ -79,23 +79,6 @@ export namespace osql::clauses
 
         /** @brief Deleted empty/default constructor. */
         TypeNameClause() noexcept = delete;
-
-        /** @brief Default copy constructor. */
-        TypeNameClause(const TypeNameClause&) noexcept = default;
-
-        /** @brief Default move constructor. */
-        TypeNameClause(TypeNameClause&&) noexcept = default;
-
-        /** @brief Default destructor. */
-        virtual ~TypeNameClause() noexcept = default;
-
-
-        //---   Assignments   -----------------------------------------------
-        /** @brief Default copy assignment. */
-        [[nodiscard]] TypeNameClause& operator= (const TypeNameClause&) noexcept = default;
-
-        /** @brief Default move assignment. */
-        [[nodiscard]] TypeNameClause& operator= (TypeNameClause&&) noexcept = default;
     };
 
 }
