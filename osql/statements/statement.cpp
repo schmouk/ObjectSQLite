@@ -45,7 +45,7 @@ namespace osql::statements
         const char* unused_{ nullptr };
         _last_error_code = sqlite3_prepare_v2(db_connection.get_handle(),
                                               sql_text.c_str(),
-                                              sql_text.size() + 1,
+                                              int(sql_text.size() + 1),
                                               &_stmt_handle,
                                               &unused_);
     }
@@ -58,7 +58,7 @@ namespace osql::statements
         const char* unused_{ nullptr };
         _last_error_code = sqlite3_prepare_v3(db_connection.get_handle(),
                                               sql_text.c_str(),
-                                              sql_text.size() + 1,
+                                              int(sql_text.size() + 1),
                                               prepare_flags,
                                               &_stmt_handle,
                                               &unused_);

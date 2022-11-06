@@ -160,16 +160,24 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ObjectSQLite.cpp" />
+    <ClCompile Include="osql\clauses\clause.ixx" />
+    <ClCompile Include="osql\clauses\collate_clause.ixx" />
+    <ClCompile Include="osql\clauses\ordering_clause.ixx" />
+    <ClCompile Include="osql\clauses\ordering_term.ixx" />
+    <ClCompile Include="osql\clauses\select_clause.ixx" />
+    <ClCompile Include="osql\clauses\with_clause.ixx" />
     <ClCompile Include="osql\common\object_base.ixx" />
     <ClCompile Include="osql\dbconnection\dbconnection.cpp" />
     <ClCompile Include="osql\dbconnection\dbconnection.ixx" />
     <ClCompile Include="osql\statements\statement.cpp" />
     <ClCompile Include="osql\statements\statement.ixx" />
+    <ClCompile Include="osql\tables\table_base.ixx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Source.def" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="osql\clauses\clause.h" />
     <ClInclude Include="osql\osql.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -79,7 +79,7 @@ export namespace osql::statements
         *   A bit-or combination of sqlite3 constants SQLITE_PREPARE_PERSISTENT
         *   and SQLITE_PREPARE_NO_VTAB.
         *   See https://www.sqlite.org/c3ref/c_prepare_normalize.html#sqlitepreparepersistent
-        *   for explanations on these flags actions.
+        *   for explanations on the actions of these flags.
         */
         Statement(const std::string&                sql_text,
                   osql::dbconnection::DBConnection& db_connection,

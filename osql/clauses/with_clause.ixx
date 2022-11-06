@@ -1,4 +1,3 @@
-#pragma once
 /*
 MIT License
 
@@ -23,30 +22,26 @@ OUT  OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-//===   Includes   ==========================================================
+//===========================================================================
+module;
+
+#include <string>
+
+#include "osql/clauses/clause.h"
 
 
-//===   Forward declarations over whole library ObjectSQLite   ============== 
-//---   osql::clauses   -----------------------------------------------------
-namespace osql::clauses {
-    class Clause;
-    class WithClause;
-}
+export module osql.clauses.with_clauses;
 
-//---   osql::common   ------------------------------------------------------
-namespace osql::common {
-    class ObjectBase;
-}
+import osql.clauses;
 
-//---   osql::dbconnection   ------------------------------------------------
-namespace osql::dbconnection {
-    class DBConnection;
-    class RODBConnection;
-    class RWDBConnection;
-    class MemoryDBConnection;
-}
 
-//---   osql::statements   --------------------------------------------------
-namespace osql::statements {
-    class Statement;
+//===========================================================================
+export namespace osql::clauses
+{
+    /** @brief The class of SQL WITH clauses as included in SQL statements. */
+    using WithClause = osql::clauses::Clause< STR<'W', 'I', 'T', 'H', 0> >;
+
+    /** @brief The class of SQL WITH clauses as included in SQL statements. */
+    using WithRecursiveClause = osql::clauses::Clause< STR<'W', 'I', 'T', 'H', ' ', 'R', 'E', 'C', 'U', 'R', 'S', 'I', 'V', 'E', 0> >;
+
 }

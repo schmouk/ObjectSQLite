@@ -33,6 +33,27 @@
     <ClCompile Include="osql\common\object_base.ixx">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="osql\tables\table_base.ixx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="osql\clauses\with_clause.ixx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="osql\clauses\clause.ixx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="osql\clauses\select_clause.ixx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="osql\clauses\collate_clause.ixx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="osql\clauses\ordering_clause.ixx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="osql\clauses\ordering_term.ixx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Source.def">
@@ -41,6 +62,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="osql\osql.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="osql\clauses\clause.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

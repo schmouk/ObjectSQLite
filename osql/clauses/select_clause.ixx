@@ -1,4 +1,3 @@
-#pragma once
 /*
 MIT License
 
@@ -23,30 +22,30 @@ OUT  OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-//===   Includes   ==========================================================
+//===========================================================================
+module;
+
+#include <string>
+
+#include "osql/clauses/clause.h"
 
 
-//===   Forward declarations over whole library ObjectSQLite   ============== 
-//---   osql::clauses   -----------------------------------------------------
-namespace osql::clauses {
-    class Clause;
-    class WithClause;
-}
+export module osql.clauses.select_clauses;
 
-//---   osql::common   ------------------------------------------------------
-namespace osql::common {
-    class ObjectBase;
-}
+import osql.clauses;
 
-//---   osql::dbconnection   ------------------------------------------------
-namespace osql::dbconnection {
-    class DBConnection;
-    class RODBConnection;
-    class RWDBConnection;
-    class MemoryDBConnection;
-}
 
-//---   osql::statements   --------------------------------------------------
-namespace osql::statements {
-    class Statement;
+//===========================================================================
+export namespace osql::clauses
+{
+    //=======================================================================
+    /** @brief The class of SQL SELECT clauses as included in SQL statements. */
+    using SelectClause = osql::clauses::Clause< STR<'S', 'E', 'L', 'E', 'C', 'T', 0> >;
+   
+    /** @brief The class of SQL WITH clauses as included in SQL statements. */
+    using SelectAllClause = osql::clauses::Clause< STR<'S', 'E', 'L', 'E', 'C', 'T', ' ', 'A', 'L', 'L', 0> >;
+
+    /** @brief The class of SQL WITH clauses as included in SQL statements. */
+    using SelectDistinctClause = osql::clauses::Clause< STR<'S', 'E', 'L', 'E', 'C', 'T', ' ', 'D', 'I', 'S', 'T', 'I', 'N', 'C', 'T', 0> >
+        ;
 }

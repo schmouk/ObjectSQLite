@@ -23,30 +23,49 @@ OUT  OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-//===   Includes   ==========================================================
+//===========================================================================
+#include <sstream>
+#include <string>
 
 
-//===   Forward declarations over whole library ObjectSQLite   ============== 
-//---   osql::clauses   -----------------------------------------------------
-namespace osql::clauses {
-    class Clause;
-    class WithClause;
+//===========================================================================
+namespace osql::clauses
+{
+    /** @brief Returns a string set with a single char. */
+    template<char C>
+    [[nodiscard]] constexpr std::string STRCHAR() noexcept
+    {
+        return std::string(1, C);
+    };
+
+
+    /** @brief Templatization of a sequence of chars as a string. */
+    template<char C, char... Cs>
+    struct STR
+    {
+        [[nodiscard]] static std::string get_text()
+        {
+            return (STRCHAR<C>() + STR<Cs...>::get_text());
+        }
+    };
+
+
+    /** @brief Specialization of STR with sole null char. */
+    template<>
+    struct STR<'\0'>
+    {
+        [[nodiscard]] static std::string get_text()
+        {
+            return "";
+        }
+    };
+
 }
 
-//---   osql::common   ------------------------------------------------------
-namespace osql::common {
-    class ObjectBase;
-}
 
-//---   osql::dbconnection   ------------------------------------------------
-namespace osql::dbconnection {
-    class DBConnection;
-    class RODBConnection;
-    class RWDBConnection;
-    class MemoryDBConnection;
-}
-
-//---   osql::statements   --------------------------------------------------
-namespace osql::statements {
-    class Statement;
+/** @brief Evaluates the text associated with an osql clause. */
+template<typename ClauseT>
+[[nodiscard]] inline std::string T(const ClauseT& clause) noexcept
+{
+    return clause.get_text();
 }

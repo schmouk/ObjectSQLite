@@ -1,4 +1,3 @@
-#pragma once
 /*
 MIT License
 
@@ -23,30 +22,31 @@ OUT  OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-//===   Includes   ==========================================================
+//===========================================================================
+module;
+
+#include <string>
+
+#include "osql/clauses/clause.h"
 
 
-//===   Forward declarations over whole library ObjectSQLite   ============== 
-//---   osql::clauses   -----------------------------------------------------
-namespace osql::clauses {
-    class Clause;
-    class WithClause;
-}
+export module osql.clauses.collate_clauses;
 
-//---   osql::common   ------------------------------------------------------
-namespace osql::common {
-    class ObjectBase;
-}
+import osql.clauses;
 
-//---   osql::dbconnection   ------------------------------------------------
-namespace osql::dbconnection {
-    class DBConnection;
-    class RODBConnection;
-    class RWDBConnection;
-    class MemoryDBConnection;
-}
 
-//---   osql::statements   --------------------------------------------------
-namespace osql::statements {
-    class Statement;
+//===========================================================================
+export namespace osql::clauses
+{
+    //=======================================================================
+    /** @brief The class of SQL COLLATE clauses as included in SQL statements.
+    *
+    *   @see https://www.sqlshack.com/the-collate-sql-command-overview/  or
+    *   https://dev.mysql.com/doc/refman/8.0/en/charset-collate.html to get
+    *   explanations about the charsets collation  concept  in  SQL.  These
+    *   charsets  names  are  to  be used as the 'core_expr' of the collate 
+    *   clause at its creation time.
+    */
+    using CollateClause = Clause< STR<'C', 'O', 'L', 'L', 'A', 'T', 'E', 0> >;
+
 }
