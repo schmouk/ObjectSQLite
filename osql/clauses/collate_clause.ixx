@@ -37,6 +37,9 @@ import osql.clauses;
 export namespace osql::clauses
 {
     //=======================================================================
+    /** @brief the STR value for COLLATE. */
+    using CollateStr = osql::clauses::STR< 'C', 'O', 'L', 'L', 'A', 'T', 'E', 0 >;
+
     /** @brief The class of SQL COLLATE clauses as included in SQL statements.
     *
     *   @see https://www.sqlshack.com/the-collate-sql-command-overview/  or
@@ -45,6 +48,19 @@ export namespace osql::clauses
     *   charsets  names  are  to  be used as the 'core_expr' of the collate 
     *   clause at its creation time.
     */
-    using CollateClause = osql::clauses::Clause< STR<'C', 'O', 'L', 'L', 'A', 'T', 'E', 0> >;
+    class CollateClause : public osql::clauses::Clause< CollateStr >
+    {
+    public:
+        //---   Wrappers   --------------------------------------------------
+        using MyBaseClass = osql::clauses::Clause< CollateStr >;  //!< wrapper to the base class.
+
+        //---   Constructors   ----------------------------------------------
+        /** @brief Value constructor. */
+        inline CollateClause(const std::string collation_name) noexcept
+            : MyBaseClass(collation_name)
+        {}
+
+        CollateClause() noexcept = delete;  //!< Deleted empty constructor.
+    };
 
 }

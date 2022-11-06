@@ -25,6 +25,7 @@ SOFTWARE.
 //===========================================================================
 module;
 
+#include <format>
 #include <string>
 
 #include "osql/clauses/clause.h"
@@ -44,7 +45,64 @@ export namespace osql::columns
     // Notice: these constraints are used with columns definitions.
     //
 
+    //===   CHECK   =========================================================
+    /** @brief the STR value for CHECK. */
+    using CheckStr = osql::clauses::STR<'C', 'H', 'E', 'C', 'K', 0>;
+
+    /** @brief The class of Check Clauses as included in columns definitions. */
+    class CheckClause : public osql::clauses::Clause< CheckStr >
+    {
+    public:
+        //---   Wrappers   --------------------------------------------------
+        using MyBaseClass = osql::clauses::Clause< CheckStr >;  //!< wrapper to the base class
+
+        //---   Constructors / Destructor   ---------------------------------
+        /** @brief Value constructor. */
+        CheckClause(const std::string& check_expr) noexcept
+            : MyBaseClass(std::format("({:s})", check_expr))
+        {}
+    };
+
+
+    //===   DEFAULT   =======================================================
+    /** @brief the STR value for DEFAULT. */
+    using DefaultStr = osql::clauses::STR<'D', 'E', 'F', 'A', 'U', 'L', 'T', 0>;
+
+    /** @brief The class of Default Clauses as included in columns definitions. */
+    class DefaultClause : public osql::clauses::Clause< DefaultStr >
+    {
+    public:
+        //---   Wrappers   --------------------------------------------------
+        using MyBaseClass = osql::clauses::Clause< DefaultStr >;  //!< wrapper to the base class
+
+        //---   Constructors / Destructor   ---------------------------------
+        /** @brief Value constructor. */
+        DefaultClause(const std::string& value) noexcept
+            : MyBaseClass(value)
+        {}
+
+        DefaultClause() noexcept = delete;  //!< deleted empty constructor.
+    };
+
+    /** @brief The class of Default Clauses with an expression as included in columns definitions. */
+    class DefaultExprClause : public osql::clauses::Clause< DefaultStr >
+    {
+    public:
+        //---   Wrappers   --------------------------------------------------
+        using MyBaseClass = osql::clauses::Clause< DefaultStr >;  //!< wrapper to the base class
+
+        //---   Constructors / Destructor   ---------------------------------
+        /** @brief Value constructor. */
+        DefaultExprClause(const std::string& default_expr) noexcept
+            : MyBaseClass(std::format("({:s})", default_expr))
+        {}
+
+        DefaultExprClause() noexcept = delete;  //!< deleted empty constructor.
+    };
+
+
     //===   NOT NULL   ======================================================
+    /** @brief the STR value for NOT NULL. */
     using NotNullStr = osql::clauses::STR<'N', 'O', 'T', ' ', 'N', 'U', 'L', 'L', 0>;
 
     /** @brief The class of Not Null Clauses as included in columns definitions. */
@@ -133,6 +191,25 @@ export namespace osql::columns
         /** @brief Value constructor. */
         PrimaryKeyDescClause(const bool auto_incr = false) noexcept
             : MyBaseClass(osql::clauses::T<ConflictClauseT>() + (auto_incr ? " AUTOINCREMENT" : ""))
+        {}
+    };
+
+
+    //===   UNIQUE   ========================================================
+    using UniqueStr = osql::clauses::STR<'U', 'N', 'I', 'Q', 'U', 'E', 0>;
+
+    /** @brief The class of Unique Clauses as included in columns definitions. */
+    template<typename ConflictClauseT>
+    class UniqueClause : public osql::clauses::Clause< UniqueStr >
+    {
+    public:
+        //---   Wrappers   --------------------------------------------------
+        using MyBaseClass = osql::clauses::Clause< UniqueStr >;  //!< wrapper to the base class
+
+        //---   Constructors / Destructor   ---------------------------------
+        /** @brief Value constructor. */
+        UniqueClause() noexcept
+            : MyBaseClass(osql::clauses::T<ConflictClauseT>())
         {}
     };
 
