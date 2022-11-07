@@ -45,8 +45,55 @@ export namespace osql::columns
     // Notice: these constraints are used with columns definitions.
     //
 
+    //===   AS   ============================================================
+    /** @brief the STR value for clause AS. */
+    using AsStr = osql::clauses::STR<'A', 'S', 0>;
+
+    /** @brief The class of As Clauses as included in columns definitions. */
+    class AsClause : public osql::clauses::Clause< AsStr >
+    {
+    public:
+        //---   Wrappers   --------------------------------------------------
+        using MyBaseClass = osql::clauses::Clause< AsStr >;  //!< wrapper to the base class
+
+        //---   Constructors / Destructor   ---------------------------------
+        /** @brief Value constructor. */
+        AsClause(const std::string& as_expr) noexcept
+            : MyBaseClass(std::format("({:s})", as_expr))
+        {}
+    };
+
+    /** @brief The class of As Clauses with suffix STORED as included in columns definitions. */
+    class AsStoredClause : public osql::clauses::Clause< AsStr >
+    {
+    public:
+        //---   Wrappers   --------------------------------------------------
+        using MyBaseClass = osql::clauses::Clause< AsStr >;  //!< wrapper to the base class
+
+        //---   Constructors / Destructor   ---------------------------------
+        /** @brief Value constructor. */
+        AsStoredClause(const std::string& as_expr) noexcept
+            : MyBaseClass(std::format("({:s}) STORED", as_expr))
+        {}
+    };
+
+    /** @brief The class of As Clauses with suffix VIRTUAL as included in columns definitions. */
+    class AsVirtualClause : public osql::clauses::Clause< AsStr >
+    {
+    public:
+        //---   Wrappers   --------------------------------------------------
+        using MyBaseClass = osql::clauses::Clause< AsStr >;  //!< wrapper to the base class
+
+        //---   Constructors / Destructor   ---------------------------------
+        /** @brief Value constructor. */
+        AsVirtualClause(const std::string& as_expr) noexcept
+            : MyBaseClass(std::format("({:s}) VIRTUAL", as_expr))
+        {}
+    };
+
+
     //===   CHECK   =========================================================
-    /** @brief the STR value for CHECK. */
+    /** @brief the STR value for clause CHECK. */
     using CheckStr = osql::clauses::STR<'C', 'H', 'E', 'C', 'K', 0>;
 
     /** @brief The class of Check Clauses as included in columns definitions. */
@@ -65,7 +112,7 @@ export namespace osql::columns
 
 
     //===   DEFAULT   =======================================================
-    /** @brief the STR value for DEFAULT. */
+    /** @brief the STR value for clause DEFAULT. */
     using DefaultStr = osql::clauses::STR<'D', 'E', 'F', 'A', 'U', 'L', 'T', 0>;
 
     /** @brief The class of Default Clauses as included in columns definitions. */
@@ -101,8 +148,56 @@ export namespace osql::columns
     };
 
 
+    //===   GENERATED ALWAYS AS   ===========================================
+    /** @brief the STR value for clause GENERATED ALWAYS AS. */
+    using GeneratedAsStr = osql::clauses::STR<'G', 'E', 'N', 'E', 'R', 'A', 'T', 'E', 'D', ' ', 'A', 'L', 'W', 'A', 'Y', 'S', ' ', 'A', 'S', 0>;
+
+    /** @brief The class of As Clauses as included in columns definitions. */
+    class GeneratedAsClause : public osql::clauses::Clause< GeneratedAsStr >
+    {
+    public:
+        //---   Wrappers   --------------------------------------------------
+        using MyBaseClass = osql::clauses::Clause< GeneratedAsStr >;  //!< wrapper to the base class
+
+        //---   Constructors / Destructor   ---------------------------------
+        /** @brief Value constructor. */
+        GeneratedAsClause(const std::string& as_expr) noexcept
+            : MyBaseClass(std::format("({:s})", as_expr))
+        {}
+    };
+
+    /** @brief The class of As Clauses with suffix STORED as included in columns definitions. */
+    class GeneratedAsStoredClause : public osql::clauses::Clause< GeneratedAsStr >
+    {
+    public:
+        //---   Wrappers   --------------------------------------------------
+        using MyBaseClass = osql::clauses::Clause< GeneratedAsStr >;  //!< wrapper to the base class
+
+        //---   Constructors / Destructor   ---------------------------------
+        /** @brief Value constructor. */
+        GeneratedAsStoredClause(const std::string& as_expr) noexcept
+            : MyBaseClass(std::format("({:s}) STORED", as_expr))
+        {}
+    };
+
+    /** @brief The class of As Clauses with suffix VIRTUAL as included in columns definitions. */
+    class GeneratedAsVirtualClause : public osql::clauses::Clause< GeneratedAsStr >
+    {
+    public:
+        //---   Wrappers   --------------------------------------------------
+        using MyBaseClass = osql::clauses::Clause< GeneratedAsStr >;  //!< wrapper to the base class
+
+        //---   Constructors / Destructor   ---------------------------------
+        /** @brief Value constructor. */
+        GeneratedAsVirtualClause(const std::string& as_expr) noexcept
+            : MyBaseClass(std::format("({:s}) VIRTUAL", as_expr))
+        {}
+    };
+
+
+
     //===   NOT NULL   ======================================================
-    /** @brief the STR value for NOT NULL. */
+    /** @brief the STR value for clause NOT NULL. */
     using NotNullStr = osql::clauses::STR<'N', 'O', 'T', ' ', 'N', 'U', 'L', 'L', 0>;
 
     /** @brief The class of Not Null Clauses as included in columns definitions. */
@@ -122,7 +217,7 @@ export namespace osql::columns
 
 
     //===   PRIMARY KEY   ===================================================
-    /** @brief the STR value for PRIMARY KEY. */
+    /** @brief the STR value for clause PRIMARY KEY. */
     using PrimaryKeyStr = osql::clauses::STR< 'P', 'R', 'I', 'M', 'A', 'R', 'Y', ' ', 'K', 'E', 'Y', 0 >;
 
     /** @brief the STR value for PRIMARY KEY ASC. */
@@ -196,6 +291,7 @@ export namespace osql::columns
 
 
     //===   UNIQUE   ========================================================
+    /** @brief the STR value for clause UNIQUE. */
     using UniqueStr = osql::clauses::STR<'U', 'N', 'I', 'Q', 'U', 'E', 0>;
 
     /** @brief The class of Unique Clauses as included in columns definitions. */
