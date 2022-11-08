@@ -53,7 +53,9 @@ export namespace osql::clauses
     *     which should be used instead.
     */
     template< typename PrefixT, typename SuffixT>
-    using ConflictBaseClause = osql::clauses::Clause< PrefixT, SuffixT >;
+    struct ConflictBaseClause : osql::clauses::Clause< PrefixT, SuffixT >
+    {};
+
 
     //=======================================================================
     /** @brief The class of ABORT Conflict Clauses as included in SQL statements. */

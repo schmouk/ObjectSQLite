@@ -76,14 +76,13 @@ int main()
                                                                                                     true, false)))
         << std::endl;
 
-    osql::columns::PrimaryKeyClause<osql::clauses::ConflictIgnoreClause>  prim_key_clause( true );
+    osql::columns::PrimaryKeyClause  prim_key_clause(osql::clauses::ConflictIgnoreClause(), false);
     std::cout << "Column Primary Key Clause: " << osql::clauses::T(prim_key_clause) << std::endl;
 
-    osql::columns::PrimaryKeyClause<osql::clauses::ConflictIgnoreClause>  prim_key_clause2 = prim_key_clause;
+    osql::columns::PrimaryKeyClause  prim_key_clause2 = prim_key_clause;
     std::cout << "Column Primary Key Clause: " << osql::clauses::T(prim_key_clause2) << std::endl;
 
-
-    osql::columns::PrimaryKeyDescClause<osql::clauses::ConflictAbortClause>  prim_key_clause3;
-    std::cout << "Column Primary Key Clause: " << osql::clauses::T(prim_key_clause3) << std::endl;
+    osql::columns::PrimaryKeyAscClause  prim_key_clause3(osql::clauses::ConflictAbortClause(), true);
+    std::cout << "Column Primary Key ASC Clause: " << osql::clauses::T(prim_key_clause3) << std::endl;
 
 }

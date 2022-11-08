@@ -35,6 +35,7 @@ export module osql.columns.column_constraints;
 
 import osql.clauses;
 import osql.clauses.conflict_clauses;
+import osql.clauses.foreign_key_clauses;
 
 
 
@@ -44,6 +45,26 @@ export namespace osql::columns
     //
     // Notice: these constraints are used with columns definitions.
     //
+
+    //=======================================================================
+    /** @brief The specific type traits for Column Constraints. */
+    template<typename T>
+    struct is_column_constraint {
+        static inline constexpr bool value = true;
+    };
+
+    /** @brief Wrapper to the type traits value for Column Constraints. */
+    template<typename T>
+    inline constexpr bool is_column_constraint_v() {
+        return is_column_constraint<T>::value;
+    }
+
+    /** @brief Type traits specialization for external FOREIGN KEY clause. */
+    template<>
+    struct is_column_constraint<osql::clauses::ForeignKeyClause> {
+        static inline constexpr bool value = true;
+    };
+
 
     //===   AS   ============================================================
     /** @brief the STR value for clause AS. */
@@ -63,6 +84,13 @@ export namespace osql::columns
         {}
     };
 
+    /** @brief Type traits specialization for clauses AS. */
+    template<>
+    struct is_column_constraint<AsClause> {
+        static inline constexpr bool value = true;
+    };
+
+
     /** @brief The class of As Clauses with suffix STORED as included in columns definitions. */
     class AsStoredClause : public osql::clauses::Clause< AsStr >
     {
@@ -77,6 +105,13 @@ export namespace osql::columns
         {}
     };
 
+    /** @brief Type traits specialization for clauses AS stored. */
+    template<>
+    struct is_column_constraint<AsStoredClause> {
+        static inline constexpr bool value = true;
+    };
+
+
     /** @brief The class of As Clauses with suffix VIRTUAL as included in columns definitions. */
     class AsVirtualClause : public osql::clauses::Clause< AsStr >
     {
@@ -89,6 +124,12 @@ export namespace osql::columns
         AsVirtualClause(const std::string& as_expr) noexcept
             : MyBaseClass(std::format("({:s}) VIRTUAL", as_expr))
         {}
+    };
+
+    /** @brief Type traits specialization for clauses AS virtual. */
+    template<>
+    struct is_column_constraint<AsVirtualClause> {
+        static inline constexpr bool value = true;
     };
 
 
@@ -108,6 +149,12 @@ export namespace osql::columns
         CheckClause(const std::string& check_expr) noexcept
             : MyBaseClass(std::format("({:s})", check_expr))
         {}
+    };
+
+    /** @brief Type traits specialization for clauses CHECK. */
+    template<>
+    struct is_column_constraint<CheckClause> {
+        static inline constexpr bool value = true;
     };
 
 
@@ -131,6 +178,13 @@ export namespace osql::columns
         DefaultClause() noexcept = delete;  //!< deleted empty constructor.
     };
 
+    /** @brief Type traits specialization for clauses DEFAULT. */
+    template<>
+    struct is_column_constraint<DefaultClause> {
+        static inline constexpr bool value = true;
+    };
+
+
     /** @brief The class of Default Clauses with an expression as included in columns definitions. */
     class DefaultExprClause : public osql::clauses::Clause< DefaultStr >
     {
@@ -147,12 +201,18 @@ export namespace osql::columns
         DefaultExprClause() noexcept = delete;  //!< deleted empty constructor.
     };
 
+    /** @brief Type traits specialization for clauses DEFAULT with expressions. */
+    template<>
+    struct is_column_constraint<DefaultExprClause> {
+        static inline constexpr bool value = true;
+    };
+
 
     //===   GENERATED ALWAYS AS   ===========================================
     /** @brief the STR value for clause GENERATED ALWAYS AS. */
     using GeneratedAsStr = osql::clauses::STR<'G', 'E', 'N', 'E', 'R', 'A', 'T', 'E', 'D', ' ', 'A', 'L', 'W', 'A', 'Y', 'S', ' ', 'A', 'S', 0>;
 
-    /** @brief The class of As Clauses as included in columns definitions. */
+    /** @brief The class of Generated Always As Clauses as included in columns definitions. */
     class GeneratedAsClause : public osql::clauses::Clause< GeneratedAsStr >
     {
     public:
@@ -166,7 +226,14 @@ export namespace osql::columns
         {}
     };
 
-    /** @brief The class of As Clauses with suffix STORED as included in columns definitions. */
+    /** @brief Type traits specialization for clauses Generated Always As. */
+    template<>
+    struct is_column_constraint<GeneratedAsClause> {
+        static inline constexpr bool value = true;
+    };
+
+
+    /** @brief The class of Generated Always As Clauses with suffix STORED as included in columns definitions. */
     class GeneratedAsStoredClause : public osql::clauses::Clause< GeneratedAsStr >
     {
     public:
@@ -180,7 +247,14 @@ export namespace osql::columns
         {}
     };
 
-    /** @brief The class of As Clauses with suffix VIRTUAL as included in columns definitions. */
+    /** @brief Type traits specialization for clauses Generated Always As stored. */
+    template<>
+    struct is_column_constraint<GeneratedAsStoredClause> {
+        static inline constexpr bool value = true;
+    };
+
+
+    /** @brief The class of Generated Always As Clauses with suffix VIRTUAL as included in columns definitions. */
     class GeneratedAsVirtualClause : public osql::clauses::Clause< GeneratedAsStr >
     {
     public:
@@ -194,6 +268,11 @@ export namespace osql::columns
         {}
     };
 
+    /** @brief Type traits specialization for clauses Generated Always As virtual. */
+    template<>
+    struct is_column_constraint<GeneratedAsVirtualClause> {
+        static inline constexpr bool value = true;
+    };
 
 
     //===   NOT NULL   ======================================================
@@ -201,7 +280,6 @@ export namespace osql::columns
     using NotNullStr = osql::clauses::STR<'N', 'O', 'T', ' ', 'N', 'U', 'L', 'L', 0>;
 
     /** @brief The class of Not Null Clauses as included in columns definitions. */
-    template<typename ConflictClauseT>
     class NotNullClause : public osql::clauses::Clause< NotNullStr >
     {
     public:
@@ -210,9 +288,18 @@ export namespace osql::columns
 
         //---   Constructors / Destructor   ---------------------------------
         /** @brief Value constructor. */
-        NotNullClause() noexcept
-            : MyBaseClass(osql::clauses::T<ConflictClauseT>())
+        template<typename PrefixT, typename SuffixT>
+        NotNullClause(const osql::clauses::ConflictBaseClause<PrefixT, SuffixT>& conflict_clause) noexcept
+            : MyBaseClass(osql::clauses::T(conflict_clause))
         {}
+
+        NotNullClause() noexcept = delete;  //!< Deleted empty constructor.
+    };
+
+    /** @brief Type traits specialization for clauses Not Null. */
+    template<>
+    struct is_column_constraint<NotNullClause> {
+        static inline constexpr bool value = true;
     };
 
 
@@ -233,7 +320,6 @@ export namespace osql::columns
     *          as Primary Key clauses for tables definitions.  Always use the
     *          the namespace as a prefix when instantiating PrimaryKeyClause.
     */
-    template<typename ConflictClauseT>
     class PrimaryKeyClause : public osql::clauses::Clause< PrimaryKeyStr >
     {
     public:
@@ -242,9 +328,19 @@ export namespace osql::columns
 
         //---   Constructors / Destructor   ---------------------------------
         /** @brief Value constructor. */
-        PrimaryKeyClause(const bool auto_incr = false) noexcept
-            : MyBaseClass(osql::clauses::T<ConflictClauseT>() + (auto_incr ? " AUTOINCREMENT" : ""))
+        template<typename PrefixT, typename SuffixT>
+        PrimaryKeyClause(const osql::clauses::ConflictBaseClause<PrefixT, SuffixT>& conflict_clause,
+                         const bool auto_incr) noexcept
+            : MyBaseClass(osql::clauses::T(conflict_clause) + (auto_incr ? " AUTOINCREMENT" : ""))
         {}
+
+        PrimaryKeyClause() noexcept = delete;  //!< Deleted empty constructor.
+    };
+
+    /** @brief Type traits specialization for clauses Primary Key. */
+    template<>
+    struct is_column_constraint<PrimaryKeyClause> {
+        static inline constexpr bool value = true;
     };
 
 
@@ -254,7 +350,6 @@ export namespace osql::columns
     *          as Primary Key clauses for tables definitions.  Always use the
     *          the namespace as a prefix when instantiating PrimaryKeyClause.
     */
-    template<typename ConflictClauseT>
     class PrimaryKeyAscClause : public osql::clauses::Clause< PrimaryKeyAscStr >
     {
     public:
@@ -263,10 +358,21 @@ export namespace osql::columns
 
         //---   Constructors / Destructor   ---------------------------------
         /** @brief Value constructor. */
-        PrimaryKeyAscClause(const bool auto_incr = false) noexcept
-            : MyBaseClass(osql::clauses::T<ConflictClauseT>() + (auto_incr ? " AUTOINCREMENT" : ""))
+        template<typename PrefixT, typename SuffixT>
+        PrimaryKeyAscClause(const osql::clauses::ConflictBaseClause<PrefixT, SuffixT>& conflict_clause,
+                            const bool auto_incr) noexcept
+            : MyBaseClass(osql::clauses::T(conflict_clause) + (auto_incr ? " AUTOINCREMENT" : ""))
         {}
+
+        PrimaryKeyAscClause() noexcept = delete;  //!< Deleted empty constructor.
     };
+
+    /** @brief Type traits specialization for clauses Primary Key ASC. */
+    template<>
+    struct is_column_constraint<PrimaryKeyAscClause> {
+        static inline constexpr bool value = true;
+    };
+
 
 
     /** @brief The class of Primary Key Clauses with specifier DESC as included in columns definitions.
@@ -275,7 +381,6 @@ export namespace osql::columns
     *          as Primary Key clauses for tables definitions.  Always use the
     *          the namespace as a prefix when instantiating PrimaryKeyClause.
     */
-    template<typename ConflictClauseT>
     class PrimaryKeyDescClause : public osql::clauses::Clause< PrimaryKeyDescStr >
     {
     public:
@@ -284,9 +389,19 @@ export namespace osql::columns
 
         //---   Constructors / Destructor   ---------------------------------
         /** @brief Value constructor. */
-        PrimaryKeyDescClause(const bool auto_incr = false) noexcept
-            : MyBaseClass(osql::clauses::T<ConflictClauseT>() + (auto_incr ? " AUTOINCREMENT" : ""))
+        template<typename PrefixT, typename SuffixT>
+        PrimaryKeyDescClause(const osql::clauses::ConflictBaseClause<PrefixT, SuffixT>& conflict_clause,
+                             const bool auto_incr) noexcept
+            : MyBaseClass(osql::clauses::T(conflict_clause) + (auto_incr ? " AUTOINCREMENT" : ""))
         {}
+
+        PrimaryKeyDescClause() noexcept = delete;  //!< Deleted empty constructor.
+    };
+
+    /** @brief Type traits specialization for clauses Primary Key DESC. */
+    template<>
+    struct is_column_constraint<PrimaryKeyDescClause> {
+        static inline constexpr bool value = true;
     };
 
 
@@ -295,7 +410,6 @@ export namespace osql::columns
     using UniqueStr = osql::clauses::STR<'U', 'N', 'I', 'Q', 'U', 'E', 0>;
 
     /** @brief The class of Unique Clauses as included in columns definitions. */
-    template<typename ConflictClauseT>
     class UniqueClause : public osql::clauses::Clause< UniqueStr >
     {
     public:
@@ -304,9 +418,18 @@ export namespace osql::columns
 
         //---   Constructors / Destructor   ---------------------------------
         /** @brief Value constructor. */
-        UniqueClause() noexcept
-            : MyBaseClass(osql::clauses::T<ConflictClauseT>())
+        template<typename PrefixT, typename SuffixT>
+        UniqueClause(const osql::clauses::ConflictBaseClause<PrefixT, SuffixT>& conflict_clause) noexcept
+            : MyBaseClass(osql::clauses::T(conflict_clause))
         {}
+
+        UniqueClause() noexcept = delete;  //!< Deleted empty constructor.
+    };
+
+    /** @brief Type traits specialization for clauses Unique. */
+    template<>
+    struct is_column_constraint<UniqueClause> {
+        static inline constexpr bool value = true;
     };
 
 }
