@@ -25,41 +25,27 @@ SOFTWARE.
 //===========================================================================
 module;
 
-#include <string>
-
 #include "osql/clauses/clause.h"
 
 
-export module osql.clauses.match_clauses;
-
-import osql.clauses;
-import osql.clauses.foreign_key_subclauses;
+export module osql.clauses.foreign_key_subclauses;
 
 
 //===========================================================================
 export namespace osql::clauses
 {
     //
-    // Notice: these clauses are used with columns and with tables constraints.
+    // Notice: these clauses are used with columns and with tables definitions.
     //
 
     //=======================================================================
-    /** @brief The class of Match Clauses as included in columns and tables constraints. */
-    class MatchClause : public osql::clauses::Clause< osql::clauses::STR<'M', 'A', 'T', 'C', 'H', 0> >, public ForeignKeySubclause
-    {
-    public:
-        //---   Wrappers   --------------------------------------------------
-        using MyBaseClass = osql::clauses::Clause< osql::clauses::STR<'M', 'A', 'T', 'C', 'H', 0> >;  //!< wrapper to the base class
-
-
-        //---   Constructors / Destructor   ---------------------------------
-        /** @brief Value constructor. */
-        inline MatchClause(const std::string& name) noexcept
-            : MyBaseClass(name)
-        {}
-
-        /** @brief Deleted empty/default constructor. */
-        MatchClause() noexcept = delete;
-    };
+    /** @brief The base class for all subclauses of Foreign Key Clauses, as included in columns and tables constraints.
+    *
+    * This class is inherited by all subclauses of clause Foreign Key.
+    * @see modules on_delete_update_clause.ixx,  match_clause.ixx  and
+    *      deferrable_clause.ixx
+    */
+    struct ForeignKeySubclause
+    {};
 
 }

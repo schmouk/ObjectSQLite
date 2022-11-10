@@ -31,6 +31,7 @@ module;
 export module osql.clauses.on_delete_update_clauses;
 
 import osql.clauses;
+import osql.clauses.foreign_key_subclauses;
 
 
 //===========================================================================
@@ -43,7 +44,8 @@ export namespace osql::clauses
     //=======================================================================
     /** @brief The base class of On-Delete and On-Update clauses. */
     template<typename PrefixT, typename SuffixT>
-    using OnDeleteUpdateClause = osql::clauses::Clause<PrefixT, SuffixT>;
+    struct OnDeleteUpdateClause : osql::clauses::Clause<PrefixT, SuffixT>, osql::clauses::ForeignKeySubclause
+    {};
 
 
     //=======================================================================

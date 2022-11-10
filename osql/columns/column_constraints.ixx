@@ -374,7 +374,6 @@ export namespace osql::columns
     };
 
 
-
     /** @brief The class of Primary Key Clauses with specifier DESC as included in columns definitions.
     *
     * CAUTION: Primary Key clauses for columns definitions are not  the  same

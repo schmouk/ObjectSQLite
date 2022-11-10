@@ -31,6 +31,7 @@ module;
 export module osql.clauses.deferrable_clauses;
 
 import osql.clauses;
+import osql.clauses.foreign_key_subclauses;
 
 
 //===========================================================================
