@@ -35,6 +35,7 @@ using namespace osql::dbconnection;
 import osql.clauses;
 import osql.clauses.collate_clauses;
 import osql.clauses.conflict_clauses;
+import osql.clauses.deferrable_clauses;
 import osql.clauses.foreign_table_subclauses;
 import osql.clauses.ordering_clauses;
 import osql.clauses.ordering_terms;
@@ -87,6 +88,8 @@ int main()
     std::cout << "Column Primary Key ASC Clause: " << osql::clauses::T(prim_key_clause3) << std::endl;
 
     osql::clauses::ForeignTableSubclause ftsu_1("foreign_table_1", "col_A", "col_B", "col_C", std::string("col_E"));
-    std::cout << "Foreign Table sublcause 1: " << osql::clauses::T(ftsu_1) << std::endl;
+    std::cout << "Foreign Table subclause 1: " << osql::clauses::T(ftsu_1) << std::endl;
 
+    osql::clauses::DeferrableImmediateClause dic_1;
+    std::cout << "Deferrable Immediate clause 1: " << osql::clauses::T(dic_1) << std::endl;
 }

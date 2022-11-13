@@ -45,7 +45,8 @@ export namespace osql::clauses
 
     //=======================================================================
     /** @brief The class of Match Clauses as included in columns and tables constraints. */
-    class MatchClause : public osql::clauses::Clause< osql::clauses::STR<'M', 'A', 'T', 'C', 'H', 0> >, public ForeignKeySubclause
+    class MatchClause : public osql::clauses::Clause< osql::clauses::STR<'M', 'A', 'T', 'C', 'H', 0> >,
+                        public ForeignKeySubclause
     {
     public:
         //---   Wrappers   --------------------------------------------------

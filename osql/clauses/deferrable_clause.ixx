@@ -57,29 +57,58 @@ namespace osql::clauses
 
 
     //=======================================================================
-    /** @brief The base class for DEFERRABLE clauses.
+    /** @brief The base class for all DEFERRABLE clauses.
     *
     * @sa DeferrableDeferredClause, DeferrableDeferredClause,
     *     NotDeferrableDeferredClause and NotDeferrableDeferredClause
     *     which should be used rather than this base class.
     */
-    export template<typename PrefixT, typename SuffixT>
-    using DeferrableBaseClause = osql::clauses::Clause<PrefixT, SuffixT>;
+    export struct DeferrableClause
+    {};
 
 
     //=======================================================================
-    /** @brief The base class for INITIALLY DEFERRED DEFERRABLE clauses. */
-    export using DeferrableDeferredClause = DeferrableBaseClause< DeferrableStr, InitiallyDeferred >;
+    /** @brief The class of Match Clauses as included in columns and tables constraints. */
+    export class DeferrableDeferredClause : public osql::clauses::Clause< DeferrableStr, InitiallyDeferred >,
+                                            public DeferrableClause
+    {
+    public:
+        //---   Constructors / Destructor   ---------------------------------
+        /** @brief Default constructor. */
+        DeferrableDeferredClause() noexcept = default;
+    };
+
 
     /** @brief The base class for INITIALLY IMMEDIATE DEFERRABLE clauses. */
-    export using DeferrableImmediateClause = DeferrableBaseClause< DeferrableStr, InitiallyImmediate >;
+    export class DeferrableImmediateClause : public osql::clauses::Clause< DeferrableStr, InitiallyImmediate >,
+                                             public DeferrableClause
+    {
+    public:
+        //---   Constructors / Destructor   ---------------------------------
+        /** @brief Default constructor. */
+        DeferrableImmediateClause() noexcept = default;
+    };
 
 
     //=======================================================================
     /** @brief The base class for INITIALLY DEFERRED NOT DEFERRABLE clauses. */
-    export using NotDeferrableDeferredClause = DeferrableBaseClause< NotDeferrableStr, InitiallyDeferred >;
+    export class NotDeferrableDeferredClause : public osql::clauses::Clause< NotDeferrableStr, InitiallyDeferred >,
+                                               public DeferrableClause
+    {
+    public:
+        //---   Constructors / Destructor   ---------------------------------
+        /** @brief Default constructor. */
+        NotDeferrableDeferredClause() noexcept = default;
+    };
 
     /** @brief The base class for INITIALLY IMMEDIATE NOT DEFERRABLE clauses. */
-    export using NotDeferrableImmediateClause = DeferrableBaseClause< NotDeferrableStr, InitiallyImmediate >;
+    export class NotDeferrableImmediateClause : public osql::clauses::Clause< NotDeferrableStr, InitiallyImmediate >,
+                                                public DeferrableClause
+    {
+    public:
+        //---   Constructors / Destructor   ---------------------------------
+        /** @brief Default constructor. */
+        NotDeferrableImmediateClause() noexcept = default;
+    };
 
 }
