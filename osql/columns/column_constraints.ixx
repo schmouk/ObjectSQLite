@@ -327,10 +327,15 @@ export namespace osql::columns
         using MyBaseClass = osql::clauses::Clause< PrimaryKeyStr >;  //!< wrapper to the base class
 
         //---   Constructors / Destructor   ---------------------------------
-        /** @brief Value constructor. */
+        /** @brief Value constructor.
+        *
+        * @see https://www.sqlite.org/autoinc.html to get explanations
+        *   about the use of AUTOINCREMENT on INTEGER PRIMARY KEYS and 
+        *   why it should be avoided as often as possible.
+        */
         template<typename PrefixT, typename SuffixT>
         PrimaryKeyClause(const osql::clauses::ConflictBaseClause<PrefixT, SuffixT>& conflict_clause,
-                         const bool auto_incr) noexcept
+                         const bool                                                 auto_incr = false) noexcept
             : MyBaseClass(osql::clauses::T(conflict_clause) + (auto_incr ? " AUTOINCREMENT" : ""))
         {}
 
@@ -357,10 +362,15 @@ export namespace osql::columns
         using MyBaseClass = osql::clauses::Clause< PrimaryKeyAscStr >;  //!< wrapper to the base class
 
         //---   Constructors / Destructor   ---------------------------------
-        /** @brief Value constructor. */
+        /** @brief Value constructor.
+        *
+        * @see https://www.sqlite.org/autoinc.html to get explanations
+        *   about the use of AUTOINCREMENT on INTEGER PRIMARY KEYS and 
+        *   why it should be avoided as often as possible.
+        */
         template<typename PrefixT, typename SuffixT>
         PrimaryKeyAscClause(const osql::clauses::ConflictBaseClause<PrefixT, SuffixT>& conflict_clause,
-                            const bool auto_incr) noexcept
+                            const bool                                                 auto_incr) noexcept
             : MyBaseClass(osql::clauses::T(conflict_clause) + (auto_incr ? " AUTOINCREMENT" : ""))
         {}
 
@@ -387,10 +397,15 @@ export namespace osql::columns
         using MyBaseClass = osql::clauses::Clause< PrimaryKeyDescStr >;  //!< wrapper to the base class
 
         //---   Constructors / Destructor   ---------------------------------
-        /** @brief Value constructor. */
+        /** @brief Value constructor.
+        *
+        * @see https://www.sqlite.org/autoinc.html to get explanations
+        *   about the use of AUTOINCREMENT on INTEGER PRIMARY KEYS and 
+        *   why it should be avoided as often as possible.
+        */
         template<typename PrefixT, typename SuffixT>
         PrimaryKeyDescClause(const osql::clauses::ConflictBaseClause<PrefixT, SuffixT>& conflict_clause,
-                             const bool auto_incr) noexcept
+                             const bool                                                 auto_incr) noexcept
             : MyBaseClass(osql::clauses::T(conflict_clause) + (auto_incr ? " AUTOINCREMENT" : ""))
         {}
 

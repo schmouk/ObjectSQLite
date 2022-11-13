@@ -41,11 +41,19 @@ export namespace osql::clauses
     //=======================================================================
     /** @brief The base class for all subclauses of Foreign Key Clauses, as included in columns and tables constraints.
     *
-    * This class is inherited by all subclauses of clause Foreign Key.
-    * @see modules on_delete_update_clause.ixx,  match_clause.ixx  and
+    * @see https://www.sqlite.org/foreignkeys.html to get  explanations
+    *   about the use of FOREIGN KEYs in sqlite: they may be parsed but
+    *   take  no  effect  or even they may be forbidden and trig errors
+    *   according to defined macros used at sqlite compilation time.
+    *
+    * This  class is inherited by all subclauses of clause Foreign Key.
+    * @see modules  on_delete_update_clause.ixx,  match_clause.ixx  and
     *      deferrable_clause.ixx
     */
     struct ForeignKeySubclause
     {};
+
+
+    // #if !defined(SQLITE_OMIT_FOREIGN_KEY) && !defined(SQLITE_OMIT_TRIGGER)
 
 }

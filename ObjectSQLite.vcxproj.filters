@@ -87,6 +87,9 @@
     <ClCompile Include="osql\clauses\foreign_key_subclause.ixx">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="osql\clauses\foreign_table_subclause.ixx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Source.def">

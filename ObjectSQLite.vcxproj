@@ -167,6 +167,7 @@
     <ClCompile Include="osql\clauses\deferrable_clause.ixx" />
     <ClCompile Include="osql\clauses\foreign_key_clause.ixx" />
     <ClCompile Include="osql\clauses\foreign_key_subclause.ixx" />
+    <ClCompile Include="osql\clauses\foreign_table_subclause.ixx" />
     <ClCompile Include="osql\clauses\match_clause.ixx" />
     <ClCompile Include="osql\clauses\on_delete_update_clause.ixx" />
     <ClCompile Include="osql\clauses\ordering_clause.ixx" />
