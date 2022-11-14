@@ -36,7 +36,10 @@ import osql.clauses;
 import osql.clauses.collate_clauses;
 import osql.clauses.conflict_clauses;
 import osql.clauses.deferrable_clauses;
+import osql.clauses.foreign_key_clauses;
 import osql.clauses.foreign_table_subclauses;
+import osql.clauses.match_clauses;
+import osql.clauses.on_delete_update_clauses;
 import osql.clauses.ordering_clauses;
 import osql.clauses.ordering_terms;
 import osql.clauses.select_clauses;
@@ -92,4 +95,18 @@ int main()
 
     osql::clauses::DeferrableImmediateClause dic_1;
     std::cout << "Deferrable Immediate clause 1: " << osql::clauses::T(dic_1) << std::endl;
+
+    osql::clauses::ForeignKeyClause fkc_1(ftsu_1);
+    std::cout << "Foreign Key clause 1: " << osql::clauses::T(fkc_1) << std::endl;
+
+    osql::clauses::ForeignKeyClause fkc_2(ftsu_1, dic_1);
+    std::cout << "Foreign Key clause 2: " << osql::clauses::T(fkc_2) << std::endl;
+
+    osql::clauses::ForeignKeyClause fkc_3(ftsu_1,
+                                          osql::clauses::OnDeleteSetNullClause(),
+                                          osql::clauses::MatchClause("match_string"),
+                                          osql::clauses::OnUpdateCascadeClause(),
+                                          dic_1);
+    std::cout << "Foreign Key clause 3: " << osql::clauses::T(fkc_3) << std::endl;
+
 }

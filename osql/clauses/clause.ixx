@@ -88,12 +88,20 @@ export namespace osql::clauses
         {
             std::string s{};
 
-            if (m_prefix != "")
+            if (!m_prefix.empty())
                 s += m_prefix;
-            if (_text != "")
-                s += ' ' + _text;
-            if (m_suffix != "")
-                s += ' ' + m_suffix;
+
+            if (!_text.empty()) {
+                if (!s.empty())
+                    s += ' ';
+                s += _text;
+            }
+
+            if (!m_suffix.empty()) {
+                if (!s.empty())
+                    s += ' ';
+                s += m_suffix;
+            }
 
             return s;
         }
