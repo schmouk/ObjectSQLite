@@ -47,10 +47,10 @@ export namespace osql::columns
     //
 
     //=======================================================================
-    /** @brief The specific type traits for Column Constraints. */
+    /** @brief The base class for all Column Constraints. */
     template<typename T>
     struct is_column_constraint {
-        static inline constexpr bool value = true;
+        static inline constexpr bool value = false;
     };
 
     /** @brief Wrapper to the type traits value for Column Constraints. */

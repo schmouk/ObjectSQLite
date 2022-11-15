@@ -34,6 +34,13 @@ export module osql.clauses;
 
 
 //===========================================================================
+// This module defines:
+//  - class Clause<>
+//  - class NonEmptyClause<>
+//  - class NoPrefixClause<>
+//
+
+//===========================================================================
 export namespace osql::clauses
 {
     //=======================================================================
@@ -57,7 +64,7 @@ export namespace osql::clauses
         /** @brief Default move constructor. */
         Clause(Clause&&) noexcept = default;
 
-        /** @brief Destructor. */
+        /** @brief Default destructor. */
         inline virtual ~Clause() = default;
 
 
@@ -121,6 +128,26 @@ export namespace osql::clauses
     private:
         static inline std::string m_prefix = PREFIX::get_text();  // the prefix text associated with this clause type
         static inline std::string m_suffix = SUFFIX::get_text();  // the suffix text associated with this clause type
+    };
+
+
+    //=======================================================================
+    /** @brief The class of SQL clauses with mandatory associated core_text. */
+    template<typename PREFIX, typename SUFFIX = osql::clauses::STR<'\0'>>
+    class NonEmptyClause : public osql::clauses::Clause<PREFIX, SUFFIX>
+    {
+    public:
+        //---   Constructors / Destructor   ---------------------------------
+        /** @brief Value constructor. */
+        inline NonEmptyClause(const std::string& core_text) noexcept
+            : osql::clauses::Clause<PREFIX, SUFFIX>(core_text)
+        {}
+
+        /** @brief Deleted empty constructor. */
+        NonEmptyClause() noexcept = delete;
+
+        /** @brief Default destructor. */
+        inline virtual ~NonEmptyClause() = default;
     };
 
 
