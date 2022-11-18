@@ -45,7 +45,14 @@ import osql.clauses.ordering_terms;
 import osql.clauses.select_clauses;
 import osql.clauses.with_clauses;
 
-import osql.columns.column_constraints;
+import osql.columns.constraints.bases;
+import osql.columns.constraints.as;
+import osql.columns.constraints.check;
+import osql.columns.constraints.default;
+import osql.columns.constraints.generated_as;
+import osql.columns.constraints.not_null;
+import osql.columns.constraints.primary_key;
+import osql.columns.constraints.unique;
 
 
 osql::clauses::SelectDistinctClause clause;
@@ -69,25 +76,25 @@ int main()
     std::cout << "Collate Clause: " << osql::clauses::T(osql::clauses::CollateClause("Latin1_General_CS_AS_KS_WS")) << std::endl;
 
     std::cout << "Ordering Clause: " << osql::clauses::T(osql::clauses::OrderingClause(
-                                                                        osql::clauses::AscOrderingTerm("SQL-expression-1",
-                                                                                                       osql::clauses::CollateClause("Latin1_General_CS_AS_KS_WS"),
-                                                                                                       true),
-                                                                        osql::clauses::DescOrderingTerm("SQL-expression-2", false),
-                                                                        osql::clauses::NullsFirstOrderingTerm("SQL-expression-3",
-                                                                                                              osql::clauses::CollateClause("Latin1_General_CS_AS_KS_WS"),
-                                                                                                              false),
-                                                                        osql::clauses::OrderingTerm("SQL-expression-4",
-                                                                                                    osql::clauses::CollateClause("Latin1_General_CS_AS_KS_WS"),
-                                                                                                    true, false)))
+                                                            osql::clauses::AscOrderingTerm("SQL-expression-1",
+                                                                                            osql::clauses::CollateClause("Latin1_General_CS_AS_KS_WS"),
+                                                                                            true),
+                                                            osql::clauses::DescOrderingTerm("SQL-expression-2", false),
+                                                            osql::clauses::NullsFirstOrderingTerm("SQL-expression-3",
+                                                                                                  osql::clauses::CollateClause("Latin1_General_CS_AS_KS_WS"),
+                                                                                                  false),
+                                                            osql::clauses::OrderingTerm("SQL-expression-4",
+                                                                                        osql::clauses::CollateClause("Latin1_General_CS_AS_KS_WS"),
+                                                                                        true, false)))
         << std::endl;
 
-    osql::columns::PrimaryKeyClause  prim_key_clause(osql::clauses::ConflictIgnoreClause(), false);
+    osql::columns::constraints::PrimaryKeyClause  prim_key_clause(osql::clauses::CONFLICT_ROLLBACK_CLAUSE, "added_text");
     std::cout << "Column Primary Key Clause: " << osql::clauses::T(prim_key_clause) << std::endl;
 
-    osql::columns::PrimaryKeyClause  prim_key_clause2 = prim_key_clause;
+    osql::columns::constraints::PrimaryKeyDescClause  prim_key_clause2(osql::clauses::NO_CONFLICT_CLAUSE);
     std::cout << "Column Primary Key Clause: " << osql::clauses::T(prim_key_clause2) << std::endl;
 
-    osql::columns::PrimaryKeyAscClause  prim_key_clause3(osql::clauses::ConflictAbortClause(), true);
+    osql::columns::constraints::PrimaryKeyAscAutoincrClause  prim_key_clause3(osql::clauses::CONFLICT_ABORT_CLAUSE);
     std::cout << "Column Primary Key ASC Clause: " << osql::clauses::T(prim_key_clause3) << std::endl;
 
     osql::clauses::ForeignTableSubclause ftsu_1("foreign_table_1", "col_A", "col_B", "col_C", std::string("col_E"));

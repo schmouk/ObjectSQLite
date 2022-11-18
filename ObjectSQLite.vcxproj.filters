@@ -78,9 +78,6 @@
     <ClCompile Include="osql\clauses\constraint_name_clause.ixx">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="osql\columns\column_constraints.ixx">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="osql\tables\table_constraints.ixx">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -88,6 +85,30 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="osql\clauses\foreign_table_subclause.ixx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="osql\columns\constraints\as.ixx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="osql\columns\constraints\bases.ixx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="osql\columns\constraints\check.ixx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="osql\columns\constraints\default.ixx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="osql\columns\constraints\generated_as.ixx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="osql\columns\constraints\primary_key.ixx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="osql\columns\constraints\not_null.ixx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="osql\columns\constraints\unique.ixx">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

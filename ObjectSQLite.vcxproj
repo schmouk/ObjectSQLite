@@ -176,7 +176,14 @@
     <ClCompile Include="osql\clauses\type_name_clause.ixx" />
     <ClCompile Include="osql\clauses\with_clause.ixx" />
     <ClCompile Include="osql\columns\column.ixx" />
-    <ClCompile Include="osql\columns\column_constraints.ixx" />
+    <ClCompile Include="osql\columns\constraints\as.ixx" />
+    <ClCompile Include="osql\columns\constraints\bases.ixx" />
+    <ClCompile Include="osql\columns\constraints\check.ixx" />
+    <ClCompile Include="osql\columns\constraints\default.ixx" />
+    <ClCompile Include="osql\columns\constraints\generated_as.ixx" />
+    <ClCompile Include="osql\columns\constraints\not_null.ixx" />
+    <ClCompile Include="osql\columns\constraints\primary_key.ixx" />
+    <ClCompile Include="osql\columns\constraints\unique.ixx" />
     <ClCompile Include="osql\common\object_base.ixx" />
     <ClCompile Include="osql\dbconnection\dbconnection.cpp" />
     <ClCompile Include="osql\dbconnection\dbconnection.ixx" />
