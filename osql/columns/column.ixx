@@ -140,7 +140,7 @@ export namespace osql::columns
             return osql::clauses::T(first_constraint) + ' ' + m_get_constraints_text(next_constraints...);
         }
 
-        /* Gets the text of the very last column constraint. */
+        /* Gets the text of the very last constraint for this column. */
         template<typename LastConstraintT>
         inline std::string  m_get_constraints_text(const LastConstraintT& last_constraint)
         {
