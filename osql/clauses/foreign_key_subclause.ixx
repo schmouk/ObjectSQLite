@@ -1,4 +1,3 @@
-#pragma once
 /*
 MIT License
 
@@ -24,56 +23,37 @@ SOFTWARE.
 */
 
 //===========================================================================
-#include <sstream>
-#include <string>
+module;
+
+#include "osql/clauses/clause.h"
+
+
+export module osql.clauses.foreign_key_subclauses;
 
 
 //===========================================================================
-namespace osql::clauses
+export namespace osql::clauses
 {
-    /** @brief Returns a string set with a single char. */
-    template<char C>
-    [[nodiscard]] constexpr std::string STRCHAR() noexcept
-    {
-        return std::string(1, C);
-    };
+    //
+    // Notice: these clauses are used with columns and with tables definitions.
+    //
+
+    //=======================================================================
+    /** @brief The base class for all subclauses of Foreign Key Clauses, as included in columns and tables constraints.
+    *
+    * @see https://www.sqlite.org/foreignkeys.html to get  explanations
+    *   about the use of FOREIGN KEYs in sqlite: they may be parsed but
+    *   take  no  effect  or even they may be forbidden and trig errors
+    *   according to defined macros used at sqlite compilation time.
+    *
+    * This  class is inherited by all subclauses of clause Foreign Key.
+    * @see modules  on_delete_update_clause.ixx,  match_clause.ixx  and
+    *      deferrable_clause.ixx
+    */
+    struct ForeignKeySubclause
+    {};
 
 
-    /** @brief Templatization of a sequence of chars as a string. */
-    template<char C, char... Cs>
-    struct STR
-    {
-        [[nodiscard]] static std::string get_text()
-        {
-            return (STRCHAR<C>() + STR<Cs...>::get_text());
-        }
-    };
-
-
-    /** @brief Specialization of STR with sole null char. */
-    template<>
-    struct STR<'\0'>
-    {
-        [[nodiscard]] static std::string get_text()
-        {
-            return "";
-        }
-    };
-
-
-    /** @brief Evaluates the text associated with an osql clause (1/2). */
-    template<typename ClauseT>
-    [[nodiscard]] inline std::string T(const ClauseT& clause) noexcept
-    {
-        return clause.get_text();
-    }
-
-
-    /** @brief Evaluates the text associated with an osql clause (2/2). */
-    template<typename ClauseT>
-    [[nodiscard]] inline std::string T() noexcept
-    {
-        return ClauseT().get_text();
-    }
+    // #if !defined(SQLITE_OMIT_FOREIGN_KEY) && !defined(SQLITE_OMIT_TRIGGER)
 
 }
