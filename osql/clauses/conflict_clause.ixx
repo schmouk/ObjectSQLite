@@ -51,7 +51,7 @@ namespace osql::clauses
 
     //=======================================================================
     /** @brief the templated string for the prefix of every conflict clauses. */
-    using OnConflictPrefixStr = osql::clauses::STR< ' ', 'O', 'N', ' ', 'C', 'O', 'N', 'F', 'L', 'I', 'C', 'T', 0 >;
+    using OnConflictPrefixStr = osql::clauses::STR< 'O', 'N', ' ', 'C', 'O', 'N', 'F', 'L', 'I', 'C', 'T', 0 >;
 
 
     //=======================================================================

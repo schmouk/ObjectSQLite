@@ -43,8 +43,10 @@ import osql.clauses.on_delete_update_clauses;
 import osql.clauses.ordering_clauses;
 import osql.clauses.ordering_terms;
 import osql.clauses.select_clauses;
+import osql.clauses.type_name_clauses;
 import osql.clauses.with_clauses;
 
+import osql.columns.column;
 import osql.columns.constraints.bases;
 import osql.columns.constraints.as;
 import osql.columns.constraints.check;
@@ -115,5 +117,30 @@ int main()
                                           osql::clauses::OnUpdateCascadeClause(),
                                           dic_1);
     std::cout << "Foreign Key clause 3: " << osql::clauses::T(fkc_3) << std::endl;
+
+
+    osql::columns::Column column_1("columnName1");
+    std::cout << "column_1: " << osql::clauses::T(column_1) << std::endl;
+
+    osql::columns::Column column_2("columnName2", osql::clauses::TypeNameClause("INT"));
+    std::cout << "column_2: " << osql::clauses::T(column_2) << std::endl;
+
+    osql::columns::Column column_3("columnName3", osql::clauses::TypeNameClause("CHAR", 10));
+    std::cout << "column_3: " << osql::clauses::T(column_3) << std::endl;
+
+    osql::columns::Column column_4("columnName4", osql::clauses::TypeNameClause("REAL", 10, 20));
+    std::cout << "column_4: " << osql::clauses::T(column_4) << std::endl;
+
+    osql::columns::Column column_5("columnName5",
+                                   osql::clauses::TypeNameClause("CHAR", 10),
+                                   osql::columns::constraints::NotNullClause(osql::clauses::CONFLICT_FAIL_CLAUSE));
+    std::cout << "column_5: " << osql::clauses::T(column_5) << std::endl;
+
+    osql::columns::Column column_6("columnName6",
+                                   osql::clauses::TypeNameClause("CHAR", 10),
+                                   osql::columns::constraints::NotNullClause(osql::clauses::CONFLICT_FAIL_CLAUSE),
+                                   osql::columns::constraints::UniqueClause(osql::clauses::CONFLICT_ABORT_CLAUSE),
+                                   osql::columns::constraints::DefaultClause("<unset>"));
+    std::cout << "column_6: " << osql::clauses::T(column_6) << std::endl;
 
 }
