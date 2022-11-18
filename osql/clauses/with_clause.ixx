@@ -39,9 +39,9 @@ import osql.clauses;
 export namespace osql::clauses
 {
     /** @brief The class of SQL WITH clauses as included in SQL statements. */
-    using WithClause = osql::clauses::Clause< STR<'W', 'I', 'T', 'H', 0> >;
+    using WithClause = osql::clauses::Clause< osql::clauses::STR<'W', 'I', 'T', 'H', 0> >;
 
-    /** @brief The class of SQL WITH clauses as included in SQL statements. */
-    using WithRecursiveClause = osql::clauses::Clause< STR<'W', 'I', 'T', 'H', ' ', 'R', 'E', 'C', 'U', 'R', 'S', 'I', 'V', 'E', 0> >;
+    /** @brief The class of SQL WITH RECURSIVE clauses as included in SQL statements. */
+    using WithRecursiveClause = osql::clauses::Clause< osql::clauses::STR<'W', 'I', 'T', 'H', ' ', 'R', 'E', 'C', 'U', 'R', 'S', 'I', 'V', 'E', 0> >;
 
 }

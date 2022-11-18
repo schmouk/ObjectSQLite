@@ -47,11 +47,11 @@ export namespace osql::clauses
     * @sa NullsOrderingTerm, NullsFisrtOrderingTerm, NullsLastOrderingTerm,
     *     AscendingOrderingTerm, AscOrderingTerm and DescOrderingTerm
     */
-    class OrderingTerm : public NoPrefixClause<>
+    class OrderingTerm : public osql::clauses::NoPrefixClause<>
     {
     public:
         //---   Wrappers   --------------------------------------------------
-        using MyBaseClass = NoPrefixClause<>;
+        using MyBaseClass = osql::clauses::NoPrefixClause<>;
 
 
         //---   Constructors / Destructor   ---------------------------------
@@ -61,14 +61,14 @@ export namespace osql::clauses
         {}
 
         /** @brief Constructor (2/6). */
-        inline OrderingTerm(const std::string& expr,
+        inline OrderingTerm(const std::string&                  expr,
                             const osql::clauses::CollateClause& collate_clause) noexcept
             : MyBaseClass(std::format("{} {}", expr,
                                                collate_clause.get_text()))
         {}
 
         /** @brief Constructor (3/6). */
-        inline OrderingTerm(const std::string& expr,
+        inline OrderingTerm(const std::string&                  expr,
                             const osql::clauses::CollateClause& collate_clause,
                             const bool                          b_ascending) noexcept
             : MyBaseClass(std::format("{} {} {}", expr,
@@ -77,7 +77,7 @@ export namespace osql::clauses
         {}
 
         /** @brief Constructor (4/6). */
-        inline OrderingTerm(const std::string& expr,
+        inline OrderingTerm(const std::string&                  expr,
                             const osql::clauses::CollateClause& collate_clause,
                             const bool                          b_ascending,
                             const bool                          b_nulls_first) noexcept
@@ -102,26 +102,6 @@ export namespace osql::clauses
                                                         b_ascending ? "ASC" : "DESC",
                                                         b_nulls_first ? "FIRST" : "LAST"))
         {}
-
-        /** @brief Default empty constructor. */
-        OrderingTerm() noexcept = default;
-
-        /** @brief Default copy constructor. */
-        OrderingTerm(const OrderingTerm&) noexcept = default;
-
-        /** @brief Default move constructor. */
-        OrderingTerm(OrderingTerm&&) noexcept = default;
-
-        /** @brief Default destructor. */
-        virtual ~OrderingTerm() noexcept = default;
-
-
-        //---   Assignments   -----------------------------------------------
-        /** @brief Default copy assignment. */
-        [[nodiscard]] OrderingTerm& operator= (const OrderingTerm&) noexcept = default;
-
-        /** @brief Default move assignment. */
-        [[nodiscard]] OrderingTerm& operator= (OrderingTerm&&) noexcept = default;
     };
 
 
@@ -131,11 +111,11 @@ export namespace osql::clauses
     * @sa NullsFirstOrderingTerm and NullsLastOrderingterm.
     */
     template<const bool NULLS_FIRST = true>
-    class NullsOrderingTerm : public OrderingTerm
+    class NullsOrderingTerm : public osql::clauses::OrderingTerm
     {
     public:
         //---   Wrappers   --------------------------------------------------
-        using MyBaseClass = OrderingTerm;
+        using MyBaseClass = osql::clauses::OrderingTerm;
 
 
         //---   Constructors / Destructor   ---------------------------------
@@ -162,27 +142,6 @@ export namespace osql::clauses
                                  const bool         b_ascending) noexcept
             : MyBaseClass(expr, b_ascending, NULLS_FIRST)
         {}
-
-        /** @brief Default empty constructor. */
-        NullsOrderingTerm() noexcept = default;
-
-        /** @brief Default copy constructor. */
-        NullsOrderingTerm(const NullsOrderingTerm&) noexcept = default;
-
-        /** @brief Default move constructor. */
-        NullsOrderingTerm(NullsOrderingTerm&&) noexcept = default;
-
-        /** @brief Default destructor. */
-        virtual ~NullsOrderingTerm() noexcept = default;
-
-
-        //---   Assignments   -----------------------------------------------
-        /** @brief Default copy assignment. */
-        [[nodiscard]] NullsOrderingTerm& operator= (const NullsOrderingTerm&) noexcept = default;
-
-        /** @brief Default move assignment. */
-        [[nodiscard]] NullsOrderingTerm& operator= (NullsOrderingTerm&&) noexcept = default;
-
     };
 
 
@@ -202,11 +161,11 @@ export namespace osql::clauses
     *     be the preferred ways to name the related classes.
     */
     template<const bool ASC = true>
-    class AscendingOrderingTerm : public OrderingTerm
+    class AscendingOrderingTerm : public osql::clauses::OrderingTerm
     {
     public:
         //---   Wrappers   --------------------------------------------------
-        using MyBaseClass = OrderingTerm;
+        using MyBaseClass = osql::clauses::OrderingTerm;
 
 
         //---   Constructors / Destructor   ---------------------------------
@@ -216,13 +175,13 @@ export namespace osql::clauses
         {}
 
         /** @brief Constructor (2/4). */
-        inline AscendingOrderingTerm(const std::string& expr,
+        inline AscendingOrderingTerm(const std::string&                  expr,
                                      const osql::clauses::CollateClause& collate_clause) noexcept
             : MyBaseClass(expr, collate_clause, ASC)
         {}
 
         /** @brief Constructor (3/4). */
-        inline AscendingOrderingTerm(const std::string& expr,
+        inline AscendingOrderingTerm(const std::string&                  expr,
                                      const osql::clauses::CollateClause& collate_clause,
                                      const bool                          b_nulls_first) noexcept
             : MyBaseClass(expr, collate_clause, ASC, b_nulls_first)
@@ -234,26 +193,6 @@ export namespace osql::clauses
                                      const bool         b_nulls_first) noexcept
             : MyBaseClass(expr, ASC, b_nulls_first)
         {}
-
-        /** @brief Default empty constructor. */
-        AscendingOrderingTerm() noexcept = default;
-
-        /** @brief Default copy constructor. */
-        AscendingOrderingTerm(const AscendingOrderingTerm&) noexcept = default;
-
-        /** @brief Default move constructor. */
-        AscendingOrderingTerm(AscendingOrderingTerm&&) noexcept = default;
-
-        /** @brief Default destructor. */
-        virtual ~AscendingOrderingTerm() noexcept = default;
-
-
-        //---   Assignments   -----------------------------------------------
-        /** @brief Default copy assignment. */
-        [[nodiscard]] AscendingOrderingTerm& operator= (const AscendingOrderingTerm&) noexcept = default;
-
-        /** @brief Default move assignment. */
-        [[nodiscard]] AscendingOrderingTerm& operator= (AscendingOrderingTerm&&) noexcept = default;
     };
 
 

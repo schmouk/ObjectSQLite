@@ -1,4 +1,3 @@
-#pragma once
 /*
 MIT License
 
@@ -24,56 +23,31 @@ SOFTWARE.
 */
 
 //===========================================================================
-#include <sstream>
+module;
+
+#include <format>
 #include <string>
+
+#include "osql/clauses/clause.h"
+
+
+export module osql.columns.constraints.unique;
+
+import osql.clauses;
+import osql.clauses.conflict_clauses;
+import osql.columns.constraints.bases;
+
 
 
 //===========================================================================
-namespace osql::clauses
+namespace osql::columns::constraints
 {
-    /** @brief Returns a string set with a single char. */
-    template<char C>
-    [[nodiscard]] constexpr std::string STRCHAR() noexcept
-    {
-        return std::string(1, C);
-    };
+    /** @brief the STR value for clause UNIQUE. */
+    using UniqueStr = osql::clauses::STR<'U', 'N', 'I', 'Q', 'U', 'E', 0>;
 
 
-    /** @brief Templatization of a sequence of chars as a string. */
-    template<char C, char... Cs>
-    struct STR
-    {
-        [[nodiscard]] static std::string get_text()
-        {
-            return (STRCHAR<C>() + STR<Cs...>::get_text());
-        }
-    };
-
-
-    /** @brief Specialization of STR with sole null char. */
-    template<>
-    struct STR<'\0'>
-    {
-        [[nodiscard]] static std::string get_text()
-        {
-            return "";
-        }
-    };
-
-
-    /** @brief Evaluates the text associated with an osql clause (1/2). */
-    template<typename ClauseT>
-    [[nodiscard]] inline std::string T(const ClauseT& clause) noexcept
-    {
-        return clause.get_text();
-    }
-
-
-    /** @brief Evaluates the text associated with an osql clause (2/2). */
-    template<typename ClauseT>
-    [[nodiscard]] inline std::string T() noexcept
-    {
-        return ClauseT().get_text();
-    }
+    //===   UNIQUE   ========================================================
+    /** @brief The class of Unique Clauses as included in columns definitions. */
+    export using UniqueClause = osql::columns::constraints::ConflictClauseColumnConstraint< UniqueStr >;
 
 }

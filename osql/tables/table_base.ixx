@@ -32,10 +32,9 @@ module;
 #include "sqlite3.h"
 
 
-export module osql.tables;
+export module osql.tables.table_base;
 
-import osql.common;
-import osql.columns;
+import osql.common.object_base;
 
 
 //===========================================================================

@@ -31,50 +31,54 @@ module;
 #include "osql/clauses/clause.h"
 
 
-export module osql.clauses.ordering_clauses;
+export module osql.clauses.type_name_clauses;
 
 import osql.clauses;
-import osql.clauses.ordering_terms;
 
 
 //===========================================================================
-namespace osql::clauses
+export namespace osql::clauses
 {
-    /** @brief The STR expression associated with ordering clauses - internal usage. */
-    using OrderingStr = osql::clauses::STR< 'O', 'R', 'D', 'E', 'R', ' ', 'B', 'Y', 0 >;
-    
+    //
+    // Notice: these clauses are used with columns definitions.
+    //
 
     //=======================================================================
-    /** @brief The class of SQL ORDER BY clauses as included in SQL statements. */
-    export class OrderingClause : public osql::clauses::Clause< OrderingStr >
+    /** @brief The class of Type Name Clauses as included in columns and tables constraints. */
+    class TypeNameClause : public osql::clauses::NoPrefixClause<>
     {
     public:
         //---   Wrappers   --------------------------------------------------
-        using MyBaseClass = osql::clauses::Clause< OrderingStr >;
+        using MyBaseClass = osql::clauses::NoPrefixClause<>;  //!< wrapper to the base class
 
 
         //---   Constructors / Destructor   ---------------------------------
-        /** @brief Value constructor. */
-        template<typename... OrderingTermsT> 
-        OrderingClause(const OrderingTermsT&... ordering_terms) noexcept
-            : MyBaseClass(get_terms(ordering_terms...))
+        /** @brief Value constructor (with sole name of type).
+        *
+        * Notice: The name definition may embed spaces and tabs characters.
+        */
+        inline TypeNameClause(const std::string& name) noexcept
+            : MyBaseClass(name)
         {}
 
+        /** @brief Value constructor (with type name and one signed integer).
+        *
+        * Notice: The name definition may embed spaces and tabs characters.
+        */
+        inline TypeNameClause(const std::string& name, const int32_t num) noexcept
+            : MyBaseClass(std::format("{:s}({:d})", name, num))
+        {}
 
-        //---   Operations   ------------------------------------------------
-        /** @brief Returns the whole string of ordering terms separated with commas. */
-        template<typename FirstOrderingTerm, typename... OrderingTermsT>
-        [[nodiscard]] const std::string get_terms(const FirstOrderingTerm& first, const OrderingTermsT... rest) const noexcept
-        {
-            return first.get_text() + ", " + get_terms(rest...);
-        }
+        /** @brief Value constructor (with type name and two signed integers).
+        *
+        * Notice: The name definition may embed spaces and tabs characters.
+        */
+        inline TypeNameClause(const std::string& name, const int32_t min_num, const int32_t max_num) noexcept
+            : MyBaseClass(std::format("{:s}({:d}, {:d})", name, min_num, max_num))
+        {}
 
-        /** @brief Returns the very last ordering term text. */
-        template<typename OrderingTermT>
-        [[nodiscard]] const std::string get_terms(const OrderingTermT& term) const noexcept
-        {
-            return term.get_text();
-        }
+        /** @brief Deleted empty/default constructor. */
+        TypeNameClause() noexcept = delete;
     };
 
 }

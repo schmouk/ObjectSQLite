@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -162,10 +162,28 @@
     <ClCompile Include="ObjectSQLite.cpp" />
     <ClCompile Include="osql\clauses\clause.ixx" />
     <ClCompile Include="osql\clauses\collate_clause.ixx" />
+    <ClCompile Include="osql\clauses\constraint_name_clause.ixx" />
+    <ClCompile Include="osql\clauses\conflict_clause.ixx" />
+    <ClCompile Include="osql\clauses\deferrable_clause.ixx" />
+    <ClCompile Include="osql\clauses\foreign_key_clause.ixx" />
+    <ClCompile Include="osql\clauses\foreign_key_subclause.ixx" />
+    <ClCompile Include="osql\clauses\foreign_table_subclause.ixx" />
+    <ClCompile Include="osql\clauses\match_clause.ixx" />
+    <ClCompile Include="osql\clauses\on_delete_update_clause.ixx" />
     <ClCompile Include="osql\clauses\ordering_clause.ixx" />
     <ClCompile Include="osql\clauses\ordering_term.ixx" />
     <ClCompile Include="osql\clauses\select_clause.ixx" />
+    <ClCompile Include="osql\clauses\type_name_clause.ixx" />
     <ClCompile Include="osql\clauses\with_clause.ixx" />
+    <ClCompile Include="osql\columns\column.ixx" />
+    <ClCompile Include="osql\columns\constraints\as.ixx" />
+    <ClCompile Include="osql\columns\constraints\bases.ixx" />
+    <ClCompile Include="osql\columns\constraints\check.ixx" />
+    <ClCompile Include="osql\columns\constraints\default.ixx" />
+    <ClCompile Include="osql\columns\constraints\generated_as.ixx" />
+    <ClCompile Include="osql\columns\constraints\not_null.ixx" />
+    <ClCompile Include="osql\columns\constraints\primary_key.ixx" />
+    <ClCompile Include="osql\columns\constraints\unique.ixx" />
     <ClCompile Include="osql\common\object_base.ixx" />
     <ClCompile Include="osql\dbconnection\dbconnection.cpp" />
     <ClCompile Include="osql\dbconnection\dbconnection.ixx" />
@@ -173,6 +191,7 @@
     <ClCompile Include="osql\statements\statement.ixx" />
     <ClCompile Include="osql\tables\table_base.cpp" />
     <ClCompile Include="osql\tables\table_base.ixx" />
+    <ClCompile Include="osql\tables\table_constraints.ixx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Source.def" />
