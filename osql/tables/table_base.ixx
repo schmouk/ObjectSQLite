@@ -25,7 +25,10 @@ SOFTWARE.
 //===========================================================================
 module;
 
+#include <type_traits>
 #include <string>
+#include <vector>
+
 #include "sqlite3.h"
 
 
@@ -48,10 +51,14 @@ export namespace osql::tables
 
         //---   Constructors / Destructor   ---------------------------------
         /** @brief Value constructor. */
-        TableBase(const std::string& name) noexcept;
+        template<typename... ColumnsT>
+            requires std::is_base_of_v<osql::columns::ColumnBase, ColumnsT...>
+        TableBase(const std::string& name, ColumnsT&... columns) noexcept;
 
         /** @brief Value constructor. */
-        TableBase(const std::string& attached_database, const std::string& name) noexcept;
+        template<typename... ColumnsT>
+            requires std::is_base_of_v<osql::columns::ColumnBase, ColumnsT...>
+        TableBase(const std::string& attached_database, const std::string& name, ColumnsT&... columns) noexcept;
 
         /** @brief Default empty constructor. */
         TableBase() noexcept = default;
@@ -63,7 +70,7 @@ export namespace osql::tables
         TableBase(TableBase&&) noexcept = delete;
 
         /** @brief Destructor. */
-        inline virtual ~TableBase() noexcept;
+        virtual ~TableBase() noexcept;
 
 
         //---   Assignments   -----------------------------------------------
@@ -74,8 +81,9 @@ export namespace osql::tables
         TableBase& operator= (TableBase&&) noexcept = delete;
 
 
-    protected:
         //---   Attributes   ------------------------------------------------
+        std::vector< osql::columns::ColumnBase* >  columns;
+
     };
 
 }

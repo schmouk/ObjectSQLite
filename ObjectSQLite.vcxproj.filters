@@ -116,6 +116,11 @@
     <None Include="Source.def">
       <Filter>Source Files</Filter>
     </None>
+    <None Include="sqlite3.def">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="sqlite3.dll" />
+    <None Include="sqlite3.exp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="osql\osql.h">
@@ -124,5 +129,8 @@
     <ClInclude Include="osql\clauses\clause.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="sqlite3.lib" />
   </ItemGroup>
 </Project>
