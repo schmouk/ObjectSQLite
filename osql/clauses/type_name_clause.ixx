@@ -25,6 +25,7 @@ SOFTWARE.
 //===========================================================================
 module;
 
+#include <cassert>
 #include <cstdint>
 #include <format>
 #include <string>
@@ -90,21 +91,27 @@ export namespace osql::clauses
     // Notice: these clauses are used with columns and with expressions definitions.
     //
 
+    /** @brief The generic (base) type for all Type name clause. */
+    struct TypeName : osql::clauses::NoPrefixClause<>
+    {
+        TypeName(const std::string& name)
+            : osql::clauses::NoPrefixClause<>(name)
+        {}
+    };
+
+
     //===   TYPENAME CLAUSE   ===============================================
     /** @brief The class of Type Name Clauses with ZERO specified unsigned integers. */
-    class TypeNameClause : public osql::clauses::NoPrefixClause<>
+    class TypeNameClause : public TypeName
     {
     public:
-        //---   Wrappers   --------------------------------------------------
-        using MyBaseClass = osql::clauses::NoPrefixClause<>;  //!< wrapper to the base class
-
         //---   Constructors / Destructor   ---------------------------------
         /** @brief Value constructor (with sole name of type).
         *
         * Notice: The name definition may embed spaces and tabs characters.
         */
         inline TypeNameClause(const std::string& name) noexcept
-            : MyBaseClass(name)
+            : TypeName(name)
         {}
 
         /** @brief Deleted empty/default constructor. */
@@ -114,19 +121,16 @@ export namespace osql::clauses
 
     //===   TYPENAME CLAUSE 1   =============================================
     /** @brief The class of Type Name Clauses with ZERO or ONE specified unsigned integers. */
-    class TypeNameClause1 : public TypeNameClause
+    class TypeNameClause1 : public TypeName
     {
     public:
-        //---   Wrappers   --------------------------------------------------
-        using MyBaseClass = TypeNameClause;  //!< wrapper to the base class
-
         //---   Constructors / Destructor   ---------------------------------
         /** @brief Value constructor (with sole name of type).
         *
         * Notice: The name definition may embed spaces and tabs characters.
         */
         inline TypeNameClause1(const std::string& name) noexcept
-            : MyBaseClass(name)
+            : TypeName(name)
         {}
 
         /** @brief Value constructor (with type name and one signed integer).
@@ -134,7 +138,7 @@ export namespace osql::clauses
         * Notice: The name definition may embed spaces and tabs characters.
         */
         inline TypeNameClause1(const std::string& name, const int32_t num) noexcept
-            : MyBaseClass(std::format("{:s}({:d})", name, num))
+            : TypeName(std::format("{:s}({:d})", name, num))
         {}
 
         /** @brief Deleted empty/default constructor. */
@@ -145,19 +149,16 @@ export namespace osql::clauses
 
     //===   TYPENAME CLAUSE 2   =============================================
     /** @brief The class of Type Name Clauses with ZERO to TWO specified unsigned integers. */
-    class TypeNameClause2 : public osql::clauses::NoPrefixClause<>
+    class TypeNameClause2 : public TypeName
     {
     public:
-        //---   Wrappers   --------------------------------------------------
-        using MyBaseClass = osql::clauses::NoPrefixClause<>;  //!< wrapper to the base class
-
         //---   Constructors / Destructor   ---------------------------------
         /** @brief Value constructor (with type name and two signed integers).
         *
         * Notice: The name definition may embed spaces and tabs characters.
         */
         inline TypeNameClause2(const std::string& name, const int32_t min_num, const int32_t max_num) noexcept
-            : MyBaseClass(std::format("{:s}({:d}, {:d})", name, min_num, max_num))
+            : TypeName(std::format("{:s}({:d}, {:d})", name, min_num, max_num))
         {}
 
         /** @brief Deleted empty/default constructor. */
@@ -354,7 +355,9 @@ export namespace osql::clauses
     /** @brief Decimal typename class. */
     struct TypeDecimal : TypeNameClause2
     {
-        inline TypeDecimal(const int32_t overall_width, const int32_t intpart_width) : TypeNameClause2("DECIMAL", overall_width, intpart_width) {}
+        inline TypeDecimal(const int32_t overall_width, const int32_t intpart_width)
+            : TypeNameClause2("DECIMAL", overall_width, intpart_width)
+        { assert(overall_width > intpart_width); }
     };
 
     /** @brief Boolean typename class. */

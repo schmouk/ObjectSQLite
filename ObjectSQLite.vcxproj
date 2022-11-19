@@ -189,9 +189,6 @@
     <ClCompile Include="osql\dbconnection\dbconnection.ixx" />
     <ClCompile Include="osql\statements\statement.cpp" />
     <ClCompile Include="osql\statements\statement.ixx" />
-    <ClCompile Include="osql\tables\table_base.cpp" />
-    <ClCompile Include="osql\tables\table_base.ixx" />
-    <ClCompile Include="osql\tables\table_constraints.ixx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Source.def" />
