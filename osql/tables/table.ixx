@@ -25,14 +25,13 @@ SOFTWARE.
 //===========================================================================
 module;
 
-#include <type_traits>
+#include <concepts>
 #include <string>
-#include <vector>
 
 #include "sqlite3.h"
 
 
-export module osql.tables.table_base;
+export module osql.tables.table;
 
 import osql.common.object_base;
 
@@ -42,7 +41,7 @@ export namespace osql::tables
 {
     //=======================================================================
     /** @brief The base class for SQL tables. */
-    class TableBase : public osql::common::ObjectBase
+    class Table : public osql::common::ObjectBase
     {
     public:
         //---   Wrappers   --------------------------------------------------
@@ -52,37 +51,35 @@ export namespace osql::tables
         //---   Constructors / Destructor   ---------------------------------
         /** @brief Value constructor. */
         template<typename... ColumnsT>
-            requires std::is_base_of_v<osql::columns::ColumnBase, ColumnsT...>
-        TableBase(const std::string& name, ColumnsT&... columns) noexcept;
+        Table(const std::string& name, ColumnsT&... columns) noexcept;
 
         /** @brief Value constructor. */
         template<typename... ColumnsT>
-            requires std::is_base_of_v<osql::columns::ColumnBase, ColumnsT...>
-        TableBase(const std::string& attached_database, const std::string& name, ColumnsT&... columns) noexcept;
+        Table(const std::string& attached_database, const std::string& name, ColumnsT&... columns) noexcept;
 
         /** @brief Default empty constructor. */
-        TableBase() noexcept = default;
+        Table() noexcept = default;
 
         /** @brief Deleted copy constructor. */
-        TableBase(const TableBase&) noexcept = delete;
+        Table(const Table&) noexcept = delete;
 
         /** @brief Deleted move constructor. */
-        TableBase(TableBase&&) noexcept = delete;
+        Table(Table&&) noexcept = delete;
 
         /** @brief Destructor. */
-        virtual ~TableBase() noexcept;
+        virtual ~Table() noexcept;
 
 
         //---   Assignments   -----------------------------------------------
         /** @brief Deleted copy assignment. */
-        TableBase& operator= (const TableBase&) noexcept = delete;
+        Table& operator= (const Table&) noexcept = delete;
 
         /** @brief Deleted move assignment. */
-        TableBase& operator= (TableBase&&) noexcept = delete;
+        Table& operator= (Table&&) noexcept = delete;
 
 
         //---   Attributes   ------------------------------------------------
-        std::vector< osql::columns::ColumnBase* >  columns;
+        //std::vector< osql::columns::ColumnBase* >  columns;
 
     };
 

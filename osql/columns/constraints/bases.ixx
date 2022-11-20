@@ -100,8 +100,7 @@ export namespace osql::columns::constraints
     public:
         //---   Constructors   ----------------------------------------------
         /** @brief Value constructor. */
-        template<typename CoreT>
-            requires std::convertible_to<CoreT, std::string>
+        template<typename CoreT> requires std::convertible_to<CoreT, std::string>
         inline NonEmptyColumnConstraint(const CoreT& core_text) noexcept
             : ColumnConstraint<PrefixT>((std::string)core_text)
         {}
@@ -148,15 +147,13 @@ export namespace osql::columns::constraints
 
         //---   Constructors / Destructor   ---------------------------------
         /** @brief Value constructor (1/2). */
-        template<typename ConflictClauseT>
-            requires std::derived_from<ConflictClauseT, osql::clauses::ConflictClauseType>
-        ConflictClauseColumnConstraint(const ConflictClauseT& conflict_clause) noexcept
+        template<typename ConflictClauseT> requires std::derived_from<ConflictClauseT, osql::clauses::ConflictClauseType>
+        ConflictClauseColumnConstraint(const ConflictClauseT conflict_clause) noexcept
             : MyBaseClass(osql::clauses::T(conflict_clause))
         {}
 
         /** @brief Value constructor (2/2). */
-        template<typename ConflictClauseT>
-            requires std::derived_from<ConflictClauseT, osql::clauses::ConflictClauseType>
+        template<typename ConflictClauseT> requires std::derived_from<ConflictClauseT, osql::clauses::ConflictClauseType>
         ConflictClauseColumnConstraint(const ConflictClauseT& conflict_clause,
                                        const std::string&     added_text) noexcept
             : MyBaseClass(std::format("{:s} {:s}", osql::clauses::T(conflict_clause), added_text))
