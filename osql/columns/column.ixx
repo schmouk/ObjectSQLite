@@ -25,7 +25,10 @@ SOFTWARE.
 //===========================================================================
 module;
 
+#include <concepts>
+#include <format>
 #include <string>
+#include <type_traits>
 
 #include "osql/clauses/clause.h"
 
@@ -37,56 +40,75 @@ import osql.clauses.type_name_clauses;
 
 
 //===========================================================================
-export namespace osql::columns
+namespace osql::columns
 {
+
     //=======================================================================
-    /** @brief The base of Columns. */
-    class Column
+    /* The internal definition of constraints as associated with columns definitions. */
+    class ColumnConstraints
+    {
+    public:
+        //---   Constructors / Destructor   ---------------------------------
+        /* Value constructor. */
+        template<typename... ColsConstraintsT>
+        inline ColumnConstraints(const ColsConstraintsT&... column_constraints) noexcept
+        {
+            constraints_text = m_get_constraints_text(column_constraints...);
+        }
+
+        ColumnConstraints() noexcept = default;                         // Default empty constructor
+        ColumnConstraints(const ColumnConstraints&) noexcept = default; // Default copy constructor
+        ColumnConstraints(ColumnConstraints&&) noexcept = default;      // Default move constructor
+        virtual ~ColumnConstraints() noexcept = default;                // Default destructor
+
+        //---   Attributes   ------------------------------------------------
+        std::string  constraints_text;  // the text of the whole constraints that are associated with a same column.
+
+    private:
+        /* Gets the text of this column constraints. */
+        template< typename FirstConstraintT, typename... ConstraintsT >
+            requires std::derived_from<FirstConstraintT, osql::columns::constraints::ColumnConstraintType>
+        inline std::string  m_get_constraints_text(const FirstConstraintT& first_constraint,
+                                                   const ConstraintsT&...  next_constraints)
+        {
+            return osql::clauses::T(first_constraint) + ' ' + m_get_constraints_text(next_constraints...);
+        }
+
+        /* Gets the text of the very last constraint for this column. */
+        template<typename LastConstraintT>
+            requires std::derived_from<LastConstraintT, osql::columns::constraints::ColumnConstraintType>
+        inline std::string  m_get_constraints_text(const LastConstraintT& last_constraint)
+        {
+            return osql::clauses::T(last_constraint);
+        }
+
+    };
+
+
+    //=======================================================================
+    /** @brief The class of untyped Columns.
+    *
+    * Instantiate this class when defining a column with no specified
+    * type affinity. Otherwise, see TypedColumn.
+    */
+    export class Column : public ColumnConstraints
     {
     public:
         //---   Constructors / Destructor   ---------------------------------
         /** @brief Value constructor (with sole column name) */
         inline Column(const std::string& column_name) noexcept
             : name{ column_name }
-            , type_name{}
-            , constraints{}
-        {}
-
-
-        /** @brief Value constructor (with column name + type name). */
-        inline Column(const std::string&                    column_name,
-                      const osql::clauses::TypeNameClause&  type_name_clause)
-            : name{ column_name }
-            , type_name{ osql::clauses::T(type_name_clause) }
-            , constraints{}
+            , ColumnConstraints{}
         {}
 
 
         /** @brief Value constructor (with column name + column constraints). */
         template<typename... ColsConstraintsT>
-            //requires std::derived_from<ColsConstraintsT..., osql::columns::constraints::ColumnConstraintType>
         inline Column(const std::string&         column_name,
                       const ColsConstraintsT&... column_constraints) noexcept
             : name{ column_name }
-            , type_name{}
-            , constraints{}
-        {
-            constraints = m_get_constraints_text(column_constraints...);
-        }
-
-
-        /** @brief Value constructor (with column name + type name + column constraints). */
-        template<typename... ColsConstraintsT>
-            //requires std::derived_from<ColsConstraintsT..., osql::columns::constraints::ColumnConstraintType>
-        inline Column(const std::string&                    column_name,
-                      const osql::clauses::TypeNameClause&  type_name_clause,
-                      const ColsConstraintsT&...            column_constraints) noexcept
-            : name{ column_name }
-            , type_name{ osql::clauses::T(type_name_clause) }
-            , constraints{}
-        {
-            constraints = m_get_constraints_text(column_constraints...);
-        }
+            , ColumnConstraints{ column_constraints... }
+        {}
 
 
         /** @brief Deleted empty constructor. */
@@ -103,18 +125,13 @@ export namespace osql::columns
 
 
         //---   Operations / Operators   ------------------------------------
-                /** @brief Gets the full text of this clause. */
-        [[nodiscard]] const std::string get_text() const noexcept
+        /** @brief Gets the full text of this clause. */
+        [[nodiscard]] inline const std::string get_text() const noexcept
         {
-            std::string s{ name };
-
-            if (!type_name.empty())
-                s += " " + type_name;
-
-            if (!constraints.empty())
-                s += " " + constraints;
-
-            return s;
+            if (constraints_text.empty())
+                return name;
+            else
+                return std::format("{:s} {:s}", name, constraints_text);
         }
 
 
@@ -126,26 +143,82 @@ export namespace osql::columns
 
 
         //---   Attributes   ------------------------------------------------
-        std::string  name;          //!< the name of this column.
-        std::string  type_name;     //!< the name of the type that is associated with this column.
-        std::string  constraints;   //!< the text of the whole constraints that are associated with this column.
+        std::string  name;  //!< the name of this column.
+    };
 
 
-    private:
-        /* Gets the text of this column constraints. */
-        template< typename FirstConstraintT, typename... ConstraintsT >
-        inline std::string  m_get_constraints_text(const FirstConstraintT& first_constraint,
-                                                   const ConstraintsT&...  next_constraints)
+    //=======================================================================
+    /** @brief The class of typed Columns.
+    *
+    * Instantiate this class when defining a column with a specified
+    * type affinity. Otherwise, see Column.
+    */
+    export class TypedColumn : public ColumnConstraints
+    {
+    public:
+        //---   Constructors / Destructor   ---------------------------------
+        /** @brief Value constructor (with column name + type name). */
+        inline TypedColumn(const std::string& column_name,
+                           const osql::clauses::TypeName& type_name_clause)
+            : name{ column_name }
+            , type_name{ osql::clauses::T(type_name_clause) }
+            , ColumnConstraints{}
+        {}
+
+
+        /** @brief Value constructor (with column name + type name + column constraints). */
+        template<typename... ColsConstraintsT>
+        inline TypedColumn(const std::string& column_name,
+                           const osql::clauses::TypeName& type_name_clause,
+                           const ColsConstraintsT&...      column_constraints) noexcept
+            : name{ column_name }
+            , type_name{ osql::clauses::T(type_name_clause) }
+            , ColumnConstraints{ column_constraints... }
+        {}
+
+
+        /** @brief Deleted empty constructor. */
+        TypedColumn() noexcept = delete;
+
+        /** @brief Default copy constructor. */
+        TypedColumn(const TypedColumn&) noexcept = default;
+
+        /** @brief Default move constructor. */
+        TypedColumn(TypedColumn&&) noexcept = default;
+
+        /** @brief Default destructor. */
+        virtual ~TypedColumn() noexcept = default;
+
+
+        //---   Operations / Operators   ------------------------------------
+        /** @brief Gets the full text of this clause. */
+        [[nodiscard]] inline const std::string get_text() const noexcept
         {
-            return osql::clauses::T(first_constraint) + ' ' + m_get_constraints_text(next_constraints...);
+            if (constraints_text.empty()) {
+                if (type_name.empty())
+                    return name;
+                else
+                    return std::format("{:s} {:s}", name, type_name);
+            }
+            else {
+                if (type_name.empty())
+                    return std::format("{:s} {:s}", name, constraints_text);
+                else
+                    return std::format("{:s} {:s} {:s}", name, type_name, constraints_text);
+            }
         }
 
-        /* Gets the text of the very last constraint for this column. */
-        template<typename LastConstraintT>
-        inline std::string  m_get_constraints_text(const LastConstraintT& last_constraint)
+
+        /** @brief Unmutable std::string casting operator. */
+        [[nodiscard]] inline operator const std::string() const noexcept
         {
-            return osql::clauses::T(last_constraint);
+            return get_text();
         }
+
+
+        //---   Attributes   ------------------------------------------------
+        std::string  name;       //!< the name of this column.
+        std::string  type_name;  //!< the name of the type associated with this column.
     };
 
 }

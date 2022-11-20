@@ -70,7 +70,7 @@ namespace osql::clauses
         template<typename DefPrefixT, typename DefSuffixT>
         inline ForeignKeyClause(const osql::clauses::ForeignTableSubclause&                    foreign_table_subclause,
                                 const osql::clauses::DeferrableClause<DefPrefixT, DefSuffixT>& deferrable_subclause) noexcept
-            : MyBaseClass(std::format("{}  {}", foreign_table_subclause.get_text(), deferrable_subclause.get_text()))
+            : MyBaseClass(std::format("{:s}  {:s}", foreign_table_subclause.get_text(), deferrable_subclause.get_text()))
         {}
 
         /** @brief Value constructor (foreign-table and at least one ForeignKeySubclause specs. */
@@ -79,18 +79,19 @@ namespace osql::clauses
                                 const SubclausesT&...                              subclauses) noexcept
             : MyBaseClass()
         {
-            set_text(std::format("{}  {}", foreign_table_subclause.get_text(), m_get_subclauses_text(subclauses...)));
+            set_text(std::format("{:s}  {:s}", foreign_table_subclause.get_text(), m_get_subclauses_text(subclauses...)));
         }
 
         /** @brief Value constructor (foreign-table, at least one ForeignKeySubclause and deferrable specs. */
         template<typename DefPrefixT, typename DefSuffixT, typename... SubclausesT>
             requires std::derived_from<osql::clauses::ForeignKeySubclause, SubclausesT...>
+            //requires std::derived_from<SubclausesT..., osql::clauses::ForeignKeySubclause>
         ForeignKeyClause(const osql::clauses::ForeignTableSubclause&                    foreign_table_subclause,
                          const SubclausesT&...                                          subclauses,
                          const osql::clauses::DeferrableClause<DefPrefixT, DefSuffixT>& deferrable_subclause) noexcept
             : MyBaseClass()
         {
-            set_text(std::format("{}  {}  {}", foreign_table_subclause.get_text(), m_get_subclauses_text(subclauses), deferrable_subclause.get_text()));
+            set_text(std::format("{:s}  {:s}  {:s}", foreign_table_subclause.get_text(), m_get_subclauses_text(subclauses), deferrable_subclause.get_text()));
         }
 
         /** @brief Deleted empty constructor. */

@@ -122,25 +122,31 @@ int main()
     osql::columns::Column column_1("columnName1");
     std::cout << "column_1: " << osql::clauses::T(column_1) << std::endl;
 
-    osql::columns::Column column_2("columnName2", osql::clauses::TypeNameClause("INT"));
+    osql::columns::TypedColumn column_2("columnName2", osql::clauses::TypeInteger());
     std::cout << "column_2: " << osql::clauses::T(column_2) << std::endl;
 
-    osql::columns::Column column_3("columnName3", osql::clauses::TypeNameClause("CHAR", 10));
+    osql::columns::TypedColumn column_3("columnName3", osql::clauses::TypeNameClause1("CHAR", 10));
     std::cout << "column_3: " << osql::clauses::T(column_3) << std::endl;
 
-    osql::columns::Column column_4("columnName4", osql::clauses::TypeNameClause("REAL", 10, 20));
+    osql::columns::TypedColumn column_4("columnName4", osql::clauses::TypeDecimal(20, 10));
     std::cout << "column_4: " << osql::clauses::T(column_4) << std::endl;
 
-    osql::columns::Column column_5("columnName5",
-                                   osql::clauses::TypeNameClause("CHAR", 10),
+    osql::columns::TypedColumn column_5("columnName5",
+                                   osql::clauses::TypeChar(10),
                                    osql::columns::constraints::NotNullClause(osql::clauses::CONFLICT_FAIL_CLAUSE));
     std::cout << "column_5: " << osql::clauses::T(column_5) << std::endl;
 
     osql::columns::Column column_6("columnName6",
-                                   osql::clauses::TypeNameClause("CHAR", 10),
                                    osql::columns::constraints::NotNullClause(osql::clauses::CONFLICT_FAIL_CLAUSE),
                                    osql::columns::constraints::UniqueClause(osql::clauses::CONFLICT_ABORT_CLAUSE),
                                    osql::columns::constraints::DefaultClause("<unset>"));
     std::cout << "column_6: " << osql::clauses::T(column_6) << std::endl;
+
+    osql::columns::TypedColumn column_7("columnName7",
+                                    osql::clauses::TypeVaryingChar(15),
+                                    osql::columns::constraints::NotNullClause(osql::clauses::CONFLICT_FAIL_CLAUSE),
+                                    osql::columns::constraints::UniqueClause(osql::clauses::CONFLICT_ABORT_CLAUSE),
+                                    osql::columns::constraints::DefaultClause("<unset>"));
+    std::cout << "column_7: " << osql::clauses::T(column_7) << std::endl;
 
 }
