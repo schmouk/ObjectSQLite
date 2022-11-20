@@ -32,31 +32,28 @@ module;
 #include "sqlite3.h"
 
 
-module osql.tables;
-
-import osql.columns;
+module osql.tables.table;
 
 
 //===========================================================================
-export namespace osql::tables
+namespace osql::tables
 {
     /* Value constructor. */
     template<typename... ColumnsT>
-        requires std::is_base_of_v<osql::columns::ColumnBase, ColumnsT...>
-    TableBase::TableBase(const std::string& name, ColumnsT&... columns) noexcept
+    Table::Table(const std::string& name, ColumnsT&... columns) noexcept
         : MyBaseClass()
     {}
 
+
     /* Value constructor. */
     template<typename... ColumnsT>
-        requires std::is_base_of_v<osql::columns::ColumnBase, ColumnsT...>
-    TableBase::TableBase(const std::string& attached_database, const std::string& name, ColumnsT&... columns) noexcept
+    Table::Table(const std::string& attached_database, const std::string& name, ColumnsT&... columns) noexcept
         : MyBaseClass()
     {}
 
 
     /* Destructor. */
-    TableBase::~TableBase() noexcept
+    Table::~Table() noexcept
     {}
 
 }

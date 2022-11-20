@@ -30,6 +30,9 @@ SOFTWARE.
 #include "osql/clauses/clause.h"
 
 import osql.dbconnection;
+import osql.dbconnection.ro_dbconnection;
+import osql.dbconnection.rw_dbconnection;
+import osql.dbconnection.memory_dbconnection;
 using namespace osql::dbconnection;
 
 import osql.clauses;

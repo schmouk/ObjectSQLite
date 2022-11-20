@@ -92,7 +92,7 @@ export namespace osql::dbconnection
             : MyBaseClass()
         {
             _last_error_code = sqlite3_open_v2(filename.c_str(), &_db_handle, flags, vfs_module.c_str());
-            // notice: attributes '_last_error_code' and '_db_handle' are inherited from base class
+            // notice: attributes '_last_error_code' and '_db_handle' are inherited from base class osql::common::ObjectBase
         }
 
         /** @brief Default empty constructor. */
@@ -135,112 +135,4 @@ export namespace osql::dbconnection
         int close() noexcept;
     };
 
-
-    //=======================================================================
-    /** @brief The Read-Only connections to SQLite databases.
-    * 
-    * Such databases are opened for read only operations and must already
-    * exist at opening time.
-    */
-    class RODBConnection : public osql::dbconnection::DBConnection
-    {
-    public:
-        //---   Constructors / Destructor   ---------------------------------
-        /** @brief Constructor with UTF-8 chars filename.
-        *
-        * @param filename: std::string
-        *   A reference to the filename for this database.
-        * @param flags: int
-        *   The  combination  of flags to be used while opening/creating a
-        *   new database file. Defaults to READ_ONLY and URI_ALLOWED.
-        *   Notice: the READ_ONLY flag is always forced, even if READ_WRITE
-        *   or CREATE flags are set.
-        * @param vfs_module: std::string
-        *   Defines the VFS to be used for this database. Defaults here to
-        *   "win32". See https://www.sqlite.org/vfs.html
-        *
-        * See https://www.sqlite.org/c3ref/open.html
-        */
-        inline RODBConnection(const std::string& filename,
-                              const int          flags = URI_ALLOWED,
-                              const std::string& vfs_module = "win32") noexcept
-            : osql::dbconnection::DBConnection(filename, flags | (READ_ONLY & ~(READ_WRITE | CREATE)), vfs_module)
-        {}
-
-        /** @brief Default destructor. */
-        virtual ~RODBConnection() noexcept = default;
-    };
-
-
-    //=======================================================================
-    /** @brief The Read-Write connections to SQLite databases.
-    *
-    * Such databases are opened for read/write operations and must already
-    * exist at opening time.
-    */
-    class RWDBConnection : public osql::dbconnection::DBConnection
-    {
-    public:
-        //---   Constructors / Destructor   ---------------------------------
-        /** @brief Constructor with UTF-8 chars filename.
-        *
-        * @param filename: std::string
-        *   A reference to the filename for this database.
-        * @param flags: int
-        *   The  combination  of flags to be used while opening/creating a
-        *   new database file. Defaults to READ_WRITE and URI_ALLOWED.
-        *   Notice: the READ_WRITE flag is always forced, even if READ_ONLY
-        *   or CREATE flags are set.
-        * @param vfs_module: std::string
-        *   Defines the VFS to be used for this database. Defaults here to
-        *   "win32". See https://www.sqlite.org/vfs.html
-        *
-        * See https://www.sqlite.org/c3ref/open.html
-        */
-        inline RWDBConnection(const std::string& filename,
-                              const int          flags = URI_ALLOWED,
-                              const std::string& vfs_module = "win32") noexcept
-            : osql::dbconnection::DBConnection(filename, flags | (READ_WRITE & ~(READ_ONLY | CREATE)), vfs_module)
-        {}
-
-        /** @brief Default destructor. */
-        virtual ~RWDBConnection() noexcept = default;
-    };
-
-
-    //=======================================================================
-    /** @brief The connections to SQLite databases that are opened in memory.
-    *
-    * Such databases are opened into memory. They are automatically
-    * destroyed at destruction time.
-    */
-    class MemoryDBConnection : public osql::dbconnection::DBConnection
-    {
-    public:
-        //---   Constructors / Destructor   ---------------------------------
-        /** @brief Constructor with UTF-8 chars filename.
-        *
-        * @param filename: std::string
-        *   A reference to the filename for this database.  Defaults to the
-        *   empty string. It should be set if shared cache mode is enabled,
-        *   but the "filename" is otherwise ignored. 
-        * @param flags: int
-        *   The  combination  of  flags to be used while opening/creating a
-        *   new database file. Defaults to CREATE.
-        *   Notice: the MEMORY_DB flag is always forced.
-        * @param vfs_module: std::string
-        *   Defines the VFS to be used for this database.  Defaults here to
-        *   "win32". See https://www.sqlite.org/vfs.html
-        *
-        * See https://www.sqlite.org/c3ref/open.html
-        */
-        inline MemoryDBConnection(const std::string& filename = "",
-                                  const int          flags = CREATE,
-                                  const std::string& vfs_module = "win32") noexcept
-            : osql::dbconnection::DBConnection(filename, flags | MEMORY_DB, vfs_module)
-        {}
-
-        /** @brief Default destructor. */
-        virtual ~MemoryDBConnection() noexcept = default;
-    };
 }
