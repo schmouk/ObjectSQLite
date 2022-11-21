@@ -34,7 +34,7 @@ import osql.clauses;
 
 
 //===========================================================================
-export namespace osql::clauses
+namespace osql::clauses
 {
     //=======================================================================
     /** @brief the STR value for COLLATE. */
@@ -48,7 +48,7 @@ export namespace osql::clauses
     *   charsets  names  are  to  be used as the 'core_expr' of the collate 
     *   clause at its creation time.
     */
-    class CollateClause : public osql::clauses::Clause< CollateStr >
+    export class CollateClause : public osql::clauses::Clause< CollateStr >
     {
     public:
         //---   Wrappers   --------------------------------------------------

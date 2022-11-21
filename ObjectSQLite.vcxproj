@@ -160,6 +160,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ObjectSQLite.cpp" />
+    <ClCompile Include="osql\clauses\attach_database_clause.ixx" />
     <ClCompile Include="osql\clauses\clause.ixx" />
     <ClCompile Include="osql\clauses\collate_clause.ixx" />
     <ClCompile Include="osql\clauses\constraint_name_clause.ixx" />
