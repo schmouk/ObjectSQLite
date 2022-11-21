@@ -84,6 +84,9 @@ export namespace osql::dbconnection
         *   Defines the VFS to be used for this database. Defaults here to 
         *   "win32". See https://www.sqlite.org/vfs.html
         * 
+        * Notice: VFS (Virtual File System?) is to be  understood  as  the
+        *   underlying Operating System.
+        * 
         * See https://www.sqlite.org/c3ref/open.html
         */
         inline DBConnection(const std::string& filename                         ,
@@ -91,8 +94,8 @@ export namespace osql::dbconnection
                             const std::string& vfs_module = "win32"              ) noexcept
             : MyBaseClass()
         {
-            _last_error_code = sqlite3_open_v2(filename.c_str(), &_db_handle, flags, vfs_module.c_str());
-            // notice: attributes '_last_error_code' and '_db_handle' are inherited from base class osql::common::ObjectBase
+            _last_error_code = sqlite3_open_v2(filename.c_str(), &_cnx_handle, flags, vfs_module.c_str());
+            // notice: attributes '_last_error_code' and '_cnx_handle' are inherited from base class osql::common::ObjectBase
         }
 
         /** @brief Default empty constructor. */
@@ -123,16 +126,179 @@ export namespace osql::dbconnection
         /** @brief Gets access to the sqlite3 connection handle. */
         inline sqlite3* get_handle() const noexcept
         {
-            return _db_handle;
+            return _cnx_handle;
         }
 
 
-        //---   Other Operations   ------------------------------------------
+        //---   Operations   ------------------------------------------------
         /** @brief Closes this connection. Ends any pending transaction also.
         *
         * @return the associated error code if any, or SQLITE_OK if no error.
         */
         int close() noexcept;
+
+
+        //===   Run Time Limits   ===========================================
+        // see https://www.sqlite.org/limits.html for explanations about 
+        // setting  (and  lowering)  lengths or values limits while they
+        // are already been set per default in sqlite3 code.
+
+        //---   Getters   ---------------------------------------------------
+        /** @brief Gets maximum size of any string or BLOB or table row, in bytes. */
+        [[nodiscard]] inline const int get_length_limit() const
+        {
+            return sqlite3_limit(get_handle(), SQLITE_LIMIT_LENGTH, -1);
+        }
+
+        /** @brief Gets the maximum length of an SQL statement, in bytes. */
+        [[nodiscard]] inline const int get_sql_length_limit() const
+        {
+            return sqlite3_limit(get_handle(), SQLITE_LIMIT_SQL_LENGTH, -1);
+        }
+
+        /** @brief Gets the maximum number of columns in a table definition or in the result set of a SELECT or the maximum number of columns in an index or in an ORDER BY or GROUP BY clause. */
+        [[nodiscard]] inline const int get_columns_limit() const
+        {
+            return sqlite3_limit(get_handle(), SQLITE_LIMIT_COLUMN, -1);
+        }
+
+        /** @brief Gets the maximum depth of the parse tree on any expression. */
+        [[nodiscard]] inline const int get_expr_depth_limit() const
+        {
+            return sqlite3_limit(get_handle(), SQLITE_LIMIT_EXPR_DEPTH, -1);
+        }
+
+        /** @brief Gets the maximum number of terms in a compound SELECT statement. */
+        [[nodiscard]] inline const int get_compound_select_limit() const
+        {
+            return sqlite3_limit(get_handle(), SQLITE_LIMIT_COMPOUND_SELECT, -1);
+        }
+
+        /** @brief Gets the maximum number of instructions in a virtual machine program used to implement an SQL statement. */
+        [[nodiscard]] inline const int get_virtual_machine_instructions_limit() const
+        {
+            return sqlite3_limit(get_handle(), SQLITE_LIMIT_VDBE_OP, -1);
+        }
+
+        /** @brief Gets the maximum number of arguments on a function. */
+        [[nodiscard]] inline const int get_function_args_limit() const
+        {
+            return sqlite3_limit(get_handle(), SQLITE_LIMIT_FUNCTION_ARG, -1);
+        }
+
+        /** @brief Gets the maximum number of attached databases. */
+        [[nodiscard]] inline const int get_attached_databases_limit() const
+        {
+            return sqlite3_limit(get_handle(), SQLITE_LIMIT_ATTACHED, -1);
+        }
+
+        /** @brief Gets the maximum length of the pattern argument to the LIKE or GLOB operators. */
+        [[nodiscard]] inline const int get_like_pattern_length_limit() const
+        {
+            return sqlite3_limit(get_handle(), SQLITE_LIMIT_LIKE_PATTERN_LENGTH, -1);
+        }
+
+        /** @brief Gets the maximum index number of any parameter in an SQL statement. */
+        [[nodiscard]] inline const int get_variable_number_limit() const
+        {
+            return sqlite3_limit(get_handle(), SQLITE_LIMIT_VARIABLE_NUMBER, -1);
+        }
+
+        /** @brief Gets the maximum depth of recursion for triggers. */
+        [[nodiscard]] inline const int get_trigger_recursion_depth_limit() const
+        {
+            return sqlite3_limit(get_handle(), SQLITE_LIMIT_TRIGGER_DEPTH, -1);
+        }
+
+        /** @brief Gets the maximum number of auxiliary worker threads that a single prepared statement may start. */
+        [[nodiscard]] inline const int get_worker_threads_limit() const
+        {
+            return sqlite3_limit(get_handle(), SQLITE_LIMIT_WORKER_THREADS, -1);
+        }
+
+
+        //---   Setters   ---------------------------------------------------
+        /** @brief Gets maximum size of any string or BLOB or table row, in bytes. */
+        inline const int set_length_limit(const int new_limit) const
+        {
+            return sqlite3_limit(get_handle(), SQLITE_LIMIT_LENGTH, new_limit);
+        }
+
+        /** @brief Gets the maximum length of an SQL statement, in bytes. */
+        inline const int set_sql_length_limit(const int new_limit) const
+        {
+            return sqlite3_limit(get_handle(), SQLITE_LIMIT_SQL_LENGTH, new_limit);
+        }
+
+        /** @brief Gets the maximum number of columns in a table definition or in the result set of a SELECT or the maximum number of columns in an index or in an ORDER BY or GROUP BY clause. */
+        inline const int set_columns_limit(const int new_limit) const
+        {
+            return sqlite3_limit(get_handle(), SQLITE_LIMIT_COLUMN, new_limit);
+        }
+
+        /** @brief Gets the maximum depth of the parse tree on any expression. */
+        inline const int set_expr_depth_limit(const int new_limit) const
+        {
+            return sqlite3_limit(get_handle(), SQLITE_LIMIT_EXPR_DEPTH, new_limit);
+        }
+
+        /** @brief Gets the maximum number of terms in a compound SELECT statement. */
+        inline const int set_compound_select_limit(const int new_limit) const
+        {
+            return sqlite3_limit(get_handle(), SQLITE_LIMIT_COMPOUND_SELECT, new_limit);
+        }
+
+        /** @brief Gets the maximum number of instructions in a virtual machine program used to implement an SQL statement.
+        *
+        * If sqlite3_prepare_v2() or the equivalent tries to allocate  space
+        * for more than this many opcodes in a single prepared statement, an
+        * SQLITE_NOMEM error is returned. */
+        inline const int set_virtual_machine_instructions_limit(const int new_limit) const
+        {
+            return sqlite3_limit(get_handle(), SQLITE_LIMIT_VDBE_OP, new_limit);
+        }
+
+        /** @brief Gets the maximum number of arguments on a function. */
+        inline const int set_function_args_limit(const int new_limit) const
+        {
+            return sqlite3_limit(get_handle(), SQLITE_LIMIT_FUNCTION_ARG, new_limit);
+        }
+
+        /** @brief Gets the maximum number of attached databases. */
+        inline const int set_attached_databases_limit(const int new_limit) const
+        {
+            return sqlite3_limit(get_handle(), SQLITE_LIMIT_ATTACHED, new_limit);
+        }
+
+        /** @brief Gets the maximum length of the pattern argument to the LIKE or GLOB operators. */
+        inline const int set_like_pattern_length_limit(const int new_limit) const
+        {
+            return sqlite3_limit(get_handle(), SQLITE_LIMIT_LIKE_PATTERN_LENGTH, new_limit);
+        }
+
+        /** @brief Gets the maximum index number of any parameter in an SQL statement. */
+        inline const int set_variable_number_limit(const int new_limit) const
+        {
+            return sqlite3_limit(get_handle(), SQLITE_LIMIT_VARIABLE_NUMBER, new_limit);
+        }
+
+        /** @brief Gets the maximum depth of recursion for triggers. */
+        inline const int set_trigger_recursion_depth_limit(const int new_limit) const
+        {
+            return sqlite3_limit(get_handle(), SQLITE_LIMIT_TRIGGER_DEPTH, new_limit);
+        }
+
+        /** @brief Gets the maximum number of auxiliary worker threads that a single prepared statement may start. */
+        inline const int set_worker_threads_limit(const int new_limit) const
+        {
+            return sqlite3_limit(get_handle(), SQLITE_LIMIT_WORKER_THREADS, new_limit);
+        }
+
+
+    protected:
+        //---   Attributes   ------------------------------------------------
+        sqlite3* _cnx_handle{ nullptr }; //!< the handle to the associated SQLite connection.
+        int      _last_error_code{};    //!< the code of the very last SQLite error.
     };
 
 }

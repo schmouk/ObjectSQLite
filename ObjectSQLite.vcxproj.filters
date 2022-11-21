@@ -33,9 +33,6 @@
     <ClCompile Include="osql\common\object_base.ixx">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="osql\tables\table_base.ixx">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="osql\clauses\with_clause.ixx">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -78,9 +75,6 @@
     <ClCompile Include="osql\clauses\constraint_name_clause.ixx">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="osql\tables\table_constraints.ixx">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="osql\clauses\foreign_key_subclause.ixx">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -109,6 +103,27 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="osql\columns\constraints\unique.ixx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="osql\dbconnection\memory_dbconnection.ixx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="osql\dbconnection\ro_dbonnection.ixx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="osql\dbconnection\rw_deconnection.ixx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="osql\tables\table.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="osql\tables\table.ixx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="osql\tables\table_options.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="osql\tables\table_options.ixx">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
