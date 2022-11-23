@@ -30,6 +30,9 @@ SOFTWARE.
 #include "osql/clauses/clause.h"
 
 import osql.dbconnection;
+import osql.dbconnection.ro_dbconnection;
+import osql.dbconnection.rw_dbconnection;
+import osql.dbconnection.memory_dbconnection;
 using namespace osql::dbconnection;
 
 import osql.clauses;
@@ -69,6 +72,47 @@ int main()
 
     MemoryDBConnection test_mem_db{};
     std::cout << "creation of memory test db, error result = " << test_mem_db.get_error_code() << ", " << test_mem_db.get_error_msg() << std::endl;
+
+    std::cout << "SQLITE_LIMIT_LENGTH = " << test_db.get_length_limit() << std::endl;
+    std::cout << "SQLITE_LIMIT_SQL_LENGTH = " << test_db.get_sql_length_limit() << std::endl;
+    std::cout << "SQLITE_LIMIT_COLUMN = " << test_db.get_columns_limit() << std::endl;
+    std::cout << "SQLITE_LIMIT_EXPR_DEPTH = " << test_db.get_expr_depth_limit() << std::endl;
+    std::cout << "SQLITE_LIMIT_COMPOUND_SELECT = " << test_db.get_compound_select_limit() << std::endl;
+    std::cout << "SQLITE_LIMIT_VDBE_OP = " << test_db.get_virtual_machine_instructions_limit() << std::endl;
+    std::cout << "SQLITE_LIMIT_FUNCTION_ARG = " << test_db.get_function_args_limit() << std::endl;
+    std::cout << "SQLITE_LIMIT_ATTACHED = " << test_db.get_attached_databases_limit() << std::endl;
+    std::cout << "SQLITE_LIMIT_LIKE_PATTERN_LENGTH = " << test_db.get_like_pattern_length_limit() << std::endl;
+    std::cout << "SQLITE_LIMIT_VARIABLE_NUMBER = " << test_db.get_variable_number_limit() << std::endl;
+    std::cout << "SQLITE_LIMIT_TRIGGER_DEPTH = " << test_db.get_trigger_recursion_depth_limit() << std::endl;
+    std::cout << "SQLITE_LIMIT_WORKER_THREADS = " << test_db.get_worker_threads_limit() << std::endl;
+    std::cout << std::endl;
+    std::cout << "new SQLITE_LIMIT_LENGTH = "               << test_db.set_length_limit(test_db.get_length_limit()/2) << std::endl;
+    std::cout << "new SQLITE_LIMIT_SQL_LENGTH = "           << test_db.set_sql_length_limit(test_db.get_sql_length_limit() / 2) << std::endl;
+    std::cout << "new SQLITE_LIMIT_COLUMN = "               << test_db.set_columns_limit(test_db.get_columns_limit() / 2) << std::endl;
+    std::cout << "new SQLITE_LIMIT_EXPR_DEPTH = "           << test_db.set_expr_depth_limit(test_db.get_expr_depth_limit() / 2) << std::endl;
+    std::cout << "new SQLITE_LIMIT_COMPOUND_SELECT = "      << test_db.set_compound_select_limit(test_db.get_compound_select_limit() / 2) << std::endl;
+    std::cout << "new SQLITE_LIMIT_VDBE_OP = "              << test_db.set_virtual_machine_instructions_limit(test_db.get_virtual_machine_instructions_limit() / 2) << std::endl;
+    std::cout << "new SQLITE_LIMIT_FUNCTION_ARG = "         << test_db.set_function_args_limit(test_db.get_function_args_limit() / 2) << std::endl;
+    std::cout << "new SQLITE_LIMIT_ATTACHED = "             << test_db.set_attached_databases_limit(test_db.get_attached_databases_limit() / 2) << std::endl;
+    std::cout << "new SQLITE_LIMIT_LIKE_PATTERN_LENGTH = "  << test_db.set_like_pattern_length_limit(test_db.get_like_pattern_length_limit() / 2) << std::endl;
+    std::cout << "new SQLITE_LIMIT_VARIABLE_NUMBER = "      << test_db.set_variable_number_limit(test_db.get_variable_number_limit() / 2) << std::endl;
+    std::cout << "new SQLITE_LIMIT_TRIGGER_DEPTH = "        << test_db.set_trigger_recursion_depth_limit(test_db.get_trigger_recursion_depth_limit() / 2) << std::endl;
+    std::cout << "new SQLITE_LIMIT_WORKER_THREADS = "       << test_db.set_worker_threads_limit(test_db.get_worker_threads_limit() / 2) << std::endl;
+    std::cout << std::endl;
+    std::cout << "SQLITE_LIMIT_LENGTH = " << test_db.get_length_limit() << std::endl;
+    std::cout << "SQLITE_LIMIT_SQL_LENGTH = " << test_db.get_sql_length_limit() << std::endl;
+    std::cout << "SQLITE_LIMIT_COLUMN = " << test_db.get_columns_limit() << std::endl;
+    std::cout << "SQLITE_LIMIT_EXPR_DEPTH = " << test_db.get_expr_depth_limit() << std::endl;
+    std::cout << "SQLITE_LIMIT_COMPOUND_SELECT = " << test_db.get_compound_select_limit() << std::endl;
+    std::cout << "SQLITE_LIMIT_VDBE_OP = " << test_db.get_virtual_machine_instructions_limit() << std::endl;
+    std::cout << "SQLITE_LIMIT_FUNCTION_ARG = " << test_db.get_function_args_limit() << std::endl;
+    std::cout << "SQLITE_LIMIT_ATTACHED = " << test_db.get_attached_databases_limit() << std::endl;
+    std::cout << "SQLITE_LIMIT_LIKE_PATTERN_LENGTH = " << test_db.get_like_pattern_length_limit() << std::endl;
+    std::cout << "SQLITE_LIMIT_VARIABLE_NUMBER = " << test_db.get_variable_number_limit() << std::endl;
+    std::cout << "SQLITE_LIMIT_TRIGGER_DEPTH = " << test_db.get_trigger_recursion_depth_limit() << std::endl;
+    std::cout << "SQLITE_LIMIT_WORKER_THREADS = " << test_db.get_worker_threads_limit() << std::endl;
+    std::cout << std::endl;
+
 
     osql::clauses::WithRecursiveClause wr_clause("test text");
     std::cout << "Recursive With Clause content: " << osql::clauses::T(wr_clause) << std::endl;

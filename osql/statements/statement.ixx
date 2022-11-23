@@ -39,7 +39,7 @@ import osql.dbconnection;
 export namespace osql::statements
 {
     //=======================================================================
-    /** @brief The default class for SQLite statements.
+    /** @brief The default class for all SQLite statements.
     *
     * @sa ...
     */
@@ -95,7 +95,9 @@ export namespace osql::statements
         Statement(Statement&&) noexcept = delete;
 
         /** @brief Destructor. */
-        inline virtual ~Statement() noexcept = default;
+        inline virtual ~Statement() noexcept
+        {
+        }
 
 
         //---   Assignments   -----------------------------------------------
@@ -108,15 +110,31 @@ export namespace osql::statements
 
         //---   Accessors   -------------------------------------------------
         /** @brief Returns the handle to the associated sqlite3 prepared statement. */
-        inline const sqlite3_stmt* get_handle() const noexcept
+        inline sqlite3_stmt* get_handle() const noexcept
         {
-            return _stmt_handle;
+            return _prepared_stmt_handle;
         }
+
+
+        //---   Operations   ------------------------------------------------
+        /** @brief Executes this statement.
+        *
+        * Sets the _last_error_code for this object and returns its value.
+        */
+        const int exec();
+
+
+        /** @brief Finalizes this statement.
+        *
+        * Sets the _last_error_code for this object and returns its value.
+        * Notice: automatically called a destruction time.
+        */
+        const int finalize();
 
 
     protected:
         //---   Internal attributes   ---------------------------------------
-        sqlite3_stmt* _stmt_handle;  //!< handle to the associated sqlite3 prepared statement
+        sqlite3_stmt* _prepared_stmt_handle;  //!< handle to the associated sqlite3 prepared statement
     };
 
 }

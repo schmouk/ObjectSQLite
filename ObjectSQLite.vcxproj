@@ -160,11 +160,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ObjectSQLite.cpp" />
+    <ClCompile Include="osql\clauses\attach_database_clause.ixx" />
     <ClCompile Include="osql\clauses\clause.ixx" />
     <ClCompile Include="osql\clauses\collate_clause.ixx" />
     <ClCompile Include="osql\clauses\constraint_name_clause.ixx" />
     <ClCompile Include="osql\clauses\conflict_clause.ixx" />
     <ClCompile Include="osql\clauses\deferrable_clause.ixx" />
+    <ClCompile Include="osql\clauses\detach_database_clause.ixx" />
     <ClCompile Include="osql\clauses\foreign_key_clause.ixx" />
     <ClCompile Include="osql\clauses\foreign_key_subclause.ixx" />
     <ClCompile Include="osql\clauses\foreign_table_subclause.ixx" />
@@ -187,8 +189,13 @@
     <ClCompile Include="osql\common\object_base.ixx" />
     <ClCompile Include="osql\dbconnection\dbconnection.cpp" />
     <ClCompile Include="osql\dbconnection\dbconnection.ixx" />
+    <ClCompile Include="osql\dbconnection\memory_dbconnection.ixx" />
+    <ClCompile Include="osql\dbconnection\ro_dbonnection.ixx" />
+    <ClCompile Include="osql\dbconnection\rw_deconnection.ixx" />
     <ClCompile Include="osql\statements\statement.cpp" />
     <ClCompile Include="osql\statements\statement.ixx" />
+    <ClCompile Include="osql\tables\table.cpp" />
+    <ClCompile Include="osql\tables\table.ixx" />
     <ClCompile Include="osql\tables\table_options.cpp" />
     <ClCompile Include="osql\tables\table_options.ixx" />
   </ItemGroup>

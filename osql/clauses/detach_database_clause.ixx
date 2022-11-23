@@ -25,10 +25,13 @@ SOFTWARE.
 //===========================================================================
 module;
 
+#include <format>
+#include <string>
+
 #include "osql/clauses/clause.h"
 
 
-export module osql.clauses.collate_clauses;
+export module osql.clauses.detach_database_clause;
 
 import osql.clauses;
 
@@ -37,30 +40,26 @@ import osql.clauses;
 namespace osql::clauses
 {
     //=======================================================================
-    /** @brief the STR value for COLLATE. */
-    using CollateStr = osql::clauses::STR< 'C', 'O', 'L', 'L', 'A', 'T', 'E', 0 >;
+    /** @brief the STR value for DETACH DATABASE. */
+    using CollateStr = osql::clauses::STR< 'D', 'E', 'T', 'A', 'C', 'H', ' ', 'D', 'A', 'T', 'A', 'B', 'A', 'S', 'E', 0 >;
 
-    /** @brief The class of SQL COLLATE clauses as included in SQL statements.
+
+    //=======================================================================
+    /** @brief The base class for SQL Attach Database clauses as included in SQL statements.
     *
-    *   @see https://www.sqlshack.com/the-collate-sql-command-overview/  or
-    *   https://dev.mysql.com/doc/refman/8.0/en/charset-collate.html to get
-    *   explanations about the charsets collation  concept  in  SQL.  These
-    *   charsets  names  are  to  be used as the 'core_expr' of the collate 
-    *   clause at its creation time.
+    * See https://www.sqlite.org/lang_detach.html to get explanations on
+    * DETACHE DATABASE statement with SQLite.
     */
-    export class CollateClause : public osql::clauses::Clause< CollateStr >
+    export struct DetachDataBaseClause : osql::clauses::NonEmptyClause< CollateStr >
     {
-    public:
         //---   Wrappers   --------------------------------------------------
-        using MyBaseClass = osql::clauses::Clause< CollateStr >;  //!< wrapper to the base class.
+        using MyBaseClass = osql::clauses::NonEmptyClause< CollateStr >;  //!< wrapper to the base class.
 
-        //---   Constructors   ----------------------------------------------
+        //---   Constructors / Destructor   ---------------------------------
         /** @brief Value constructor. */
-        inline CollateClause(const std::string collation_name) noexcept
-            : MyBaseClass(collation_name)
+        inline DetachDataBaseClause(const std::string& schema_name_) noexcept
+            : MyBaseClass(schema_name_)
         {}
-
-        CollateClause() noexcept = delete;  //!< Deleted empty constructor.
     };
 
 }
