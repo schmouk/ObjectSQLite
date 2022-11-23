@@ -39,8 +39,10 @@ import osql.clauses;
 //===========================================================================
 // This module defines:
 //  - class AttachDatabaseClause<>
-//  - class AttachMemoryDatabaseClause<>
-//  - class AttachTemporaryDatabaseClause<>
+//  - class AttachMainDatabaseClause
+//  - class AttachMemoryDatabaseClause
+//  - class AttachTemporaryDatabaseClause
+//  - class AttachTempTablesDatabaseClause
 //
 
 //===========================================================================
@@ -49,6 +51,7 @@ namespace osql::clauses
     //=======================================================================
     /** @brief the STR value for ATTACH DATABASE. */
     using CollateStr = osql::clauses::STR< 'A', 'T', 'T', 'A', 'C', 'H', ' ', 'D', 'A', 'T', 'A', 'B', 'A', 'S', 'E', 0 >;
+
 
     //=======================================================================
     /** @brief The base class for SQL Attach Database clauses as included in SQL statements.
@@ -102,22 +105,6 @@ namespace osql::clauses
 
 
     //=======================================================================
-    /** @brief The class of SQL Attach Database clauses for the temporary tables database. */
-    export class AttachTempTablesDatabaseClause : public AttachDataBaseClause
-    {
-    public:
-        //---   Wrappers   --------------------------------------------------
-        using MyBaseClass = osql::clauses::AttachDataBaseClause;  //!< wrapper to the base class.
-
-        //---   Constructors / Destructor   ---------------------------------
-        /** @brief Value constructor. */
-        inline AttachTempTablesDatabaseClause(const std::string& schema_name) noexcept
-            : MyBaseClass("temp", schema_name)
-        {}
-    };
-
-
-    //=======================================================================
     /** @brief The class of SQL Attach Database clauses for new temporary databases. */
     export class AttachTemporaryDatabaseClause : public AttachDataBaseClause
     {
@@ -129,6 +116,22 @@ namespace osql::clauses
         /** @brief Value constructor. */
         inline AttachTemporaryDatabaseClause(const std::string& schema_name) noexcept
             : MyBaseClass("", schema_name)
+        {}
+    };
+
+
+    //=======================================================================
+    /** @brief The class of SQL Attach Database clauses for the temporary tables database. */
+    export class AttachTempTablesDatabaseClause : public AttachDataBaseClause
+    {
+    public:
+        //---   Wrappers   --------------------------------------------------
+        using MyBaseClass = osql::clauses::AttachDataBaseClause;  //!< wrapper to the base class.
+
+        //---   Constructors / Destructor   ---------------------------------
+        /** @brief Value constructor. */
+        inline AttachTempTablesDatabaseClause(const std::string& schema_name) noexcept
+            : MyBaseClass("temp", schema_name)
         {}
     };
 

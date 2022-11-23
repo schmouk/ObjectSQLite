@@ -129,6 +129,9 @@
     <ClCompile Include="osql\clauses\attach_database_clause.ixx">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="osql\clauses\detach_database_clause.ixx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Source.def">

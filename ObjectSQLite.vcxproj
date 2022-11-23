@@ -166,6 +166,7 @@
     <ClCompile Include="osql\clauses\constraint_name_clause.ixx" />
     <ClCompile Include="osql\clauses\conflict_clause.ixx" />
     <ClCompile Include="osql\clauses\deferrable_clause.ixx" />
+    <ClCompile Include="osql\clauses\detach_database_clause.ixx" />
     <ClCompile Include="osql\clauses\foreign_key_clause.ixx" />
     <ClCompile Include="osql\clauses\foreign_key_subclause.ixx" />
     <ClCompile Include="osql\clauses\foreign_table_subclause.ixx" />

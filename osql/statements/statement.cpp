@@ -41,6 +41,7 @@ namespace osql::statements
     Statement::Statement(const std::string&                 sql_text,
                          osql::dbconnection::DBConnection&  db_connection) noexcept
         : MyBaseClass(db_connection.get_handle())
+        , _prepared_stmt_handle{ nullptr }
     {
         const char* unused_{ nullptr };
         _last_error_code = sqlite3_prepare_v2(db_connection.get_handle(),
@@ -54,6 +55,8 @@ namespace osql::statements
     Statement::Statement(const std::string&                sql_text,
                          osql::dbconnection::DBConnection& db_connection,
                          const unsigned int                prepare_flags) noexcept
+        : MyBaseClass(db_connection.get_handle())
+        , _prepared_stmt_handle{ nullptr }
     {
         const char* unused_{ nullptr };
         _last_error_code = sqlite3_prepare_v3(db_connection.get_handle(),
@@ -62,6 +65,36 @@ namespace osql::statements
                                               prepare_flags,
                                               &_stmt_handle,
                                               &unused_);
+    }
+
+
+    /* Executes this statement. */
+    const int Statement::exec()
+    {
+        if (get_handle() == nullptr) {
+            _last_error_code = SQLITE_OK;
+        }
+        else {
+            _last_error_code = sqlite3_step(get_handle());
+            _prepared_stmt_handle = nullptr;
+        }
+
+        return _last_error_code;
+    }
+
+
+
+    /* Finalizes this statement. */
+    const int Statement::finalize()
+    {
+        if (get_handle() == nullptr) {
+            _last_error_code = SQLITE_OK;
+        }
+        else {
+            _last_error_code = sqlite3_finalize(get_handle());
+        }
+
+        return _last_error_code;
     }
 
 }
