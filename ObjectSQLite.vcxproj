@@ -193,6 +193,7 @@
     <ClCompile Include="osql\dbconnection\ro_dbonnection.ixx" />
     <ClCompile Include="osql\dbconnection\rw_deconnection.ixx" />
     <ClCompile Include="osql\statements\result_column.ixx" />
+    <ClCompile Include="osql\statements\result_raw.ixx" />
     <ClCompile Include="osql\statements\statement.ixx" />
     <ClCompile Include="osql\tables\table.cpp" />
     <ClCompile Include="osql\tables\table.ixx" />

@@ -81,9 +81,6 @@ export namespace osql::statements
         ResultColumn& operator= (ResultColumn&&) noexcept = default;
 
 
-        //---   Accessors   -------------------------------------------------
-
-
         //---   Operations   ------------------------------------------------
         /** @brief Returns the value contained in this column. */
         [[nodiscard]] virtual T get() const = 0;
@@ -112,7 +109,7 @@ export namespace osql::statements
         /** @brief Returns the value contained in this column. */
         [[nodiscard]] virtual value_type get()
         {
-            return sqlite3_column_text(_sqlite_statement_ptr, _column_index)[0];
+            return *sqlite3_column_text(_sqlite_statement_ptr, _column_index);
         }
     };
 
