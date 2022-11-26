@@ -27,9 +27,6 @@
     <ClCompile Include="osql\statements\statement.ixx">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="osql\statements\statement.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="osql\common\object_base.ixx">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -130,6 +127,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="osql\clauses\detach_database_clause.ixx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="osql\statements\result_column.ixx">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
