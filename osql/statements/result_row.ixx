@@ -32,7 +32,7 @@ module;
 #include "sqlite3.h"
 
 
-export module osql.statements.result_raw;
+export module osql.statements.result_row;
 
 import osql.statements.result_column;
 import osql.statements.statement;
@@ -43,7 +43,7 @@ export namespace osql::statements
 {
     //===   RESULT COLUMN<T>   ==============================================
     /** @brief The class of SQLite rows that result from SQL statements processing. */
-    class ResultRaw
+    class ResultRow
     {
     public:
         //---   Constructors / Destructor   ---------------------------------
@@ -51,33 +51,37 @@ export namespace osql::statements
         *
         * @param statement: sqlite3_stmt*
         *   A pointer to the related SQLite statement.
-        * @param column_index: uint32_t
-        *   The index of the column in the raws resulting
-        *   from the associated statement processing.
         */
-        inline ResultRaw(sqlite3_stmt* statement_ptr) noexcept
+        inline ResultRow(sqlite3_stmt* statement_ptr) noexcept
             : _sqlite_statement_ptr{ statement_ptr }
         {}
 
         /** @brief Empty constructor. */
-        ResultRaw() noexcept = default;
+        ResultRow() noexcept = default;
 
         /** @brief Default copy constructor. */
-        ResultRaw(const ResultRaw&) noexcept = default;
+        ResultRow(const ResultRow&) noexcept = default;
 
         /** @brief Default move constructor. */
-        ResultRaw(ResultRaw&&) noexcept = default;
+        ResultRow(ResultRow&&) noexcept = default;
 
         /** @brief Default Destructor. */
-        inline virtual ~ResultRaw() noexcept = default;
+        inline virtual ~ResultRow() noexcept = default;
 
 
         //---   Assignments   -----------------------------------------------
         /** @brief Default copy assignment. */
-        ResultRaw& operator= (const ResultRaw&) noexcept = default;
+        [[nodiscard]] ResultRow& operator= (const ResultRow&) noexcept = default;
 
         /** @brief Default move assignment. */
-        ResultRaw& operator= (ResultRaw&&) noexcept = default;
+        [[nodiscard]] ResultRow& operator= (ResultRow&&) noexcept = default;
+
+        /** @brief Sets the sqlite statement pointer associated with this result-row. */
+        [[nodiscard]] ResultRow& operator= (sqlite3_stmt* statement_ptr) noexcept
+        {
+            _sqlite_statement_ptr = statement_ptr;
+            return *this;
+        }
 
 
         //---   Accessors   -------------------------------------------------
@@ -89,7 +93,7 @@ export namespace osql::statements
         */
         inline const int error_code() const noexcept
         {
-            return _sqlite_error_code == SQLITE_DONE ? SQLITE_OK : _sqlite_error_code;
+            return (_sqlite_error_code == SQLITE_DONE || _sqlite_error_code == SQLITE_ROW) ? SQLITE_OK : _sqlite_error_code;
         }
 
 
@@ -120,6 +124,18 @@ export namespace osql::statements
         inline const bool is_completed() const noexcept
         {
             return _sqlite_error_code == SQLITE_DONE;
+        }
+
+        /** @brief Returns true if this result row error status is SQLITE_OK, or false otherwise. */
+        [[nodiscard]] inline const bool is_ok() const noexcept
+        {
+            return error_code() == SQLITE_OK;
+        }
+
+        /** @brief Sets the sqlite statement pointer associated with this result-row. */
+        inline void set(sqlite3_stmt* statement_ptr) noexcept
+        {
+            _sqlite_statement_ptr = statement_ptr;
         }
 
 

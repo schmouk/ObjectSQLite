@@ -132,7 +132,10 @@
     <ClCompile Include="osql\statements\result_column.ixx">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="osql\statements\result_raw.ixx">
+    <ClCompile Include="osql\statements\result.ixx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="osql\statements\result_row.ixx">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
