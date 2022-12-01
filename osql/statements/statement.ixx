@@ -29,7 +29,7 @@ module;
 #include "sqlite3.h"
 
 
-export module osql.statements.statements;
+export module osql.statements.statement;
 
 import osql.common.object_base;
 import osql.dbconnection;
@@ -39,7 +39,7 @@ import osql.dbconnection;
 export namespace osql::statements
 {
     //=======================================================================
-    /** @brief The default class for all SQLite statements.
+    /** @brief The base class for all SQLite statements.
     *
     * @sa ...
     */
@@ -63,7 +63,17 @@ export namespace osql::statements
         *   statement is to be evaluated.
         */
         Statement(const std::string&                sql_text,
-                  osql::dbconnection::DBConnection& db_connection) noexcept;
+                      osql::dbconnection::DBConnection& db_connection) noexcept
+            : MyBaseClass(db_connection.get_handle())
+            , _prepared_stmt_handle{ nullptr }
+        {
+            const char* unused_{ nullptr };
+            _last_error_code = sqlite3_prepare_v2(db_connection.get_handle(),
+                sql_text.c_str(),
+                int(sql_text.size() + 1),
+                &_prepared_stmt_handle,
+                &unused_);
+        }
 
         /** @brief Value constructor (2/2).
         *
@@ -82,8 +92,19 @@ export namespace osql::statements
         *   for explanations on the actions of these flags.
         */
         Statement(const std::string&                sql_text,
-                  osql::dbconnection::DBConnection& db_connection,
-                  const unsigned int                prepare_flags) noexcept;
+                      osql::dbconnection::DBConnection& db_connection,
+                      const unsigned int                prepare_flags) noexcept
+            : MyBaseClass(db_connection.get_handle())
+            , _prepared_stmt_handle{ nullptr }
+        {
+            const char* unused_{ nullptr };
+            _last_error_code = sqlite3_prepare_v3(db_connection.get_handle(),
+                sql_text.c_str(),
+                int(sql_text.size() + 1),
+                prepare_flags,
+                &_prepared_stmt_handle,
+                &unused_);
+        }
 
         /** @brief Empty constructor. */
         Statement() noexcept = default;
@@ -121,7 +142,18 @@ export namespace osql::statements
         *
         * Sets the _last_error_code for this object and returns its value.
         */
-        const int exec();
+        const int exec() noexcept
+        {
+            if (get_handle() == nullptr) {
+                _last_error_code = SQLITE_OK;
+            }
+            else {
+                _last_error_code = sqlite3_step(get_handle());
+                _prepared_stmt_handle = nullptr;
+            }
+
+            return _last_error_code;
+        }
 
 
         /** @brief Finalizes this statement.
@@ -129,7 +161,17 @@ export namespace osql::statements
         * Sets the _last_error_code for this object and returns its value.
         * Notice: automatically called a destruction time.
         */
-        const int finalize();
+        const int finalize() noexcept
+        {
+            if (get_handle() == nullptr) {
+                _last_error_code = SQLITE_OK;
+            }
+            else {
+                _last_error_code = sqlite3_finalize(get_handle());
+            }
+
+            return _last_error_code;
+        }
 
 
     protected:

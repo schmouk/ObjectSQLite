@@ -196,6 +196,7 @@
     <ClCompile Include="osql\statements\result_column.ixx" />
     <ClCompile Include="osql\statements\result_row.ixx" />
     <ClCompile Include="osql\statements\statement.ixx" />
+    <ClCompile Include="osql\statements\typed_result_row.ixx" />
     <ClCompile Include="osql\tables\table.cpp" />
     <ClCompile Include="osql\tables\table.ixx" />
     <ClCompile Include="osql\tables\table_options.cpp" />
